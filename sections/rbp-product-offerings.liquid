@@ -12,7 +12,7 @@
       <article class="rbp-product-card rbp-offering-card">
         <div class="rbp-offering-card__media">
           {%- if section.settings.templates_image != blank -%}
-            <img class="rbp-offering-card__image" src="{{ section.settings.templates_image | image_url: width: 700 }}" alt="{{ section.settings.templates_title | escape }}" loading="lazy">
+            <img class="rbp-offering-card__image" src="{{ section.settings.templates_image | image_url: width: 700 }}" alt="{{ section.settings.templates_title | escape }}" loading="lazy" width="700" height="467">
           {%- else -%}
             <svg viewBox="0 0 80 80" fill="none" aria-hidden="true"><rect x="18" y="10" width="44" height="60" rx="8" fill="rgba(255,255,255,.18)" stroke="white"/><path d="M28 28h24M28 40h24M28 52h16" stroke="white" stroke-width="4" stroke-linecap="round"/></svg>
           {%- endif -%}
@@ -27,7 +27,7 @@
       <article class="rbp-product-card rbp-offering-card">
         <div class="rbp-offering-card__media">
           {%- if section.settings.suites_image != blank -%}
-            <img class="rbp-offering-card__image" src="{{ section.settings.suites_image | image_url: width: 700 }}" alt="{{ section.settings.suites_title | escape }}" loading="lazy">
+            <img class="rbp-offering-card__image" src="{{ section.settings.suites_image | image_url: width: 700 }}" alt="{{ section.settings.suites_title | escape }}" loading="lazy" width="700" height="467">
           {%- else -%}
             <svg viewBox="0 0 80 80" fill="none" aria-hidden="true"><rect x="14" y="18" width="38" height="48" rx="7" fill="rgba(255,255,255,.16)" stroke="white"/><rect x="26" y="10" width="40" height="50" rx="7" fill="rgba(255,255,255,.18)" stroke="white"/><path d="M36 28h20M36 40h20M36 52h12" stroke="white" stroke-width="4" stroke-linecap="round"/></svg>
           {%- endif -%}
@@ -42,7 +42,7 @@
       <article class="rbp-product-card rbp-offering-card">
         <div class="rbp-offering-card__media">
           {%- if section.settings.toolkits_image != blank -%}
-            <img class="rbp-offering-card__image" src="{{ section.settings.toolkits_image | image_url: width: 700 }}" alt="{{ section.settings.toolkits_title | escape }}" loading="lazy">
+            <img class="rbp-offering-card__image" src="{{ section.settings.toolkits_image | image_url: width: 700 }}" alt="{{ section.settings.toolkits_title | escape }}" loading="lazy" width="700" height="467">
           {%- else -%}
             <svg viewBox="0 0 80 80" fill="none" aria-hidden="true"><rect x="12" y="24" width="56" height="38" rx="8" fill="rgba(255,255,255,.18)" stroke="white"/><path d="M26 24v-6a6 6 0 0 1 6-6h16a6 6 0 0 1 6 6v6" stroke="white" stroke-width="4"/><path d="M22 42h36" stroke="white" stroke-width="4" stroke-linecap="round"/></svg>
           {%- endif -%}

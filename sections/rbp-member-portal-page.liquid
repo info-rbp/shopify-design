@@ -1,10 +1,24 @@
 {%- liquid
   assign is_member = false
   assign member_level = 'Not currently identified as a Premium Member'
+  assign lifecycle = 'none'
   if customer
-    if customer.tags contains 'Premium Member'
+    if customer.tags contains 'rbp-premium-active' or customer.tags contains 'Premium Member'
       assign is_member = true
-      assign member_level = 'Premium Member'
+      assign member_level = 'Premium Membership active'
+      assign lifecycle = 'active'
+    elsif customer.tags contains 'rbp-premium-approved'
+      assign member_level = 'Premium Membership approved'
+      assign lifecycle = 'approved'
+    elsif customer.tags contains 'rbp-premium-applied'
+      assign member_level = 'Application under review'
+      assign lifecycle = 'applied'
+    elsif customer.tags contains 'rbp-premium-suspended'
+      assign member_level = 'Premium Membership suspended'
+      assign lifecycle = 'restricted'
+    elsif customer.tags contains 'rbp-premium-cancelled'
+      assign member_level = 'Premium Membership cancelled'
+      assign lifecycle = 'restricted'
     endif
   endif
   assign gated_page = false
@@ -47,6 +61,12 @@
 <section class="rbp-mportal-hero"><div class="rbp-mportal-c"><div class="rbp-mportal-hero-in"><div><div class="rbp-mportal-ey">{{ eyebrow }}</div><h1>{{ page.title }}</h1><p>{{ summary }}</p><div class="rbp-mportal-actions"><a class="rbp-mportal-btn rbp-mportal-btn--primary" href="/account">Go to account</a><a class="rbp-mportal-btn" href="/pages/help-centre">Help Centre</a></div></div><aside class="rbp-mportal-status"><span>Member status</span><strong>{{ member_level }}</strong>{%- if customer -%}<p>Signed in as {{ customer.email }}</p>{%- else -%}<p>Sign in to check Premium Member access.</p>{%- endif -%}</aside></div></div></section>
 {%- if gated_page and is_member == false -%}
 <section class="rbp-mportal-sec"><div class="rbp-mportal-c"><div class="rbp-mportal-gate"><h2>Premium Member access required</h2><p>This page is intended for customers tagged as <strong>Premium Member</strong>. Sign in with the correct account or ask about membership access.</p><div class="rbp-mportal-actions" style="justify-content:center;"><a class="rbp-mportal-btn rbp-mportal-btn--primary" href="/account">Sign in</a><a class="rbp-mportal-btn" href="/pages/membership">View membership</a><a class="rbp-mportal-btn" href="/pages/contact">Contact support</a></div></div></div></section>
+{%- elsif lifecycle == 'applied' -%}
+<section class="rbp-mportal-sec"><div class="rbp-mportal-c"><div class="rbp-mportal-gate"><h2>Your Premium Membership application is under review.</h2><p>RBP will contact you after business fit, agreement and serviceability checks are reviewed.</p><div class="rbp-mportal-actions" style="justify-content:center;"><a class="rbp-mportal-btn rbp-mportal-btn--primary" href="/pages/contact">Contact support</a><a class="rbp-mportal-btn" href="/pages/membership-faq">Membership FAQ</a></div></div></div></section>
+{%- elsif lifecycle == 'approved' -%}
+<section class="rbp-mportal-sec"><div class="rbp-mportal-c"><div class="rbp-mportal-gate"><h2>Your Premium Membership is approved.</h2><p>Complete the agreement and activation steps supplied by RBP before member-only resources are exposed.</p><div class="rbp-mportal-actions" style="justify-content:center;"><a class="rbp-mportal-btn rbp-mportal-btn--primary" href="/pages/contact">Request activation help</a><a class="rbp-mportal-btn" href="/account">Go to account</a></div></div></div></section>
+{%- elsif lifecycle == 'restricted' -%}
+<section class="rbp-mportal-sec"><div class="rbp-mportal-c"><div class="rbp-mportal-gate"><h2>Premium Membership access is currently restricted.</h2><p>Use the support pathway to review your membership status before accessing member-only content.</p><div class="rbp-mportal-actions" style="justify-content:center;"><a class="rbp-mportal-btn rbp-mportal-btn--primary" href="/pages/contact">Contact support</a><a class="rbp-mportal-btn" href="/pages/help-centre">Help Centre</a></div></div></div></section>
 {%- else -%}
 <section class="rbp-mportal-sec"><div class="rbp-mportal-c"><div class="rbp-mportal-grid rbp-mportal-g3"><a class="rbp-mportal-card" href="/pages/member-benefits"><span>MB</span><h3>Premium Member benefits</h3><p>Benefits, inclusion areas, support expectations and access guidance.</p></a><a class="rbp-mportal-card" href="/pages/account-support"><span>AC</span><h3>Account support</h3><p>Login, address, order history and Premium Member tag access guidance.</p></a><a class="rbp-mportal-card" href="/pages/order-support"><span>OS</span><h3>Order support</h3><p>Help with orders, onboarding, revisions, delivery and support routing.</p></a><a class="rbp-mportal-card" href="/pages/document-order-status"><span>DS</span><h3>Document order status</h3><p>Purchase, onboarding, preparation, delivery, review and revisions.</p></a><a class="rbp-mportal-card" href="/pages/payment-plan-support"><span>PP</span><h3>Payment plan support</h3><p>Payment plans are facilitated through Shopify Subscriptions and actioned independently.</p></a><a class="rbp-mportal-card" href="/pages/member-resources"><span>MR</span><h3>Premium resources</h3><p>Premium-only resource area scaffolded for later content population.</p></a></div>{%- if mode == 'resources' -%}<div class="rbp-mportal-note"><strong>Resource content coming later</strong><p>Actual Premium Member-only resources will be populated later. This page is currently the gated portal shell and access-control experience.</p></div>{%- endif -%}</div></section>
 <section class="rbp-mportal-sec rbp-mportal-muted"><div class="rbp-mportal-c"><div class="rbp-mportal-grid rbp-mportal-g2"><div class="rbp-mportal-card rbp-mportal-blue"><h2>Account navigation strategy</h2><p>Use the customer account for order history and addresses. Use the member portal pages for Premium Member benefits, resources, document status, payment guidance and support routing.</p><ul class="rbp-mportal-list"><li><span class="rbp-mportal-check">✓</span><span>Account page: orders and addresses</span></li><li><span class="rbp-mportal-check">✓</span><span>Premium Member pages: benefits and resource pathways</span></li><li><span class="rbp-mportal-check">✓</span><span>Shopify Subscriptions: membership billing and payment-plan support</span></li><li><span class="rbp-mportal-check">✓</span><span>Help Centre: support routing and FAQs</span></li></ul></div><div class="rbp-mportal-card"><h2>{% if mode == 'payments' %}Shopify Subscriptions payment support{% elsif mode == 'documents' %}Document order stages{% elsif mode == 'orders' %}Order support pathway{% elsif mode == 'account' %}Account support pathway{% else %}Premium Member support pathway{% endif %}</h2><div class="rbp-mportal-step"><b>01</b><h3>Review your account or page guidance</h3><p>Start with the relevant portal page and check the current order, Premium Member or support area.</p></div><div class="rbp-mportal-step"><b>02</b><h3>Collect the required details</h3><p>Use order number, product name, business name, member email or support category where relevant.</p></div><div class="rbp-mportal-step"><b>03</b><h3>Use the right support route</h3><p>Use Help Centre or Contact Support so the request can be routed correctly instead of becoming inbox fog.</p></div></div></div></div></section>

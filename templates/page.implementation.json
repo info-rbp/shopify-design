@@ -1,0 +1,27 @@
+{
+  "sections": {
+    "main": {
+      "type": "rbp-landing-page",
+      "settings": {
+        "eyebrow": "Implementation",
+        "heading": "Implementation",
+        "intro": "Support for custom projects, applications, retainers and implementation pathways.",
+        "primary_label": "Explore Custom Solutions",
+        "primary_link": "/pages/custom-solutions",
+        "secondary_label": "View Retainer Builder",
+        "secondary_link": "/pages/retainer-builder",
+        "featured_title": "Custom Solutions"
+      },
+      "blocks": {
+        "custom": {"type": "pathway_card", "settings": {"type_label": "Implementation", "title": "Custom Solutions", "text": "Shape a practical project, build or implementation pathway.", "link": "/pages/custom-solutions", "cta_text": "View pathway"}},
+        "retainer": {"type": "pathway_card", "settings": {"type_label": "Retainer", "title": "Retainer Builder", "text": "Explore recurring support options across service areas.", "link": "/pages/retainer-builder", "cta_text": "View pathway"}},
+        "applications": {"type": "pathway_card", "settings": {"type_label": "Applications", "title": "Applications", "text": "Application-led workflows for structured requests and approvals.", "link": "/pages/applications", "cta_text": "View pathway"}},
+        "managed": {"type": "pathway_card", "settings": {"type_label": "Managed", "title": "Managed Services", "text": "Ongoing operational support where scope and cadence need structure.", "link": "/pages/managed-services", "cta_text": "View pathway"}},
+        "bid": {"type": "pathway_card", "settings": {"type_label": "Bid support", "title": "Bid Management", "text": "Support for tender, bid and opportunity response workflows.", "link": "/pages/bid-management", "cta_text": "View pathway"}},
+        "property": {"type": "pathway_card", "settings": {"type_label": "Field services", "title": "Property Field Services", "text": "Practical property and field-service pathways where available.", "link": "/pages/property-field-services", "cta_text": "View pathway"}}
+      },
+      "block_order": ["custom", "retainer", "applications", "managed", "bid", "property"]
+    }
+  },
+  "order": ["main"]
+}

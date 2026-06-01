@@ -1,0 +1,27 @@
+{
+  "sections": {
+    "main": {
+      "type": "rbp-landing-page",
+      "settings": {
+        "eyebrow": "Advisory",
+        "heading": "Advisory",
+        "intro": "Structured support for business owners who need clarity, direction and commercially grounded next steps.",
+        "primary_label": "Start with a Health Check",
+        "primary_link": "/pages/business-health-check",
+        "secondary_label": "Contact RBP",
+        "secondary_link": "/pages/contact",
+        "featured_title": "Business Health Check"
+      },
+      "blocks": {
+        "core_services": {"type": "pathway_card", "settings": {"type_label": "Service pathway", "title": "Core Services", "text": "Structured diagnostics, advisory and decision support pathways for business owners.", "link": "/pages/core-services", "cta_text": "View core services"}},
+        "health_check": {"type": "pathway_card", "settings": {"type_label": "Starting point", "title": "Business Health Check", "text": "Clarify the current business issue, risks and next practical steps.", "link": "/pages/business-health-check", "cta_text": "Start health check"}},
+        "advisor": {"type": "pathway_card", "settings": {"type_label": "Planned product", "title": "Business Advisor", "text": "Commercially grounded guidance for owners who need a practical advisory session.", "link": "/products/business-advisor", "cta_text": "View planned offer"}},
+        "decision_desk": {"type": "pathway_card", "settings": {"type_label": "Planned product", "title": "Decision Desk", "text": "Decision support for options, tradeoffs and next-step planning.", "link": "/products/decision-desk", "cta_text": "View planned offer"}},
+        "fixer": {"type": "pathway_card", "settings": {"type_label": "Planned product", "title": "The Fixer", "text": "Quote intake for business issues that need triage before scope is confirmed.", "link": "/products/the-fixer", "cta_text": "View planned offer"}},
+        "dispute": {"type": "pathway_card", "settings": {"type_label": "Advisory support", "title": "Dispute Resolution Support", "text": "Business issue support to structure the issue and identify practical next-step options.", "link": "/pages/dispute-resolution-support", "cta_text": "View support"}}
+      },
+      "block_order": ["core_services", "health_check", "advisor", "decision_desk", "fixer", "dispute"]
+    }
+  },
+  "order": ["main"]
+}

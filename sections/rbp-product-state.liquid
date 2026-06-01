@@ -451,7 +451,7 @@
     var result = document.getElementById('rbp-avail-result');
     if(!address){ result.style.display='block'; result.style.color='#b45309'; result.textContent='Please enter your business address to check availability.'; return; }
     checkBtn.textContent='Checking…'; checkBtn.disabled=true;
-    // Placeholder — Codex will connect /apps/rbp-bridge/api/check-address
+    // Backend route planned: /apps/rbp-bridge/api/check-address
     setTimeout(function(){
       result.style.display='block';
       result.style.color='#047857';

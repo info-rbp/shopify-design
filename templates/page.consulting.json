@@ -1,0 +1,30 @@
+{
+  "sections": {
+    "main": {
+      "type": "rbp-landing-page",
+      "settings": {
+        "eyebrow": "Consulting",
+        "heading": "Consulting",
+        "intro": "Flexible consulting pathways across people, finance, growth, systems and digital operations.",
+        "primary_label": "Explore On-Demand Services",
+        "primary_link": "/collections/on-demand-services",
+        "secondary_label": "Contact RBP",
+        "secondary_link": "/pages/contact",
+        "featured_title": "On-Demand Services"
+      },
+      "blocks": {
+        "on_demand": {"type": "pathway_card", "settings": {"type_label": "Consulting", "title": "On-Demand Services", "text": "Access focused support when a specific business need is ready to move.", "link": "/collections/on-demand-services", "cta_text": "View pathway"}},
+        "hr": {"type": "pathway_card", "settings": {"type_label": "People", "title": "HR Advisory", "text": "Practical HR support for employment, policy and workplace needs.", "link": "/collections/human-resources", "cta_text": "View pathway"}},
+        "finance": {"type": "pathway_card", "settings": {"type_label": "Finance", "title": "Finance & Accounting", "text": "Support for finance, accounting and commercial administration needs.", "link": "/collections/finance-accounting", "cta_text": "View pathway"}},
+        "growth": {"type": "pathway_card", "settings": {"type_label": "Growth", "title": "Growth & Sales", "text": "Commercial support for growth, sales and marketing activity.", "link": "/collections/sales-marketing", "cta_text": "View pathway"}},
+        "ai": {"type": "pathway_card", "settings": {"type_label": "Digital", "title": "AI & Digital", "text": "Practical AI and digital support for business workflows.", "link": "/collections/artificial-intelligence", "cta_text": "View pathway"}},
+        "it": {"type": "pathway_card", "settings": {"type_label": "Digital", "title": "IT / Digital", "text": "Digital operations and IT-aligned support pathways.", "link": "/collections/it-digital", "cta_text": "View pathway"}},
+        "change": {"type": "pathway_card", "settings": {"type_label": "Change", "title": "Change Management", "text": "Support for change planning, communication and implementation.", "link": "/collections/change-management", "cta_text": "View pathway"}},
+        "operations": {"type": "pathway_card", "settings": {"type_label": "Operations", "title": "Operations Consulting", "text": "Improve business systems, processes and delivery operations.", "link": "/collections/operations", "cta_text": "View pathway"}},
+        "bundled": {"type": "pathway_card", "settings": {"type_label": "Bundled", "title": "Bundled On-Demand", "text": "Grouped support options for connected business needs.", "link": "/collections/bundled-on-demand", "cta_text": "View pathway"}}
+      },
+      "block_order": ["on_demand", "hr", "finance", "growth", "ai", "it", "change", "operations", "bundled"]
+    }
+  },
+  "order": ["main"]
+}

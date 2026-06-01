@@ -1,0 +1,26 @@
+{
+  "sections": {
+    "main": {
+      "type": "rbp-landing-page",
+      "settings": {
+        "eyebrow": "Essentials",
+        "heading": "Business essentials connected into one practical pathway.",
+        "intro": "Access key business services, partner offers and commercial essentials through a structured RBP experience.",
+        "primary_label": "Explore Business NBN",
+        "primary_link": "/pages/business-nbn",
+        "secondary_label": "View Marketplace",
+        "secondary_link": "/pages/marketplace",
+        "featured_title": "Business NBN"
+      },
+      "blocks": {
+        "nbn": {"type": "pathway_card", "settings": {"type_label": "Connectivity", "title": "Business NBN", "text": "Qualification-safe business internet pathways with address review before activation.", "link": "/pages/business-nbn", "cta_text": "View pathway"}},
+        "finance": {"type": "pathway_card", "settings": {"type_label": "Finance", "title": "Business Finance", "text": "Finance pathways and partner-led business support where available.", "link": "/pages/business-finance", "cta_text": "View pathway"}},
+        "insurance": {"type": "pathway_card", "settings": {"type_label": "Insurance", "title": "Business Insurance", "text": "Insurance pathways for business owners to review separately.", "link": "/pages/business-insurance", "cta_text": "View pathway"}},
+        "marketplace": {"type": "pathway_card", "settings": {"type_label": "Marketplace", "title": "Marketplace", "text": "Business opportunities, partner offers and practical growth pathways.", "link": "/pages/marketplace", "cta_text": "View pathway"}},
+        "offers": {"type": "pathway_card", "settings": {"type_label": "Offers", "title": "Partner Offers", "text": "Curated partner offers with claim and enquiry guardrails.", "link": "/pages/offers", "cta_text": "View pathway"}}
+      },
+      "block_order": ["nbn", "finance", "insurance", "marketplace", "offers"]
+    }
+  },
+  "order": ["main"]
+}
