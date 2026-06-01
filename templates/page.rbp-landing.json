@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "main": {
+      "type": "rbp-landing-page",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

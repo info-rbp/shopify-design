@@ -1,0 +1,13 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product-on-demand-service",
+      "settings": {
+        "scope_call_url": "/pages/contact",
+        "question_url": "/pages/contact",
+        "show_trust_strip": true
+      }
+    }
+  },
+  "order": ["main"]
+}

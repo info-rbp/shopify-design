@@ -1,400 +1,144 @@
 {% comment %}
-  RBP Footer — G1 Global IA Cleanup
-  Version: 2.0 | Correct service architecture, no Managed Services
-  Architecture: Core Services · On-Demand · Business NBN · Custom Solutions · Membership · Marketplace · Resources · Help
+  RBP Footer — Trimmed global footer
+  Phase 2 footer update aligned to approved navigation.
+  Columns: Services, Business Essentials, Membership, Support.
 {% endcomment %}
 
 <style>
 .rbp-footer {
-  --rbp-blue: #1d4ed8;
-  --rbp-indigo: #4f46e5;
-  --rbp-slate-950: #020617;
-  --rbp-slate-900: #0f172a;
-  --rbp-slate-800: #1e293b;
-  --rbp-slate-700: #334155;
-  --rbp-slate-600: #475569;
-  --rbp-slate-500: #64748b;
-  --rbp-slate-400: #94a3b8;
-  --rbp-slate-300: #cbd5e1;
+  --rbp-footer-blue: #1d4ed8;
+  --rbp-footer-blue-mid: #2563eb;
+  --rbp-footer-navy: #020617;
+  --rbp-footer-slate: #94a3b8;
+  --rbp-footer-muted: #64748b;
+  --rbp-footer-border: rgba(255,255,255,.09);
   font-family: var(--font-body-family, system-ui, sans-serif);
+  color: #e2e8f0;
 }
 .rbp-footer *, .rbp-footer *::before, .rbp-footer *::after { box-sizing: border-box; }
-
-/* ── Pre-footer CTA band ──────────────────────────────── */
-.rbp-footer-cta-band {
-  background: linear-gradient(135deg, #0f172a 0%, #172554 55%, #0f172a 100%);
-  position: relative; overflow: hidden;
-}
-.rbp-footer-cta-band::before {
-  content: '';
-  position: absolute; inset: 0;
-  background: radial-gradient(ellipse at 30% 50%, rgba(29,78,216,.28) 0%, transparent 60%),
-              radial-gradient(ellipse at 80% 50%, rgba(79,70,229,.18) 0%, transparent 55%);
-  pointer-events: none;
-}
-.rbp-footer-cta-inner {
-  width: min(100% - 2.5rem, 1280px);
-  margin-inline: auto;
-  padding: 72px 0;
-  display: grid;
-  grid-template-columns: 1fr auto;
-  align-items: center;
-  gap: 40px;
-  position: relative;
-}
-.rbp-footer-cta-text { }
-.rbp-footer-cta-eyebrow {
-  display: inline-flex; align-items: center; gap: 6px;
-  background: rgba(29,78,216,.25); border: 1px solid rgba(29,78,216,.35);
-  border-radius: 999px; padding: 5px 12px;
-  color: #93c5fd; font-size: 11px; font-weight: 800;
-  letter-spacing: .1em; text-transform: uppercase; margin-bottom: 16px;
-}
-.rbp-footer-cta-heading {
-  font-size: clamp(28px, 4vw, 48px);
-  font-weight: 900; letter-spacing: -.03em; line-height: 1.08;
-  color: #fff; margin: 0 0 14px;
-}
-.rbp-footer-cta-heading span { color: #60a5fa; }
-.rbp-footer-cta-sub { color: #94a3b8; font-size: 16px; line-height: 1.6; font-weight: 500; max-width: 480px; }
-.rbp-footer-cta-actions { display: flex; gap: 12px; align-items: center; flex-shrink: 0; flex-direction: column; }
-.rbp-footer-btn {
-  display: inline-flex; align-items: center; gap: 8px;
-  padding: 14px 24px; border-radius: 13px;
-  font-size: 14px; font-weight: 800; text-decoration: none;
-  white-space: nowrap; transition: all .18s ease;
-}
-.rbp-footer-btn-primary {
-  background: var(--rbp-blue); color: #fff;
-  box-shadow: 0 8px 28px rgba(29,78,216,.35);
-}
-.rbp-footer-btn-primary:hover { background: #2563eb; transform: translateY(-2px); box-shadow: 0 12px 36px rgba(29,78,216,.45); }
-.rbp-footer-btn-ghost {
-  background: rgba(255,255,255,.08); color: #cbd5e1;
-  border: 1px solid rgba(255,255,255,.14);
-}
-.rbp-footer-btn-ghost:hover { background: rgba(255,255,255,.14); color: #fff; }
-
-/* ── Main footer ──────────────────────────────────────── */
-.rbp-footer-main {
-  background: var(--rbp-slate-950);
-  padding: 64px 0 0;
-}
-.rbp-footer-grid {
-  width: min(100% - 2.5rem, 1280px);
-  margin-inline: auto;
-  display: grid;
-  grid-template-columns: 280px repeat(5, 1fr);
-  gap: 40px;
-}
-
-/* Brand column */
-.rbp-footer-brand { }
-.rbp-footer-logo {
-  display: inline-flex; align-items: center; gap: 10px;
-  text-decoration: none; color: #fff; margin-bottom: 20px;
-}
-.rbp-footer-logo-mark {
-  width: 38px; height: 38px; border-radius: 11px;
-  background: linear-gradient(135deg, var(--rbp-blue) 0%, var(--rbp-indigo) 100%);
-  display: grid; place-items: center; font-size: 14px; font-weight: 900; color: #fff;
-  box-shadow: 0 4px 14px rgba(29,78,216,.3); flex-shrink: 0;
-}
-.rbp-footer-logo-text { display: flex; flex-direction: column; }
-.rbp-footer-logo-name { font-size: 13.5px; font-weight: 900; letter-spacing: -.02em; color: #fff; }
-.rbp-footer-logo-tag { font-size: 10.5px; color: var(--rbp-slate-500); font-weight: 600; margin-top: 2px; }
-.rbp-footer-brand-desc { font-size: 13.5px; color: var(--rbp-slate-500); line-height: 1.7; margin-bottom: 24px; font-weight: 500; }
-.rbp-footer-trust {
-  display: flex; flex-direction: column; gap: 8px;
-}
-.rbp-footer-trust-item {
-  display: flex; align-items: center; gap: 8px;
-  font-size: 12px; color: var(--rbp-slate-400); font-weight: 600;
-}
-.rbp-footer-trust-item svg { color: #22c55e; flex-shrink: 0; }
-.rbp-footer-social {
-  display: flex; gap: 8px; margin-top: 24px;
-}
-.rbp-footer-social-link {
-  width: 34px; height: 34px; border-radius: 9px;
-  background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1);
-  display: grid; place-items: center; color: var(--rbp-slate-400);
-  text-decoration: none; transition: all .15s ease;
-  font-size: 13px;
-}
-.rbp-footer-social-link:hover { background: rgba(29,78,216,.25); color: #93c5fd; border-color: rgba(29,78,216,.4); }
-
-/* Nav columns */
-.rbp-footer-col { }
-.rbp-footer-col-title {
-  font-size: 10px; font-weight: 900; text-transform: uppercase;
-  letter-spacing: .13em; color: var(--rbp-slate-500);
-  margin: 0 0 16px; padding-bottom: 12px;
-  border-bottom: 1px solid rgba(255,255,255,.07);
-}
-.rbp-footer-nav { list-style: none; padding: 0; margin: 0; display: grid; gap: 2px; }
-.rbp-footer-nav li a {
-  display: flex; align-items: center; gap: 7px;
-  padding: 7px 8px; border-radius: 8px;
-  color: var(--rbp-slate-400); text-decoration: none;
-  font-size: 13px; font-weight: 600; line-height: 1.3;
-  transition: color .12s, background .12s;
-}
-.rbp-footer-nav li a:hover { color: #93c5fd; background: rgba(29,78,216,.12); }
-.rbp-footer-nav li a .rbp-ft-badge {
-  display: inline-block; padding: 2px 7px;
-  background: rgba(29,78,216,.2); color: #93c5fd;
-  border-radius: 999px; font-size: 10px; font-weight: 800;
-  margin-left: auto;
-}
-.rbp-footer-nav li a .rbp-ft-badge.new { background: rgba(34,197,94,.15); color: #86efac; }
-
-/* ── Bottom bar ───────────────────────────────────────── */
-.rbp-footer-bottom {
-  width: min(100% - 2.5rem, 1280px);
-  margin-inline: auto;
-  padding: 28px 0;
-  margin-top: 52px;
-  border-top: 1px solid rgba(255,255,255,.07);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-  flex-wrap: wrap;
-}
-.rbp-footer-copy {
-  font-size: 12px; color: var(--rbp-slate-600); font-weight: 500; line-height: 1.5;
-}
-.rbp-footer-copy a { color: var(--rbp-slate-500); text-decoration: none; }
-.rbp-footer-copy a:hover { color: #93c5fd; }
-.rbp-footer-legal {
-  display: flex; gap: 20px; flex-wrap: wrap;
-}
-.rbp-footer-legal a {
-  font-size: 12px; color: var(--rbp-slate-600); text-decoration: none;
-  font-weight: 600; transition: color .12s;
-}
-.rbp-footer-legal a:hover { color: #93c5fd; }
-
-/* ── Newsletter strip ─────────────────────────────────── */
-.rbp-footer-newsletter {
-  width: min(100% - 2.5rem, 1280px);
-  margin-inline: auto;
-  padding: 32px 0;
-  border-bottom: 1px solid rgba(255,255,255,.07);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 32px;
-}
-.rbp-footer-newsletter-text h3 {
-  font-size: 16px; font-weight: 900; color: #fff;
-  margin: 0 0 4px; letter-spacing: -.02em;
-}
-.rbp-footer-newsletter-text p { font-size: 13px; color: var(--rbp-slate-500); margin: 0; font-weight: 500; }
-.rbp-footer-newsletter-form {
-  display: flex; gap: 8px; flex-shrink: 0; min-width: 340px;
-}
-.rbp-footer-newsletter-form input {
-  flex: 1; border: 1px solid rgba(255,255,255,.12);
-  border-radius: 11px; padding: 11px 16px;
-  background: rgba(255,255,255,.06); color: #fff;
-  font-size: 13.5px; outline: none; font-weight: 500;
-  transition: border-color .15s, background .15s;
-}
-.rbp-footer-newsletter-form input::placeholder { color: var(--rbp-slate-600); }
-.rbp-footer-newsletter-form input:focus { border-color: var(--rbp-blue); background: rgba(29,78,216,.1); }
-.rbp-footer-newsletter-form button {
-  padding: 11px 20px; background: var(--rbp-blue); color: #fff;
-  border: none; border-radius: 11px; font-size: 13px; font-weight: 800;
-  cursor: pointer; white-space: nowrap; transition: background .15s, transform .15s;
-}
-.rbp-footer-newsletter-form button:hover { background: #2563eb; transform: translateY(-1px); }
-
-/* ── Responsive ───────────────────────────────────────── */
-@media (max-width: 1100px) {
-  .rbp-footer-grid { grid-template-columns: 1fr 1fr 1fr; }
-  .rbp-footer-brand { grid-column: 1 / -1; }
-  .rbp-footer-newsletter { flex-direction: column; align-items: flex-start; gap: 20px; }
-  .rbp-footer-newsletter-form { min-width: unset; width: 100%; }
-}
-@media (max-width: 768px) {
-  .rbp-footer-grid { grid-template-columns: 1fr 1fr; }
-  .rbp-footer-cta-inner { grid-template-columns: 1fr; text-align: center; }
-  .rbp-footer-cta-sub { max-width: 100%; margin-inline: auto; }
-  .rbp-footer-cta-actions { flex-direction: row; justify-content: center; }
-  .rbp-footer-bottom { flex-direction: column; align-items: flex-start; }
-}
-@media (max-width: 479px) {
-  .rbp-footer-grid { grid-template-columns: 1fr; }
-  .rbp-footer-newsletter-form { flex-direction: column; }
-}
+.rbp-footer a { color: inherit; text-decoration: none; }
+.rbp-footer-wrap { width: min(100% - 2.5rem, 1280px); margin-inline: auto; }
+.rbp-footer-cta { background: linear-gradient(135deg, #0f172a 0%, #172554 58%, #0f172a 100%); border-top: 1px solid rgba(255,255,255,.06); }
+.rbp-footer-cta-inner { min-height: 190px; display: grid; grid-template-columns: minmax(0,1fr) auto; align-items: center; gap: 32px; padding: 48px 0; }
+.rbp-footer-eyebrow { display: inline-flex; margin: 0 0 12px; color: #93c5fd; font-size: 11px; font-weight: 900; letter-spacing: .12em; text-transform: uppercase; }
+.rbp-footer-cta h2 { margin: 0; color: #fff; font-size: clamp(26px, 4vw, 44px); line-height: 1.08; letter-spacing: -.035em; font-weight: 950; }
+.rbp-footer-cta p { margin: 12px 0 0; max-width: 650px; color: var(--rbp-footer-slate); font-size: 15px; line-height: 1.65; }
+.rbp-footer-actions { display: flex; flex-wrap: wrap; gap: 12px; justify-content: flex-end; }
+.rbp-footer-btn { display: inline-flex; align-items: center; justify-content: center; min-height: 46px; padding: 0 18px; border-radius: 13px; font-size: 13px; font-weight: 900; white-space: nowrap; transition: background .16s ease, border-color .16s ease, transform .16s ease; }
+.rbp-footer-btn-primary { background: var(--rbp-footer-blue); color: #fff; box-shadow: 0 10px 28px rgba(29,78,216,.3); }
+.rbp-footer-btn-primary:hover { background: var(--rbp-footer-blue-mid); transform: translateY(-1px); }
+.rbp-footer-btn-secondary { background: rgba(255,255,255,.08); color: #e2e8f0; border: 1px solid rgba(255,255,255,.16); }
+.rbp-footer-btn-secondary:hover { background: rgba(255,255,255,.13); border-color: rgba(255,255,255,.24); }
+.rbp-footer-main { background: var(--rbp-footer-navy); }
+.rbp-footer-grid { display: grid; grid-template-columns: minmax(250px, 1.3fr) repeat(4, minmax(145px, 1fr)); gap: 34px; padding: 52px 0 42px; }
+.rbp-footer-brand-link { display: inline-flex; align-items: center; gap: 11px; margin-bottom: 16px; }
+.rbp-footer-logo { width: 38px; height: 38px; border-radius: 12px; display: grid; place-items: center; background: linear-gradient(135deg, var(--rbp-footer-blue), #4f46e5); color: #fff; font-size: 14px; font-weight: 950; }
+.rbp-footer-brand-name { display: block; color: #fff; font-size: 14px; font-weight: 950; letter-spacing: -.02em; }
+.rbp-footer-brand-sub { display: block; margin-top: 3px; color: var(--rbp-footer-muted); font-size: 11px; font-weight: 650; }
+.rbp-footer-brand p { margin: 0 0 18px; color: var(--rbp-footer-slate); font-size: 13.5px; line-height: 1.7; max-width: 330px; }
+.rbp-footer-note { display: grid; gap: 7px; margin-top: 16px; }
+.rbp-footer-note span { color: var(--rbp-footer-muted); font-size: 12px; line-height: 1.45; }
+.rbp-footer-col h3 { margin: 0 0 14px; padding-bottom: 10px; border-bottom: 1px solid var(--rbp-footer-border); color: #fff; font-size: 11px; font-weight: 950; letter-spacing: .13em; text-transform: uppercase; }
+.rbp-footer-nav { display: grid; gap: 2px; list-style: none; margin: 0; padding: 0; }
+.rbp-footer-nav a { display: inline-flex; width: 100%; border-radius: 9px; padding: 7px 8px; color: var(--rbp-footer-slate); font-size: 13px; font-weight: 650; line-height: 1.35; }
+.rbp-footer-nav a:hover { color: #bfdbfe; background: rgba(29,78,216,.13); }
+.rbp-footer-bottom { border-top: 1px solid var(--rbp-footer-border); padding: 22px 0 28px; display: flex; align-items: center; justify-content: space-between; gap: 18px; flex-wrap: wrap; }
+.rbp-footer-copy { margin: 0; color: var(--rbp-footer-muted); font-size: 12px; line-height: 1.55; }
+.rbp-footer-legal { display: flex; flex-wrap: wrap; gap: 14px; }
+.rbp-footer-legal a { color: var(--rbp-footer-muted); font-size: 12px; font-weight: 650; }
+.rbp-footer-legal a:hover { color: #bfdbfe; }
+@media (max-width: 1100px) { .rbp-footer-grid { grid-template-columns: 1fr 1fr 1fr; } .rbp-footer-brand { grid-column: 1 / -1; } }
+@media (max-width: 760px) { .rbp-footer-cta-inner { grid-template-columns: 1fr; text-align: left; } .rbp-footer-actions { justify-content: flex-start; } .rbp-footer-grid { grid-template-columns: 1fr 1fr; gap: 26px; } .rbp-footer-brand { grid-column: 1 / -1; } }
+@media (max-width: 520px) { .rbp-footer-wrap { width: min(100% - 1.5rem, 1280px); } .rbp-footer-grid { grid-template-columns: 1fr; } .rbp-footer-actions, .rbp-footer-btn { width: 100%; } .rbp-footer-bottom { align-items: flex-start; } }
 </style>
 
 <footer class="rbp-footer" role="contentinfo" aria-label="Site footer">
-
-  {%- comment %} ── Pre-footer CTA ── {% endcomment %}
-  <div class="rbp-footer-cta-band">
-    <div class="rbp-footer-cta-inner">
-      <div class="rbp-footer-cta-text">
-        <div class="rbp-footer-cta-eyebrow">
-          <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-          Join 1,000+ Australian businesses
-        </div>
-        <h2 class="rbp-footer-cta-heading">Your business partner,<br><span>on demand.</span></h2>
-        <p class="rbp-footer-cta-sub">From templates to full advisory services — Remote Business Partner puts the right support in your hands, right when you need it.</p>
+  <section class="rbp-footer-cta" aria-label="Footer call to action">
+    <div class="rbp-footer-wrap rbp-footer-cta-inner">
+      <div>
+        <span class="rbp-footer-eyebrow">Start with the right support pathway</span>
+        <h2>Practical business support for decisions, delivery and operations.</h2>
+        <p>Use Remote Business Partner to access advisory, consulting, implementation support, operational resources, business essentials, membership and help from one connected platform.</p>
       </div>
-      <div class="rbp-footer-cta-actions">
-        <a href="/pages/membership" class="rbp-footer-btn rbp-footer-btn-primary">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-          Join Free Today
-        </a>
-        <a href="/pages/core-services" class="rbp-footer-btn rbp-footer-btn-ghost">Explore Services</a>
+      <div class="rbp-footer-actions">
+        <a class="rbp-footer-btn rbp-footer-btn-primary" href="/pages/business-health-check">Start with a Health Check</a>
+        <a class="rbp-footer-btn rbp-footer-btn-secondary" href="/pages/contact">Contact RBP</a>
       </div>
     </div>
-  </div>
+  </section>
 
-  {%- comment %} ── Main footer ── {% endcomment %}
-  <div class="rbp-footer-main">
-
-    {%- comment %} Newsletter strip {% endcomment %}
-    <div class="rbp-footer-newsletter">
-      <div class="rbp-footer-newsletter-text">
-        <h3>Stay ahead of the curve</h3>
-        <p>Business insights, new services &amp; member-only offers delivered to your inbox.</p>
-      </div>
-      <form class="rbp-footer-newsletter-form" action="/contact#newsletter" method="post" aria-label="Newsletter signup">
-        <input type="email" name="contact[email]" placeholder="your@email.com" aria-label="Email address" required>
-        <button type="submit">Subscribe</button>
-      </form>
-    </div>
-
-    {%- comment %} Nav grid {% endcomment %}
-    <div class="rbp-footer-grid">
-
-      {%- comment %} Brand column {% endcomment %}
-      <div class="rbp-footer-brand">
-        <a href="/" class="rbp-footer-logo" aria-label="Remote Business Partner — Home">
-          <div class="rbp-footer-logo-mark" aria-hidden="true">RBP</div>
-          <div class="rbp-footer-logo-text">
-            <span class="rbp-footer-logo-name">Remote Business Partner</span>
-            <span class="rbp-footer-logo-tag">Australia's Business Support Platform</span>
-          </div>
-        </a>
-        <p class="rbp-footer-brand-desc">Fractional advisory, on-demand services, business templates, NBN connectivity, marketplace opportunities — all in one place, built for Australian SMEs.</p>
-        <div class="rbp-footer-trust">
-          <div class="rbp-footer-trust-item">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-            Australian owned &amp; operated
-          </div>
-          <div class="rbp-footer-trust-item">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-            Secure payments via Shopify
-          </div>
-          <div class="rbp-footer-trust-item">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-            GST invoices issued on all orders
-          </div>
-          <div class="rbp-footer-trust-item">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-            Instant digital delivery on templates
+  <section class="rbp-footer-main" aria-label="Footer navigation">
+    <div class="rbp-footer-wrap">
+      <div class="rbp-footer-grid">
+        <div class="rbp-footer-brand">
+          <a class="rbp-footer-brand-link" href="/" aria-label="Remote Business Partner home">
+            <span class="rbp-footer-logo" aria-hidden="true">RBP</span>
+            <span>
+              <span class="rbp-footer-brand-name">Remote Business Partner</span>
+              <span class="rbp-footer-brand-sub">Australia's Business Support Platform</span>
+            </span>
+          </a>
+          <p>Advisory, consulting, implementation support, operational resources and essential business services for Australian businesses.</p>
+          <div class="rbp-footer-note" aria-label="Store notes">
+            <span>Secure checkout through Shopify.</span>
+            <span>Digital products and services may use onboarding-led delivery where required.</span>
           </div>
         </div>
-        <div class="rbp-footer-social" aria-label="Follow us">
-          <a href="#" class="rbp-footer-social-link" aria-label="LinkedIn">in</a>
-          <a href="#" class="rbp-footer-social-link" aria-label="Facebook">f</a>
-          <a href="#" class="rbp-footer-social-link" aria-label="Twitter / X">𝕏</a>
-          <a href="#" class="rbp-footer-social-link" aria-label="Instagram">▲</a>
-        </div>
+
+        <nav class="rbp-footer-col" aria-label="Services footer links">
+          <h3>Services</h3>
+          <ul class="rbp-footer-nav">
+            <li><a href="/pages/core-services">Advisory</a></li>
+            <li><a href="/collections/on-demand-services">Consulting</a></li>
+            <li><a href="/pages/custom-solutions">Implementation</a></li>
+            <li><a href="/pages/our-process">Operations</a></li>
+          </ul>
+        </nav>
+
+        <nav class="rbp-footer-col" aria-label="Business essentials footer links">
+          <h3>Business Essentials</h3>
+          <ul class="rbp-footer-nav">
+            <li><a href="/pages/business-nbn">Business NBN</a></li>
+            <li><a href="/pages/business-finance">Business Finance</a></li>
+            <li><a href="/pages/business-insurance">Business Insurance</a></li>
+            <li><a href="/pages/marketplace">Marketplace</a></li>
+            <li><a href="/pages/offers">Partner Offers</a></li>
+          </ul>
+        </nav>
+
+        <nav class="rbp-footer-col" aria-label="Membership footer links">
+          <h3>Membership</h3>
+          <ul class="rbp-footer-nav">
+            <li><a href="/pages/membership">Overview</a></li>
+            <li><a href="/pages/membership#benefits">Member Benefits</a></li>
+            <li><a href="/pages/membership#faq">Frequently Asked Questions</a></li>
+            <li><a href="/pages/sign-up-today">Sign Up</a></li>
+          </ul>
+        </nav>
+
+        <nav class="rbp-footer-col" aria-label="Support footer links">
+          <h3>Support</h3>
+          <ul class="rbp-footer-nav">
+            <li><a href="/pages/help-centre">Help Centre</a></li>
+            <li><a href="/pages/nbn-support-education">NBN Support &amp; Education</a></li>
+            <li><a href="/pages/contact">Contact</a></li>
+            <li><a href="/pages/about">About</a></li>
+            <li><a href="/policies/privacy-policy">Policies</a></li>
+          </ul>
+        </nav>
       </div>
 
-      {%- comment %} Services col {% endcomment %}
-      <div class="rbp-footer-col">
-        <h3 class="rbp-footer-col-title">Core Services</h3>
-        <ul class="rbp-footer-nav">
-          <li><a href="/pages/core-services">All Core Services</a></li>
-          <li><a href="/products/business-health-check">Business Health Check</a></li>
-          <li><a href="/products/business-advisor">Business Advisor</a></li>
-          <li><a href="/products/decision-desk">Decision Desk</a></li>
-          <li><a href="/products/risk-advisor">Risk Advisor</a></li>
-          <li><a href="/products/the-fixer">The Fixer</a></li>
-          <li><a href="/pages/custom-solutions">Custom Solutions</a></li>
-        </ul>
+      <div class="rbp-footer-bottom">
+        <p class="rbp-footer-copy">&copy; {{ 'now' | date: '%Y' }} Remote Business Partner. All rights reserved. Prices are in AUD where applicable.</p>
+        <nav class="rbp-footer-legal" aria-label="Legal links">
+          <a href="/policies/privacy-policy">Privacy</a>
+          <a href="/policies/terms-of-service">Terms</a>
+          <a href="/policies/refund-policy">Refunds</a>
+          <a href="/pages/contact">Contact</a>
+        </nav>
       </div>
-
-      {%- comment %} On-Demand col {% endcomment %}
-      <div class="rbp-footer-col">
-        <h3 class="rbp-footer-col-title">On-Demand Services</h3>
-        <ul class="rbp-footer-nav">
-          <li><a href="/collections/on-demand-services">All On-Demand <span class="rbp-ft-badge">699+</span></a></li>
-          <li><a href="/collections/on-demand-accounting-finance">Accounting &amp; Finance</a></li>
-          <li><a href="/collections/on-demand-people">People &amp; HR</a></li>
-          <li><a href="/collections/on-demand-operations">Operations</a></li>
-          <li><a href="/collections/on-demand-growth">Growth &amp; Marketing</a></li>
-          <li><a href="/collections/on-demand-ai-advisory">AI Advisory <span class="rbp-ft-badge new">New</span></a></li>
-          <li><a href="/collections/on-demand-digital-support">Digital Support</a></li>
-        </ul>
-      </div>
-
-      {%- comment %} Membership + NBN col {% endcomment %}
-      <div class="rbp-footer-col">
-        <h3 class="rbp-footer-col-title">Membership &amp; NBN</h3>
-        <ul class="rbp-footer-nav">
-          <li><a href="/pages/membership">Membership Overview</a></li>
-          <li><a href="/pages/membership#plans">Plans &amp; Pricing</a></li>
-          <li><a href="/pages/member-portal">Member Portal</a></li>
-          <li><a href="/pages/offers">Partner Offers</a></li>
-          <li><a href="/pages/business-nbn">Business NBN</a></li>
-          <li><a href="/pages/business-nbn#plans">NBN Plans</a></li>
-          <li><a href="/pages/business-nbn#check">Check Address</a></li>
-        </ul>
-      </div>
-
-      {%- comment %} Marketplace col {% endcomment %}
-      <div class="rbp-footer-col">
-        <h3 class="rbp-footer-col-title">Marketplace</h3>
-        <ul class="rbp-footer-nav">
-          <li><a href="/pages/marketplace">Marketplace Hub</a></li>
-          <li><a href="/collections/business-in-a-box">Business-In-A-Box</a></li>
-          <li><a href="/collections/asset-sales">Asset Sales</a></li>
-          <li><a href="/collections/featured-opportunities">Featured Listings</a></li>
-          <li><a href="/pages/sell-your-business">Sell Your Business</a></li>
-          <li><a href="/pages/marketplace-enquiry">Marketplace Enquiry</a></li>
-        </ul>
-      </div>
-
-      {%- comment %} Resources col {% endcomment %}
-      <div class="rbp-footer-col">
-        <h3 class="rbp-footer-col-title">Resources &amp; Help</h3>
-        <ul class="rbp-footer-nav">
-          <li><a href="/pages/resources">Resources Hub</a></li>
-          <li><a href="/pages/help-center">Help Center</a></li>
-          <li><a href="/collections/business-templates">Business Templates</a></li>
-          <li><a href="/collections/toolkits">Toolkits</a></li>
-          <li><a href="/collections/free-resources">Free Resources</a></li>
-          <li><a href="/pages/faq">FAQ</a></li>
-          <li><a href="/pages/contact">Contact Us</a></li>
-        </ul>
-      </div>
-
     </div>
-
-    {%- comment %} ── Bottom bar ── {% endcomment %}
-    <div class="rbp-footer-bottom">
-      <p class="rbp-footer-copy">
-        &copy; {{ 'now' | date: '%Y' }} <a href="/">Remote Business Partner</a>. All rights reserved. ABN: — Australian Business Network.
-        <br>Prices are in AUD and inclusive of GST where applicable.
-      </p>
-      <nav class="rbp-footer-legal" aria-label="Legal links">
-        <a href="/policies/privacy-policy">Privacy Policy</a>
-        <a href="/policies/terms-of-service">Terms of Service</a>
-        <a href="/policies/refund-policy">Refund Policy</a>
-        <a href="/pages/marketplace-terms">Marketplace Terms</a>
-        <a href="/pages/contact">Contact</a>
-      </nav>
-    </div>
-
-  </div>
+  </section>
 </footer>
 
 {% schema %}

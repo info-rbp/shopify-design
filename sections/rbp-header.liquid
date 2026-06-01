@@ -1,8 +1,7 @@
 {% comment %}
-  RBP Header — G1 Global IA Cleanup
-  Version: 2.0 | Modern mega-nav, correct service architecture
-  Navigation: Home · Membership · Core Services · On-Demand · Business NBN · Marketplace · Custom Solutions · Resources · Contact
-  Removed: Managed Services (not a public offer)
+  RBP Header — Approved IA Navigation
+  Phase 2 header navigation update.
+  Top-level navigation: Advisory, Consulting, Implementation, Operations, Essentials, Membership, Support.
 {% endcomment %}
 
 <style>
@@ -22,357 +21,95 @@
   --rbp-slate-100: #f1f5f9;
   --rbp-slate-50: #f8fafc;
   --rbp-white: #ffffff;
-  --rbp-border: rgba(15,23,42,.09);
-  --rbp-header-h: 64px;
+  --rbp-border: rgba(15, 23, 42, .1);
+  --rbp-header-h: 72px;
 }
-
-/* ── Base ─────────────────────────────────────────────── */
 .rbp-header { position: sticky; top: 0; z-index: 100; font-family: var(--font-body-family, system-ui, sans-serif); }
 .rbp-header *, .rbp-header *::before, .rbp-header *::after { box-sizing: border-box; }
-
-/* ── Announcement bar ─────────────────────────────────── */
-.rbp-announce {
-  background: linear-gradient(90deg, var(--rbp-blue-dark) 0%, var(--rbp-blue) 50%, var(--rbp-indigo) 100%);
-  color: #fff;
-  text-align: center;
-  font-size: 12.5px;
-  font-weight: 700;
-  letter-spacing: .01em;
-  padding: 9px 20px;
-  position: relative;
-}
+.rbp-announce { background: linear-gradient(90deg, var(--rbp-blue-dark), var(--rbp-blue), var(--rbp-indigo)); color: #fff; text-align: center; font-size: 12.5px; font-weight: 750; padding: 9px 44px 9px 20px; position: relative; }
 .rbp-announce a { color: #bfdbfe; text-decoration: underline; text-underline-offset: 2px; }
-.rbp-announce-close {
-  position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
-  background: rgba(255,255,255,.15); border: none; color: #fff; cursor: pointer;
-  width: 22px; height: 22px; border-radius: 6px; font-size: 14px; display: grid; place-items: center;
-}
-.rbp-announce-close:hover { background: rgba(255,255,255,.25); }
-
-/* ── Main nav shell ───────────────────────────────────── */
-.rbp-nav-shell {
-  background: rgba(255,255,255,.97);
-  backdrop-filter: blur(16px) saturate(180%);
-  -webkit-backdrop-filter: blur(16px) saturate(180%);
-  border-bottom: 1px solid var(--rbp-border);
-  box-shadow: 0 1px 0 0 rgba(15,23,42,.04);
-}
-.rbp-nav-inner {
-  width: min(100% - 2.5rem, 1280px);
-  margin-inline: auto;
-  height: var(--rbp-header-h);
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  align-items: center;
-  gap: 24px;
-}
-
-/* ── Brand ────────────────────────────────────────────── */
-.rbp-brand {
-  display: inline-flex; align-items: center; gap: 11px;
-  text-decoration: none; color: var(--rbp-slate-900);
-  flex-shrink: 0;
-}
-.rbp-brand-logo {
-  width: 36px; height: 36px; border-radius: 10px;
-  background: linear-gradient(135deg, var(--rbp-blue) 0%, var(--rbp-indigo) 100%);
-  color: #fff; display: grid; place-items: center;
-  font-size: 15px; font-weight: 900; letter-spacing: -.02em;
-  box-shadow: 0 4px 12px rgba(29,78,216,.28);
-  flex-shrink: 0;
-}
+.rbp-announce-close { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,.16); border: 0; color: #fff; cursor: pointer; width: 22px; height: 22px; border-radius: 6px; display: grid; place-items: center; }
+.rbp-nav-shell { background: rgba(255,255,255,.98); backdrop-filter: blur(16px) saturate(180%); -webkit-backdrop-filter: blur(16px) saturate(180%); border-bottom: 1px solid var(--rbp-border); box-shadow: 0 1px 0 rgba(15,23,42,.04); position: relative; }
+.rbp-nav-inner { width: min(100% - 2.5rem, 1440px); margin-inline: auto; min-height: var(--rbp-header-h); display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 22px; }
+.rbp-brand { display: inline-flex; align-items: center; gap: 11px; color: var(--rbp-slate-900); text-decoration: none; min-width: 220px; }
+.rbp-brand-logo { width: 38px; height: 38px; border-radius: 12px; background: linear-gradient(135deg, var(--rbp-blue), var(--rbp-indigo)); color: #fff; display: grid; place-items: center; font-size: 15px; font-weight: 950; box-shadow: 0 4px 12px rgba(29,78,216,.28); }
 .rbp-brand-text { display: flex; flex-direction: column; line-height: 1; }
-.rbp-brand-name { font-size: 14px; font-weight: 900; letter-spacing: -.025em; color: var(--rbp-slate-900); }
-.rbp-brand-tagline { font-size: 10.5px; color: var(--rbp-slate-500); font-weight: 600; margin-top: 2px; letter-spacing: .01em; }
-
-/* ── Desktop nav ──────────────────────────────────────── */
-.rbp-desktop-nav {
-  display: flex; align-items: center; justify-content: center; gap: 2px;
-}
-.rbp-nav-item { position: static; }
-
-.rbp-nav-btn {
-  appearance: none; border: none; background: transparent;
-  display: inline-flex; align-items: center; gap: 5px;
-  padding: 8px 11px; border-radius: 10px;
-  color: var(--rbp-slate-600); font-size: 13.5px; font-weight: 800;
-  cursor: pointer; text-decoration: none; white-space: nowrap;
-  transition: background .15s ease, color .15s ease;
-  letter-spacing: -.01em;
-}
-.rbp-nav-btn:hover, .rbp-nav-btn[aria-expanded="true"] {
-  background: #eff6ff; color: var(--rbp-blue);
-}
+.rbp-brand-name { font-size: 14.5px; font-weight: 950; letter-spacing: -.025em; color: var(--rbp-slate-900); }
+.rbp-brand-tagline { font-size: 10.5px; color: var(--rbp-slate-500); font-weight: 650; margin-top: 4px; }
+.rbp-desktop-nav { display: flex; align-items: center; justify-content: center; gap: 4px; }
+.rbp-nav-btn { appearance: none; border: 0; background: transparent; display: inline-flex; align-items: center; gap: 5px; padding: 10px 12px; border-radius: 12px; color: var(--rbp-slate-700); font-size: 13.5px; font-weight: 850; cursor: pointer; text-decoration: none; white-space: nowrap; transition: background .16s ease, color .16s ease; }
+.rbp-nav-btn:hover, .rbp-nav-btn[aria-expanded="true"] { background: #eff6ff; color: var(--rbp-blue); }
 .rbp-nav-btn svg { width: 10px; height: 10px; transition: transform .2s ease; }
 .rbp-nav-btn[aria-expanded="true"] svg { transform: rotate(180deg); }
-
-/* ── Mega panel ───────────────────────────────────────── */
-.rbp-mega-wrap {
-  position: absolute; left: 0; right: 0;
-  top: calc(var(--rbp-header-h) + 1px);
-  background: #fff;
-  border-top: 1px solid var(--rbp-border);
-  border-bottom: 1px solid var(--rbp-border);
-  box-shadow: 0 32px 72px rgba(15,23,42,.13);
-  opacity: 0; visibility: hidden; pointer-events: none;
-  transform: translateY(-6px);
-  transition: opacity .2s ease, transform .2s ease, visibility .2s;
-  z-index: 99;
-}
-.rbp-mega-wrap.is-open {
-  opacity: 1; visibility: visible; pointer-events: auto; transform: none;
-}
-.rbp-mega-content {
-  width: min(100% - 2.5rem, 1280px);
-  margin-inline: auto;
-  padding: 32px 0 36px;
-  display: grid;
-  gap: 36px;
-}
-.rbp-mega-content.cols-2 { grid-template-columns: 260px 1fr; }
-.rbp-mega-content.cols-3 { grid-template-columns: 260px 1fr 1fr; }
-.rbp-mega-content.cols-4 { grid-template-columns: 260px 1fr 1fr 1fr; }
-
-/* Mega sidebar */
-.rbp-mega-sidebar { border-right: 1px solid var(--rbp-border); padding-right: 28px; }
-.rbp-mega-hub {
-  display: flex; align-items: center; gap: 12px;
-  background: linear-gradient(135deg, var(--rbp-blue) 0%, var(--rbp-indigo) 100%);
-  color: #fff; text-decoration: none; border-radius: 16px;
-  padding: 14px 16px; margin-bottom: 16px;
-  box-shadow: 0 8px 24px rgba(29,78,216,.22);
-  transition: transform .18s ease, box-shadow .18s ease;
-}
-.rbp-mega-hub:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(29,78,216,.3); }
-.rbp-mega-hub-icon { width: 36px; height: 36px; background: rgba(255,255,255,.18); border-radius: 10px; display: grid; place-items: center; font-size: 16px; flex-shrink: 0; }
-.rbp-mega-hub-text { display: flex; flex-direction: column; gap: 2px; }
-.rbp-mega-hub-label { font-size: 13px; font-weight: 900; letter-spacing: -.01em; }
-.rbp-mega-hub-sub { font-size: 11px; opacity: .75; font-weight: 600; }
-
-.rbp-mega-section-label {
-  font-size: 10px; font-weight: 900; text-transform: uppercase;
-  letter-spacing: .12em; color: var(--rbp-slate-400);
-  margin: 12px 0 8px;
-}
-.rbp-mega-quick-link {
-  display: flex; align-items: center; gap: 8px;
-  padding: 7px 8px; border-radius: 9px;
-  color: var(--rbp-slate-600); text-decoration: none;
-  font-size: 12.5px; font-weight: 700;
-  transition: background .12s, color .12s;
-}
-.rbp-mega-quick-link:hover { background: #f8fafc; color: var(--rbp-blue); }
-.rbp-mega-quick-link-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--rbp-slate-300); flex-shrink: 0; }
-
-/* Mega column */
-.rbp-mega-col { }
-.rbp-mega-col-title {
-  font-size: 10px; font-weight: 900; text-transform: uppercase;
-  letter-spacing: .12em; color: var(--rbp-slate-400);
-  margin: 0 0 12px; padding-bottom: 10px;
-  border-bottom: 1px solid var(--rbp-border);
-}
-.rbp-mega-link-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 2px; }
-.rbp-mega-link {
-  display: flex; align-items: flex-start; gap: 10px;
-  padding: 9px 10px; border-radius: 11px;
-  text-decoration: none; color: var(--rbp-slate-800);
-  transition: background .12s, color .12s;
-}
-.rbp-mega-link:hover { background: #f0f9ff; color: var(--rbp-blue); }
-.rbp-mega-link-icon {
-  width: 32px; height: 32px; border-radius: 9px;
-  background: var(--rbp-slate-100); display: grid; place-items: center;
-  font-size: 14px; flex-shrink: 0; margin-top: 1px;
-}
-.rbp-mega-link:hover .rbp-mega-link-icon { background: #dbeafe; }
-.rbp-mega-link-body { display: flex; flex-direction: column; gap: 2px; }
-.rbp-mega-link-name { font-size: 13.5px; font-weight: 800; letter-spacing: -.01em; line-height: 1.2; }
-.rbp-mega-link-desc { font-size: 11.5px; color: var(--rbp-slate-500); line-height: 1.4; font-weight: 500; }
-
-/* Mega footer CTA bar */
-.rbp-mega-footer {
-  grid-column: 1 / -1;
-  padding-top: 20px;
-  border-top: 1px solid var(--rbp-border);
-  display: flex; align-items: center; justify-content: space-between; gap: 16px;
-}
-.rbp-mega-footer-text { font-size: 13px; color: var(--rbp-slate-500); font-weight: 600; }
-.rbp-mega-footer-text strong { color: var(--rbp-slate-800); font-weight: 800; }
-.rbp-mega-footer-actions { display: flex; gap: 10px; }
-.rbp-mega-footer-btn {
-  display: inline-flex; align-items: center; gap: 7px;
-  padding: 9px 16px; border-radius: 11px;
-  font-size: 12.5px; font-weight: 800; text-decoration: none;
-  transition: all .15s ease;
-}
-.rbp-mega-footer-btn-ghost { background: #f8fafc; color: var(--rbp-slate-700); border: 1px solid var(--rbp-border); }
-.rbp-mega-footer-btn-ghost:hover { background: #f1f5f9; color: var(--rbp-slate-900); }
-.rbp-mega-footer-btn-primary { background: var(--rbp-blue); color: #fff; box-shadow: 0 4px 14px rgba(29,78,216,.22); }
-.rbp-mega-footer-btn-primary:hover { background: var(--rbp-blue-mid); transform: translateY(-1px); }
-
-/* ── Header actions (right) ───────────────────────────── */
-.rbp-nav-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
-
-.rbp-search-trigger {
-  width: 36px; height: 36px; border: 1px solid var(--rbp-border);
-  border-radius: 10px; background: #fff; color: var(--rbp-slate-600);
-  cursor: pointer; display: grid; place-items: center;
-  transition: border-color .15s, background .15s, color .15s;
-}
-.rbp-search-trigger:hover { border-color: var(--rbp-blue); color: var(--rbp-blue); background: #eff6ff; }
-
-.rbp-header-cta {
-  display: inline-flex; align-items: center; gap: 7px;
-  padding: 9px 16px; border-radius: 11px; font-size: 13px; font-weight: 800;
-  text-decoration: none; white-space: nowrap; transition: all .15s ease;
-}
-.rbp-header-cta-outline {
-  border: 1px solid var(--rbp-border); color: var(--rbp-slate-700); background: #fff;
-}
+.rbp-nav-actions { display: flex; align-items: center; gap: 8px; justify-content: flex-end; }
+.rbp-search-trigger, .rbp-cart-btn, .rbp-mobile-toggle { width: 38px; height: 38px; border: 1px solid var(--rbp-border); border-radius: 12px; background: #fff; color: var(--rbp-slate-600); cursor: pointer; display: grid; place-items: center; text-decoration: none; transition: border-color .15s, background .15s, color .15s; }
+.rbp-search-trigger:hover, .rbp-cart-btn:hover, .rbp-mobile-toggle:hover { border-color: var(--rbp-blue); color: var(--rbp-blue); background: #eff6ff; }
+.rbp-header-cta { display: inline-flex; align-items: center; justify-content: center; gap: 7px; padding: 10px 16px; border-radius: 12px; font-size: 13px; font-weight: 850; text-decoration: none; white-space: nowrap; transition: all .15s ease; }
+.rbp-header-cta-outline { border: 1px solid var(--rbp-border); color: var(--rbp-slate-700); background: #fff; }
 .rbp-header-cta-outline:hover { border-color: var(--rbp-blue); color: var(--rbp-blue); background: #eff6ff; }
-.rbp-header-cta-primary {
-  background: var(--rbp-blue); color: #fff;
-  box-shadow: 0 4px 14px rgba(29,78,216,.24);
-  border: 1px solid transparent;
-}
-.rbp-header-cta-primary:hover { background: var(--rbp-blue-mid); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(29,78,216,.3); }
-
-.rbp-cart-btn {
-  position: relative; width: 36px; height: 36px;
-  border: 1px solid var(--rbp-border); border-radius: 10px;
-  background: #fff; color: var(--rbp-slate-600);
-  cursor: pointer; display: grid; place-items: center;
-  text-decoration: none; transition: border-color .15s, background .15s, color .15s;
-}
-.rbp-cart-btn:hover { border-color: var(--rbp-blue); color: var(--rbp-blue); background: #eff6ff; }
-.rbp-cart-count {
-  position: absolute; top: -5px; right: -5px;
-  min-width: 16px; height: 16px; border-radius: 999px;
-  background: var(--rbp-blue); color: #fff;
-  font-size: 9px; font-weight: 900; display: grid; place-items: center;
-  padding: 0 3px;
-}
-
-/* ── Mobile toggle ────────────────────────────────────── */
-.rbp-mobile-toggle {
-  display: none; appearance: none; border: 1px solid var(--rbp-border);
-  background: #fff; border-radius: 10px; padding: 8px;
-  color: var(--rbp-slate-700); cursor: pointer;
-  flex-direction: column; gap: 4px; align-items: center; justify-content: center;
-  width: 36px; height: 36px;
-}
-.rbp-mobile-toggle span {
-  display: block; width: 16px; height: 2px; background: currentColor;
-  border-radius: 999px; transition: transform .2s ease, opacity .2s ease;
-}
+.rbp-header-cta-primary { background: var(--rbp-blue); color: #fff; border: 1px solid transparent; box-shadow: 0 4px 14px rgba(29,78,216,.24); }
+.rbp-header-cta-primary:hover { background: var(--rbp-blue-mid); transform: translateY(-1px); }
+.rbp-cart-btn { position: relative; }
+.rbp-cart-count { position: absolute; top: -6px; right: -6px; min-width: 17px; height: 17px; border-radius: 999px; background: var(--rbp-blue); color: #fff; font-size: 9px; font-weight: 950; display: grid; place-items: center; padding: 0 4px; }
+.rbp-mobile-toggle { display: none; place-items: center; }
+.rbp-mobile-toggle span { display: block; width: 17px; height: 2px; background: currentColor; border-radius: 999px; margin: 2px 0; transition: transform .2s ease, opacity .2s ease; }
 .rbp-mobile-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
 .rbp-mobile-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
 .rbp-mobile-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
-
-/* ── Search overlay ───────────────────────────────────── */
-.rbp-search-overlay {
-  position: absolute; left: 0; right: 0; top: 100%;
-  background: rgba(255,255,255,.98); backdrop-filter: blur(16px);
-  border-bottom: 1px solid var(--rbp-border);
-  box-shadow: 0 16px 48px rgba(15,23,42,.1);
-  padding: 20px 0; z-index: 98;
-  opacity: 0; visibility: hidden; pointer-events: none;
-  transform: translateY(-8px);
-  transition: all .2s ease;
-}
+.rbp-mega-wrap { position: absolute; left: 0; right: 0; top: calc(100% + 1px); background: #fff; border-top: 1px solid var(--rbp-border); border-bottom: 1px solid var(--rbp-border); box-shadow: 0 32px 72px rgba(15,23,42,.13); opacity: 0; visibility: hidden; pointer-events: none; transform: translateY(-6px); transition: opacity .2s ease, transform .2s ease, visibility .2s; z-index: 99; }
+.rbp-mega-wrap.is-open { opacity: 1; visibility: visible; pointer-events: auto; transform: none; }
+.rbp-mega-content { width: min(100% - 2.5rem, 1440px); margin-inline: auto; padding: 32px 0 36px; display: grid; grid-template-columns: 280px repeat(3, minmax(0, 1fr)); gap: 32px; }
+.rbp-mega-content.cols-2 { grid-template-columns: 280px repeat(2, minmax(0, 1fr)); }
+.rbp-mega-sidebar { border-right: 1px solid var(--rbp-border); padding-right: 28px; }
+.rbp-mega-hub { display: flex; align-items: center; gap: 12px; background: linear-gradient(135deg, var(--rbp-blue), var(--rbp-indigo)); color: #fff; text-decoration: none; border-radius: 16px; padding: 15px 16px; margin-bottom: 16px; box-shadow: 0 8px 24px rgba(29,78,216,.22); }
+.rbp-mega-hub-icon { width: 38px; height: 38px; background: rgba(255,255,255,.18); border-radius: 11px; display: grid; place-items: center; font-size: 17px; flex-shrink: 0; }
+.rbp-mega-hub-label { display: block; font-size: 13.5px; font-weight: 950; }
+.rbp-mega-hub-sub { display: block; font-size: 11px; opacity: .78; font-weight: 650; margin-top: 2px; }
+.rbp-mega-section-label, .rbp-mega-col-title { font-size: 10.5px; font-weight: 950; text-transform: uppercase; letter-spacing: .12em; color: var(--rbp-slate-400); margin: 12px 0 10px; }
+.rbp-mega-col-title { padding-bottom: 10px; border-bottom: 1px solid var(--rbp-border); margin-top: 0; }
+.rbp-mega-quick-link { display: flex; align-items: center; gap: 8px; padding: 8px 8px; border-radius: 9px; color: var(--rbp-slate-600); text-decoration: none; font-size: 12.5px; font-weight: 750; }
+.rbp-mega-quick-link:hover { background: #f8fafc; color: var(--rbp-blue); }
+.rbp-mega-quick-link-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--rbp-slate-300); flex-shrink: 0; }
+.rbp-mega-link-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 3px; }
+.rbp-mega-link { display: flex; align-items: flex-start; gap: 10px; padding: 10px; border-radius: 12px; text-decoration: none; color: var(--rbp-slate-800); transition: background .12s, color .12s; }
+.rbp-mega-link:hover { background: #f0f9ff; color: var(--rbp-blue); }
+.rbp-mega-link-icon { width: 33px; height: 33px; border-radius: 10px; background: var(--rbp-slate-100); display: grid; place-items: center; font-size: 14px; flex-shrink: 0; margin-top: 1px; }
+.rbp-mega-link:hover .rbp-mega-link-icon { background: #dbeafe; }
+.rbp-mega-link-name { display: block; font-size: 13.5px; font-weight: 850; line-height: 1.22; }
+.rbp-mega-link-desc { display: block; font-size: 11.5px; color: var(--rbp-slate-500); line-height: 1.4; font-weight: 550; margin-top: 2px; }
+.rbp-mega-footer { grid-column: 1 / -1; padding-top: 20px; border-top: 1px solid var(--rbp-border); display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.rbp-mega-footer-text { font-size: 13px; color: var(--rbp-slate-500); font-weight: 650; margin: 0; }
+.rbp-mega-footer-text strong { color: var(--rbp-slate-800); font-weight: 850; }
+.rbp-mega-footer-actions { display: flex; gap: 10px; }
+.rbp-mega-footer-btn { display: inline-flex; align-items: center; gap: 7px; padding: 10px 16px; border-radius: 12px; font-size: 12.5px; font-weight: 850; text-decoration: none; transition: all .15s ease; }
+.rbp-mega-footer-btn-ghost { background: #f8fafc; color: var(--rbp-slate-700); border: 1px solid var(--rbp-border); }
+.rbp-mega-footer-btn-primary { background: var(--rbp-blue); color: #fff; }
+.rbp-search-overlay { position: absolute; left: 0; right: 0; top: 100%; background: rgba(255,255,255,.98); backdrop-filter: blur(16px); border-bottom: 1px solid var(--rbp-border); box-shadow: 0 16px 48px rgba(15,23,42,.1); padding: 20px 0; z-index: 98; opacity: 0; visibility: hidden; pointer-events: none; transform: translateY(-8px); transition: all .2s ease; }
 .rbp-search-overlay.is-open { opacity: 1; visibility: visible; pointer-events: auto; transform: none; }
-.rbp-search-inner { width: min(100% - 2.5rem, 680px); margin-inline: auto; }
-.rbp-search-form {
-  display: flex; align-items: center; gap: 12px;
-  border: 1.5px solid var(--rbp-blue); border-radius: 14px;
-  background: #fff; padding: 10px 16px;
-  box-shadow: 0 0 0 4px rgba(29,78,216,.08);
-}
-.rbp-search-form input {
-  flex: 1; border: none; outline: none; background: transparent;
-  font-size: 15px; color: var(--rbp-slate-900); font-weight: 500;
-}
-.rbp-search-form input::placeholder { color: var(--rbp-slate-400); }
-.rbp-search-submit {
-  border: none; background: var(--rbp-blue); color: #fff;
-  padding: 8px 14px; border-radius: 9px; cursor: pointer;
-  font-size: 12.5px; font-weight: 800; transition: background .15s;
-}
-.rbp-search-submit:hover { background: var(--rbp-blue-mid); }
+.rbp-search-inner { width: min(100% - 2.5rem, 720px); margin-inline: auto; }
+.rbp-search-form { display: flex; align-items: center; gap: 12px; border: 1.5px solid var(--rbp-blue); border-radius: 15px; background: #fff; padding: 10px 16px; box-shadow: 0 0 0 4px rgba(29,78,216,.08); }
+.rbp-search-form input { flex: 1; border: 0; outline: 0; background: transparent; font-size: 15px; color: var(--rbp-slate-900); }
+.rbp-search-submit { border: 0; background: var(--rbp-blue); color: #fff; padding: 9px 15px; border-radius: 10px; cursor: pointer; font-size: 12.5px; font-weight: 850; }
 .rbp-search-hints { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
-.rbp-search-hint {
-  padding: 5px 12px; background: var(--rbp-slate-100); border-radius: 999px;
-  font-size: 12px; font-weight: 700; color: var(--rbp-slate-600);
-  text-decoration: none; transition: background .12s, color .12s;
-}
-.rbp-search-hint:hover { background: #dbeafe; color: var(--rbp-blue); }
-
-/* ── Mobile drawer ────────────────────────────────────── */
-.rbp-mobile-nav {
-  position: absolute; left: 0; right: 0; top: 100%;
-  background: #fff; border-bottom: 1px solid var(--rbp-border);
-  box-shadow: 0 20px 50px rgba(15,23,42,.12);
-  max-height: calc(100dvh - var(--rbp-header-h) - 40px);
-  overflow-y: auto;
-  display: none;
-}
+.rbp-search-hint { padding: 5px 12px; background: var(--rbp-slate-100); border-radius: 999px; font-size: 12px; font-weight: 750; color: var(--rbp-slate-600); text-decoration: none; }
+.rbp-mobile-nav { position: absolute; left: 0; right: 0; top: 100%; background: #fff; border-bottom: 1px solid var(--rbp-border); box-shadow: 0 20px 50px rgba(15,23,42,.12); max-height: calc(100dvh - var(--rbp-header-h) - 40px); overflow-y: auto; display: none; }
 .rbp-mobile-nav.is-open { display: block; }
-.rbp-mobile-search-bar {
-  padding: 14px 20px; border-bottom: 1px solid var(--rbp-border);
-}
-.rbp-mobile-search-bar form {
-  display: flex; align-items: center; gap: 10px;
-  border: 1px solid var(--rbp-border); border-radius: 11px;
-  background: var(--rbp-slate-50); padding: 9px 14px;
-}
-.rbp-mobile-search-bar input {
-  flex: 1; border: none; outline: none; background: transparent;
-  font-size: 14px; color: var(--rbp-slate-900);
-}
-.rbp-mobile-accordion { }
+.rbp-mobile-search-bar { padding: 14px 20px; border-bottom: 1px solid var(--rbp-border); }
+.rbp-mobile-search-bar form { display: flex; align-items: center; gap: 10px; border: 1px solid var(--rbp-border); border-radius: 12px; background: var(--rbp-slate-50); padding: 10px 14px; }
+.rbp-mobile-search-bar input { flex: 1; border: 0; outline: 0; background: transparent; font-size: 14px; color: var(--rbp-slate-900); }
 .rbp-mobile-item { border-bottom: 1px solid rgba(15,23,42,.06); }
-.rbp-mobile-item-btn {
-  display: flex; align-items: center; justify-content: space-between;
-  width: 100%; padding: 15px 20px;
-  background: transparent; border: none; cursor: pointer;
-  color: var(--rbp-slate-800); font-size: 14px; font-weight: 850;
-  text-align: left; text-decoration: none;
-}
-.rbp-mobile-item-btn svg { color: var(--rbp-slate-400); transition: transform .2s; flex-shrink: 0; }
+.rbp-mobile-item-btn { display: flex; align-items: center; justify-content: space-between; width: 100%; padding: 15px 20px; background: transparent; border: 0; cursor: pointer; color: var(--rbp-slate-800); font-size: 14px; font-weight: 850; text-align: left; text-decoration: none; }
 .rbp-mobile-item[open] .rbp-mobile-item-btn svg { transform: rotate(180deg); }
 .rbp-mobile-sub { background: var(--rbp-slate-50); }
-.rbp-mobile-sub a {
-  display: block; padding: 11px 20px 11px 36px;
-  color: var(--rbp-slate-600); font-size: 13px; font-weight: 700;
-  text-decoration: none; border-bottom: 1px solid rgba(15,23,42,.05);
-}
+.rbp-mobile-sub a { display: block; padding: 11px 20px 11px 36px; color: var(--rbp-slate-600); font-size: 13px; font-weight: 750; text-decoration: none; border-bottom: 1px solid rgba(15,23,42,.05); }
 .rbp-mobile-sub a:hover { color: var(--rbp-blue); background: #eff6ff; }
-.rbp-mobile-cta-row {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
-  padding: 16px 20px; border-top: 1px solid var(--rbp-border);
-}
-.rbp-mobile-cta {
-  display: grid; place-items: center; padding: 12px; border-radius: 11px;
-  font-size: 13px; font-weight: 800; text-decoration: none; text-align: center;
-  transition: all .15s ease;
-}
-.rbp-mobile-cta-outline {
-  border: 1px solid var(--rbp-border); color: var(--rbp-slate-700); background: #fff;
-}
+.rbp-mobile-cta-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 16px 20px; border-top: 1px solid var(--rbp-border); }
+.rbp-mobile-cta { display: grid; place-items: center; padding: 12px; border-radius: 12px; font-size: 13px; font-weight: 850; text-decoration: none; text-align: center; }
+.rbp-mobile-cta-outline { border: 1px solid var(--rbp-border); color: var(--rbp-slate-700); background: #fff; }
 .rbp-mobile-cta-primary { background: var(--rbp-blue); color: #fff; }
-
-/* ── Responsive ───────────────────────────────────────── */
-@media (max-width: 1023px) {
-  .rbp-desktop-nav, .rbp-search-trigger, .rbp-header-cta-outline { display: none; }
-  .rbp-mobile-toggle { display: flex; }
-  .rbp-nav-inner { grid-template-columns: auto 1fr auto; }
-}
-@media (max-width: 479px) {
-  .rbp-brand-tagline { display: none; }
-  .rbp-header-cta-primary { display: none; }
-  .rbp-nav-inner { width: calc(100% - 1.5rem); gap: 12px; }
-}
+@media (max-width: 1240px) { .rbp-nav-inner { gap: 14px; } .rbp-brand { min-width: 190px; } .rbp-nav-btn { padding-inline: 9px; font-size: 13px; } .rbp-header-cta-outline { display: none; } }
+@media (max-width: 1080px) { .rbp-desktop-nav, .rbp-search-trigger { display: none; } .rbp-mobile-toggle { display: block; } .rbp-nav-inner { grid-template-columns: auto 1fr auto; } }
+@media (max-width: 520px) { .rbp-brand-tagline { display: none; } .rbp-header-cta-primary { display: none; } .rbp-nav-inner { width: calc(100% - 1.5rem); gap: 10px; } .rbp-brand { min-width: 0; } .rbp-brand-name { font-size: 13px; } .rbp-announce { font-size: 11.5px; } }
 </style>
 
 {%- liquid
@@ -380,18 +117,14 @@
 -%}
 
 <header class="rbp-header" id="rbp-site-header" role="banner">
-
-  {%- comment %} ── Announcement bar ── {% endcomment %}
   <div class="rbp-announce" id="rbp-announce" role="region" aria-label="Announcement">
-    🚀 <strong>Remote Business Partner</strong> — Australia's business support platform. 
-    <a href="/pages/membership">Join as a Member</a> and unlock exclusive rates &amp; priority access.
-    <button class="rbp-announce-close" onclick="this.closest('#rbp-announce').remove()" aria-label="Close announcement">✕</button>
+    <strong>Remote Business Partner</strong> — practical business support for decisions, delivery and day-to-day operations.
+    <a href="/pages/business-health-check">Start with a Business Health Check</a>
+    <button class="rbp-announce-close" onclick="this.closest('#rbp-announce').remove()" aria-label="Close announcement">×</button>
   </div>
 
-  <div class="rbp-nav-shell" style="position:relative;">
+  <div class="rbp-nav-shell">
     <nav class="rbp-nav-inner" aria-label="Main navigation">
-
-      {%- comment %} ── Brand ── {% endcomment %}
       <a href="/" class="rbp-brand" aria-label="Remote Business Partner — Home">
         <div class="rbp-brand-logo" aria-hidden="true">RBP</div>
         <div class="rbp-brand-text">
@@ -400,653 +133,132 @@
         </div>
       </a>
 
-      {%- comment %} ── Desktop nav ── {% endcomment %}
       <div class="rbp-desktop-nav" role="menubar" aria-label="Site navigation">
-
-        {%- comment %} Home ── {% endcomment %}
-        <a href="/" class="rbp-nav-btn" role="menuitem">Home</a>
-
-        {%- comment %} Membership ── {% endcomment %}
-        <button class="rbp-nav-btn" role="menuitem" aria-haspopup="true" aria-expanded="false" aria-controls="mega-membership" data-mega="membership">
-          Membership
-          <svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M1 1l4 4 4-4"/></svg>
-        </button>
-
-        {%- comment %} Core Services ── {% endcomment %}
-        <button class="rbp-nav-btn" role="menuitem" aria-haspopup="true" aria-expanded="false" aria-controls="mega-core" data-mega="core">
-          Core Services
-          <svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M1 1l4 4 4-4"/></svg>
-        </button>
-
-        {%- comment %} On-Demand ── {% endcomment %}
-        <button class="rbp-nav-btn" role="menuitem" aria-haspopup="true" aria-expanded="false" aria-controls="mega-ondemand" data-mega="ondemand">
-          On-Demand
-          <svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M1 1l4 4 4-4"/></svg>
-        </button>
-
-        {%- comment %} Business NBN ── {% endcomment %}
-        <a href="/pages/business-nbn" class="rbp-nav-btn" role="menuitem">Business NBN</a>
-
-        {%- comment %} Marketplace ── {% endcomment %}
-        <button class="rbp-nav-btn" role="menuitem" aria-haspopup="true" aria-expanded="false" aria-controls="mega-marketplace" data-mega="marketplace">
-          Marketplace
-          <svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M1 1l4 4 4-4"/></svg>
-        </button>
-
-        {%- comment %} Custom Solutions ── {% endcomment %}
-        <button class="rbp-nav-btn" role="menuitem" aria-haspopup="true" aria-expanded="false" aria-controls="mega-custom" data-mega="custom">
-          Custom Solutions
-          <svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M1 1l4 4 4-4"/></svg>
-        </button>
-
-        {%- comment %} Resources ── {% endcomment %}
-        <button class="rbp-nav-btn" role="menuitem" aria-haspopup="true" aria-expanded="false" aria-controls="mega-resources" data-mega="resources">
-          Resources
-          <svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M1 1l4 4 4-4"/></svg>
-        </button>
-
+        <button class="rbp-nav-btn" role="menuitem" aria-haspopup="true" aria-expanded="false" aria-controls="mega-advisory" data-mega="advisory">Advisory <svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M1 1l4 4 4-4"/></svg></button>
+        <button class="rbp-nav-btn" role="menuitem" aria-haspopup="true" aria-expanded="false" aria-controls="mega-consulting" data-mega="consulting">Consulting <svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M1 1l4 4 4-4"/></svg></button>
+        <button class="rbp-nav-btn" role="menuitem" aria-haspopup="true" aria-expanded="false" aria-controls="mega-implementation" data-mega="implementation">Implementation <svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M1 1l4 4 4-4"/></svg></button>
+        <button class="rbp-nav-btn" role="menuitem" aria-haspopup="true" aria-expanded="false" aria-controls="mega-operations" data-mega="operations">Operations <svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M1 1l4 4 4-4"/></svg></button>
+        <button class="rbp-nav-btn" role="menuitem" aria-haspopup="true" aria-expanded="false" aria-controls="mega-essentials" data-mega="essentials">Essentials <svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M1 1l4 4 4-4"/></svg></button>
+        <button class="rbp-nav-btn" role="menuitem" aria-haspopup="true" aria-expanded="false" aria-controls="mega-membership" data-mega="membership">Membership <svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M1 1l4 4 4-4"/></svg></button>
+        <button class="rbp-nav-btn" role="menuitem" aria-haspopup="true" aria-expanded="false" aria-controls="mega-support" data-mega="support">Support <svg viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M1 1l4 4 4-4"/></svg></button>
       </div>
 
-      {%- comment %} ── Actions ── {% endcomment %}
       <div class="rbp-nav-actions">
-        <button class="rbp-search-trigger" id="rbp-search-btn" aria-label="Search" aria-expanded="false" aria-controls="rbp-search-overlay">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-        </button>
-        <a href="/account/login" class="rbp-header-cta rbp-header-cta-outline" aria-label="Login to your account">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="12" cy="7" r="4"/><path d="M5.5 20a6.5 6.5 0 0 1 13 0"/></svg>
-          Login
-        </a>
-        <a href="/pages/membership" class="rbp-header-cta rbp-header-cta-primary">
-          Join Free
-        </a>
-        <a href="/cart" class="rbp-cart-btn" aria-label="Cart{% if cart_count > 0 %} — {{ cart_count }} item{% if cart_count != 1 %}s{% endif %}{% endif %}">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-          {%- if cart_count > 0 -%}
-            <span class="rbp-cart-count" aria-hidden="true">{{ cart_count }}</span>
-          {%- endif -%}
-        </a>
-        <button class="rbp-mobile-toggle" id="rbp-mobile-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="rbp-mobile-nav">
-          <span></span><span></span><span></span>
-        </button>
+        <button class="rbp-search-trigger" id="rbp-search-btn" aria-label="Search" aria-expanded="false" aria-controls="rbp-search-overlay"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></button>
+        <a href="/account/login" class="rbp-header-cta rbp-header-cta-outline" aria-label="Login to your account">Account</a>
+        <a href="/pages/business-health-check" class="rbp-header-cta rbp-header-cta-primary">Health Check</a>
+        <a href="/cart" class="rbp-cart-btn" aria-label="Cart{% if cart_count > 0 %} — {{ cart_count }} item{% if cart_count != 1 %}s{% endif %}{% endif %}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>{% if cart_count > 0 %}<span class="rbp-cart-count" aria-hidden="true">{{ cart_count }}</span>{% endif %}</a>
+        <button class="rbp-mobile-toggle" id="rbp-mobile-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="rbp-mobile-nav"><span></span><span></span><span></span></button>
       </div>
     </nav>
 
-    {%- comment %} ═══════════════════════════════════════════════
-      MEGA PANELS
-    ═══════════════════════════════════════════════ {% endcomment %}
+    <div class="rbp-mega-wrap" id="mega-advisory" role="dialog" aria-label="Advisory menu" aria-hidden="true">
+      <div class="rbp-mega-content cols-2">
+        <div class="rbp-mega-sidebar"><a href="/pages/core-services" class="rbp-mega-hub"><div class="rbp-mega-hub-icon">🎯</div><div><span class="rbp-mega-hub-label">Advisory</span><span class="rbp-mega-hub-sub">Assess, diagnose, decide and resolve →</span></div></a><p class="rbp-mega-section-label">Start here</p><a href="/pages/business-health-check" class="rbp-mega-quick-link"><span class="rbp-mega-quick-link-dot"></span>Business Health Check</a><a href="/pages/contact" class="rbp-mega-quick-link"><span class="rbp-mega-quick-link-dot"></span>Ask where to start</a></div>
+        <div class="rbp-mega-col"><p class="rbp-mega-col-title">Advisory services</p><ul class="rbp-mega-link-list"><li><a href="/pages/core-services" class="rbp-mega-link"><span class="rbp-mega-link-icon">◎</span><span><span class="rbp-mega-link-name">Core Services</span><span class="rbp-mega-link-desc">Structured advisory pathways for business owners.</span></span></a></li><li><a href="/products/business-health-check" class="rbp-mega-link"><span class="rbp-mega-link-icon">✓</span><span><span class="rbp-mega-link-name">Business Health Check</span><span class="rbp-mega-link-desc">Review current issues, risks and next steps.</span></span></a></li><li><a href="/products/business-advisor" class="rbp-mega-link"><span class="rbp-mega-link-icon">↗</span><span><span class="rbp-mega-link-name">Business Advisor</span><span class="rbp-mega-link-desc">Practical business guidance and decision support.</span></span></a></li></ul></div>
+        <div class="rbp-mega-col"><p class="rbp-mega-col-title">Decision and resolution</p><ul class="rbp-mega-link-list"><li><a href="/products/decision-desk" class="rbp-mega-link"><span class="rbp-mega-link-icon">▦</span><span><span class="rbp-mega-link-name">Decision Desk</span><span class="rbp-mega-link-desc">Clarify options before committing time or spend.</span></span></a></li><li><a href="/products/the-fixer" class="rbp-mega-link"><span class="rbp-mega-link-icon">⚙</span><span><span class="rbp-mega-link-name">The Fixer</span><span class="rbp-mega-link-desc">Targeted support for operational problems.</span></span></a></li><li><a href="/pages/dispute-resolution-support" class="rbp-mega-link"><span class="rbp-mega-link-icon">⚖</span><span><span class="rbp-mega-link-name">Dispute Resolution Support</span><span class="rbp-mega-link-desc">Guidance when a business issue needs structure.</span></span></a></li></ul></div>
+        <div class="rbp-mega-footer"><p class="rbp-mega-footer-text"><strong>Best first step:</strong> start with a Business Health Check before choosing a larger service.</p><div class="rbp-mega-footer-actions"><a href="/pages/core-services" class="rbp-mega-footer-btn rbp-mega-footer-btn-ghost">View advisory</a><a href="/pages/business-health-check" class="rbp-mega-footer-btn rbp-mega-footer-btn-primary">Start Health Check →</a></div></div>
+      </div>
+    </div>
 
-    {%- comment %} ── Membership mega ── {% endcomment %}
+    <div class="rbp-mega-wrap" id="mega-consulting" role="dialog" aria-label="Consulting menu" aria-hidden="true">
+      <div class="rbp-mega-content">
+        <div class="rbp-mega-sidebar"><a href="/collections/on-demand-services" class="rbp-mega-hub"><div class="rbp-mega-hub-icon">⚡</div><div><span class="rbp-mega-hub-label">Consulting</span><span class="rbp-mega-hub-sub">Specialist on-demand support →</span></div></a><p class="rbp-mega-section-label">Popular</p><a href="/collections/on-demand-services" class="rbp-mega-quick-link"><span class="rbp-mega-quick-link-dot"></span>On-Demand Services</a><a href="/collections/bundled-on-demand" class="rbp-mega-quick-link"><span class="rbp-mega-quick-link-dot"></span>Bundled On-Demand</a></div>
+        <div class="rbp-mega-col"><p class="rbp-mega-col-title">People and operations</p><ul class="rbp-mega-link-list"><li><a href="/collections/human-resources" class="rbp-mega-link"><span class="rbp-mega-link-icon">HR</span><span><span class="rbp-mega-link-name">Human Resources</span><span class="rbp-mega-link-desc">People, workplace and compliance support.</span></span></a></li><li><a href="/collections/change-management" class="rbp-mega-link"><span class="rbp-mega-link-icon">↻</span><span><span class="rbp-mega-link-name">Change Management</span><span class="rbp-mega-link-desc">Support business change with structure.</span></span></a></li><li><a href="/collections/operations" class="rbp-mega-link"><span class="rbp-mega-link-icon">OP</span><span><span class="rbp-mega-link-name">Operations</span><span class="rbp-mega-link-desc">Process and operational support.</span></span></a></li></ul></div>
+        <div class="rbp-mega-col"><p class="rbp-mega-col-title">Management and growth</p><ul class="rbp-mega-link-list"><li><a href="/collections/management" class="rbp-mega-link"><span class="rbp-mega-link-icon">MG</span><span><span class="rbp-mega-link-name">Management</span><span class="rbp-mega-link-desc">Management systems and business structure.</span></span></a></li><li><a href="/collections/sales-marketing" class="rbp-mega-link"><span class="rbp-mega-link-icon">SM</span><span><span class="rbp-mega-link-name">Sales & Marketing</span><span class="rbp-mega-link-desc">Revenue, marketing and customer growth.</span></span></a></li><li><a href="/collections/finance-accounting" class="rbp-mega-link"><span class="rbp-mega-link-icon">$</span><span><span class="rbp-mega-link-name">Finance & Accounting</span><span class="rbp-mega-link-desc">Commercial, reporting and finance support.</span></span></a></li></ul></div>
+        <div class="rbp-mega-col"><p class="rbp-mega-col-title">Digital and packaged</p><ul class="rbp-mega-link-list"><li><a href="/collections/artificial-intelligence" class="rbp-mega-link"><span class="rbp-mega-link-icon">AI</span><span><span class="rbp-mega-link-name">Artificial Intelligence</span><span class="rbp-mega-link-desc">AI advisory and practical adoption support.</span></span></a></li><li><a href="/collections/it-digital" class="rbp-mega-link"><span class="rbp-mega-link-icon">IT</span><span><span class="rbp-mega-link-name">IT/Digital</span><span class="rbp-mega-link-desc">Digital systems, tools and technology support.</span></span></a></li><li><a href="/collections/bundled-on-demand" class="rbp-mega-link"><span class="rbp-mega-link-icon">▣</span><span><span class="rbp-mega-link-name">Bundled On-Demand</span><span class="rbp-mega-link-desc">Grouped support for connected business needs.</span></span></a></li></ul></div>
+        <div class="rbp-mega-footer"><p class="rbp-mega-footer-text"><strong>Need specialist support?</strong> Browse consulting by function or start with all on-demand services.</p><div class="rbp-mega-footer-actions"><a href="/collections/on-demand-services" class="rbp-mega-footer-btn rbp-mega-footer-btn-primary">Explore Consulting →</a></div></div>
+      </div>
+    </div>
+
+    <div class="rbp-mega-wrap" id="mega-implementation" role="dialog" aria-label="Implementation menu" aria-hidden="true">
+      <div class="rbp-mega-content cols-2">
+        <div class="rbp-mega-sidebar"><a href="/pages/custom-solutions" class="rbp-mega-hub"><div class="rbp-mega-hub-icon">🛠</div><div><span class="rbp-mega-hub-label">Implementation</span><span class="rbp-mega-hub-sub">Move from plan to delivery →</span></div></a><p class="rbp-mega-section-label">Delivery pathways</p><a href="/pages/retainer-builder" class="rbp-mega-quick-link"><span class="rbp-mega-quick-link-dot"></span>Retainer Builder</a><a href="/pages/contact" class="rbp-mega-quick-link"><span class="rbp-mega-quick-link-dot"></span>Request a quote</a></div>
+        <div class="rbp-mega-col"><p class="rbp-mega-col-title">Build and manage</p><ul class="rbp-mega-link-list"><li><a href="/pages/custom-solutions" class="rbp-mega-link"><span class="rbp-mega-link-icon">CS</span><span><span class="rbp-mega-link-name">Custom Solutions</span><span class="rbp-mega-link-desc">Bespoke business support and project builds.</span></span></a></li><li><a href="/pages/retainer-builder" class="rbp-mega-link"><span class="rbp-mega-link-icon">RB</span><span><span class="rbp-mega-link-name">Retainer Builder</span><span class="rbp-mega-link-desc">Create an ongoing support arrangement.</span></span></a></li><li><a href="/pages/applications" class="rbp-mega-link"><span class="rbp-mega-link-icon">AP</span><span><span class="rbp-mega-link-name">Applications</span><span class="rbp-mega-link-desc">Business applications, forms and requests.</span></span></a></li></ul></div>
+        <div class="rbp-mega-col"><p class="rbp-mega-col-title">Delivery capabilities</p><ul class="rbp-mega-link-list"><li><a href="/pages/managed-services" class="rbp-mega-link"><span class="rbp-mega-link-icon">MS</span><span><span class="rbp-mega-link-name">Managed Services</span><span class="rbp-mega-link-desc">Structured ongoing delivery support.</span></span></a></li><li><a href="/pages/bid-management" class="rbp-mega-link"><span class="rbp-mega-link-icon">BM</span><span><span class="rbp-mega-link-name">Bid Management</span><span class="rbp-mega-link-desc">Support tender and bid delivery.</span></span></a></li><li><a href="/pages/property-field-services" class="rbp-mega-link"><span class="rbp-mega-link-icon">PF</span><span><span class="rbp-mega-link-name">Property Field Services</span><span class="rbp-mega-link-desc">Field delivery capability for property tasks.</span></span></a></li></ul></div>
+        <div class="rbp-mega-footer"><p class="rbp-mega-footer-text"><strong>From plan to delivery:</strong> structure, build, manage and support the work.</p><div class="rbp-mega-footer-actions"><a href="/pages/custom-solutions" class="rbp-mega-footer-btn rbp-mega-footer-btn-primary">View implementation →</a></div></div>
+      </div>
+    </div>
+
+    <div class="rbp-mega-wrap" id="mega-operations" role="dialog" aria-label="Operations menu" aria-hidden="true">
+      <div class="rbp-mega-content cols-2">
+        <div class="rbp-mega-sidebar"><a href="/pages/our-process" class="rbp-mega-hub"><div class="rbp-mega-hub-icon">🗂</div><div><span class="rbp-mega-hub-label">Operations</span><span class="rbp-mega-hub-sub">Tools, documents and resources →</span></div></a><p class="rbp-mega-section-label">Start with process</p><a href="/pages/our-process" class="rbp-mega-quick-link"><span class="rbp-mega-quick-link-dot"></span>Our Process</a><a href="/pages/resources" class="rbp-mega-quick-link"><span class="rbp-mega-quick-link-dot"></span>Resources</a></div>
+        <div class="rbp-mega-col"><p class="rbp-mega-col-title">Operating resources</p><ul class="rbp-mega-link-list"><li><a href="/pages/our-process" class="rbp-mega-link"><span class="rbp-mega-link-icon">01</span><span><span class="rbp-mega-link-name">Our Process</span><span class="rbp-mega-link-desc">How RBP scopes, supports and delivers.</span></span></a></li><li><a href="/collections/templates" class="rbp-mega-link"><span class="rbp-mega-link-icon">📄</span><span><span class="rbp-mega-link-name">Templates</span><span class="rbp-mega-link-desc">Practical business document templates.</span></span></a></li><li><a href="/collections/toolkits" class="rbp-mega-link"><span class="rbp-mega-link-icon">🧰</span><span><span class="rbp-mega-link-name">Toolkits</span><span class="rbp-mega-link-desc">Grouped tools for business operations.</span></span></a></li></ul></div>
+        <div class="rbp-mega-col"><p class="rbp-mega-col-title">Documentation library</p><ul class="rbp-mega-link-list"><li><a href="/collections/documentation-suites" class="rbp-mega-link"><span class="rbp-mega-link-icon">📑</span><span><span class="rbp-mega-link-name">Documentation Suites</span><span class="rbp-mega-link-desc">Connected document sets for business workflows.</span></span></a></li><li><a href="/collections/industry-packs" class="rbp-mega-link"><span class="rbp-mega-link-icon">IP</span><span><span class="rbp-mega-link-name">Industry Packs</span><span class="rbp-mega-link-desc">Industry-focused operating documents and support.</span></span></a></li><li><a href="/pages/resources" class="rbp-mega-link"><span class="rbp-mega-link-icon">↗</span><span><span class="rbp-mega-link-name">Resources</span><span class="rbp-mega-link-desc">Business guides, tools and support material.</span></span></a></li></ul></div>
+        <div class="rbp-mega-footer"><p class="rbp-mega-footer-text"><strong>Operational tools:</strong> standardise, document and improve how the business runs.</p><div class="rbp-mega-footer-actions"><a href="/pages/our-process" class="rbp-mega-footer-btn rbp-mega-footer-btn-ghost">View process</a><a href="/collections/templates" class="rbp-mega-footer-btn rbp-mega-footer-btn-primary">Browse resources →</a></div></div>
+      </div>
+    </div>
+
+    <div class="rbp-mega-wrap" id="mega-essentials" role="dialog" aria-label="Essentials menu" aria-hidden="true">
+      <div class="rbp-mega-content cols-2">
+        <div class="rbp-mega-sidebar"><a href="/pages/business-nbn" class="rbp-mega-hub"><div class="rbp-mega-hub-icon">🌐</div><div><span class="rbp-mega-hub-label">Essentials</span><span class="rbp-mega-hub-sub">Connected business services →</span></div></a><p class="rbp-mega-section-label">Popular essentials</p><a href="/pages/business-nbn" class="rbp-mega-quick-link"><span class="rbp-mega-quick-link-dot"></span>Business NBN</a><a href="/pages/marketplace" class="rbp-mega-quick-link"><span class="rbp-mega-quick-link-dot"></span>Marketplace</a></div>
+        <div class="rbp-mega-col"><p class="rbp-mega-col-title">Business services</p><ul class="rbp-mega-link-list"><li><a href="/pages/business-nbn" class="rbp-mega-link"><span class="rbp-mega-link-icon">BN</span><span><span class="rbp-mega-link-name">Business NBN</span><span class="rbp-mega-link-desc">Connectivity options and business internet support.</span></span></a></li><li><a href="/pages/business-finance" class="rbp-mega-link"><span class="rbp-mega-link-icon">$</span><span><span class="rbp-mega-link-name">Business Finance</span><span class="rbp-mega-link-desc">Finance pathways and partner-supported options.</span></span></a></li><li><a href="/pages/business-insurance" class="rbp-mega-link"><span class="rbp-mega-link-icon">◈</span><span><span class="rbp-mega-link-name">Business Insurance</span><span class="rbp-mega-link-desc">Insurance support pathways for business needs.</span></span></a></li></ul></div>
+        <div class="rbp-mega-col"><p class="rbp-mega-col-title">Offers and partners</p><ul class="rbp-mega-link-list"><li><a href="/pages/marketplace" class="rbp-mega-link"><span class="rbp-mega-link-icon">🏪</span><span><span class="rbp-mega-link-name">Marketplace</span><span class="rbp-mega-link-desc">Business offers, listings and opportunities.</span></span></a></li><li><a href="/pages/offers" class="rbp-mega-link"><span class="rbp-mega-link-icon">★</span><span><span class="rbp-mega-link-name">Partner Offers</span><span class="rbp-mega-link-desc">Partner-led services and business offers.</span></span></a></li></ul></div>
+        <div class="rbp-mega-footer"><p class="rbp-mega-footer-text"><strong>Essentials are connected services:</strong> distinguish partner services from RBP advisory and implementation.</p><div class="rbp-mega-footer-actions"><a href="/pages/business-nbn" class="rbp-mega-footer-btn rbp-mega-footer-btn-primary">Explore essentials →</a></div></div>
+      </div>
+    </div>
+
     <div class="rbp-mega-wrap" id="mega-membership" role="dialog" aria-label="Membership menu" aria-hidden="true">
       <div class="rbp-mega-content cols-2">
-        <div class="rbp-mega-sidebar">
-          <a href="/pages/membership" class="rbp-mega-hub">
-            <div class="rbp-mega-hub-icon">⭐</div>
-            <div class="rbp-mega-hub-text">
-              <span class="rbp-mega-hub-label">RBP Membership</span>
-              <span class="rbp-mega-hub-sub">View full hub →</span>
-            </div>
-          </a>
-          <p class="rbp-mega-section-label">Quick links</p>
-          <a href="/pages/membership#inclusions" class="rbp-mega-quick-link"><span class="rbp-mega-quick-link-dot"></span>What's included</a>
-          <a href="/pages/membership#plans" class="rbp-mega-quick-link"><span class="rbp-mega-quick-link-dot"></span>Plans &amp; pricing</a>
-          <a href="/pages/membership#faq" class="rbp-mega-quick-link"><span class="rbp-mega-quick-link-dot"></span>Membership FAQ</a>
-          <a href="/account/login" class="rbp-mega-quick-link"><span class="rbp-mega-quick-link-dot"></span>Member login</a>
-        </div>
-        <div class="rbp-mega-col">
-          <p class="rbp-mega-col-title">Member Benefits</p>
-          <ul class="rbp-mega-link-list">
-            <li><a href="/pages/membership" class="rbp-mega-link">
-              <div class="rbp-mega-link-icon">💎</div>
-              <div class="rbp-mega-link-body">
-                <span class="rbp-mega-link-name">Premium Membership</span>
-                <span class="rbp-mega-link-desc">Priority access, exclusive rates &amp; member-only tools</span>
-              </div>
-            </a></li>
-            <li><a href="/pages/member-portal" class="rbp-mega-link">
-              <div class="rbp-mega-link-icon">🚪</div>
-              <div class="rbp-mega-link-body">
-                <span class="rbp-mega-link-name">Member Portal</span>
-                <span class="rbp-mega-link-desc">Access your dashboard, documents &amp; services</span>
-              </div>
-            </a></li>
-            <li><a href="/pages/offers" class="rbp-mega-link">
-              <div class="rbp-mega-link-icon">🎁</div>
-              <div class="rbp-mega-link-body">
-                <span class="rbp-mega-link-name">Partner Offers</span>
-                <span class="rbp-mega-link-desc">Exclusive deals available to members only</span>
-              </div>
-            </a></li>
-            <li><a href="/collections/free-resources" class="rbp-mega-link">
-              <div class="rbp-mega-link-icon">📦</div>
-              <div class="rbp-mega-link-body">
-                <span class="rbp-mega-link-name">Free Resources</span>
-                <span class="rbp-mega-link-desc">Templates &amp; guides open to all members</span>
-              </div>
-            </a></li>
-          </ul>
-        </div>
-        <div class="rbp-mega-footer">
-          <p class="rbp-mega-footer-text"><strong>Not a member yet?</strong> Join free and unlock your first benefits today.</p>
-          <div class="rbp-mega-footer-actions">
-            <a href="/pages/membership" class="rbp-mega-footer-btn rbp-mega-footer-btn-ghost">Learn more</a>
-            <a href="/pages/membership#join" class="rbp-mega-footer-btn rbp-mega-footer-btn-primary">Join Free →</a>
-          </div>
-        </div>
+        <div class="rbp-mega-sidebar"><a href="/pages/membership" class="rbp-mega-hub"><div class="rbp-mega-hub-icon">★</div><div><span class="rbp-mega-hub-label">Membership</span><span class="rbp-mega-hub-sub">Ongoing benefits and support →</span></div></a><p class="rbp-mega-section-label">Membership links</p><a href="/pages/membership#benefits" class="rbp-mega-quick-link"><span class="rbp-mega-quick-link-dot"></span>Member Benefits</a><a href="/pages/membership#faq" class="rbp-mega-quick-link"><span class="rbp-mega-quick-link-dot"></span>FAQs</a></div>
+        <div class="rbp-mega-col"><p class="rbp-mega-col-title">Join RBP</p><ul class="rbp-mega-link-list"><li><a href="/pages/membership" class="rbp-mega-link"><span class="rbp-mega-link-icon">OV</span><span><span class="rbp-mega-link-name">Overview</span><span class="rbp-mega-link-desc">Understand the membership model.</span></span></a></li><li><a href="/pages/membership#benefits" class="rbp-mega-link"><span class="rbp-mega-link-icon">MB</span><span><span class="rbp-mega-link-name">Member Benefits</span><span class="rbp-mega-link-desc">Support, resources and member-only value.</span></span></a></li></ul></div>
+        <div class="rbp-mega-col"><p class="rbp-mega-col-title">Support and sign up</p><ul class="rbp-mega-link-list"><li><a href="/pages/membership#faq" class="rbp-mega-link"><span class="rbp-mega-link-icon">?</span><span><span class="rbp-mega-link-name">Frequently Asked Questions</span><span class="rbp-mega-link-desc">Membership answers and support.</span></span></a></li><li><a href="/pages/sign-up-today" class="rbp-mega-link"><span class="rbp-mega-link-icon">＋</span><span><span class="rbp-mega-link-name">Sign Up</span><span class="rbp-mega-link-desc">Start the membership pathway.</span></span></a></li></ul></div>
+        <div class="rbp-mega-footer"><p class="rbp-mega-footer-text"><strong>Make RBP part of your operating rhythm.</strong></p><div class="rbp-mega-footer-actions"><a href="/pages/membership" class="rbp-mega-footer-btn rbp-mega-footer-btn-primary">Explore membership →</a></div></div>
       </div>
     </div>
 
-    {%- comment %} ── Core Services mega ── {% endcomment %}
-    <div class="rbp-mega-wrap" id="mega-core" role="dialog" aria-label="Core Services menu" aria-hidden="true">
-      <div class="rbp-mega-content cols-3">
-        <div class="rbp-mega-sidebar">
-          <a href="/pages/core-services" class="rbp-mega-hub">
-            <div class="rbp-mega-hub-icon">🎯</div>
-            <div class="rbp-mega-hub-text">
-              <span class="rbp-mega-hub-label">Core Services</span>
-              <span class="rbp-mega-hub-sub">View all services →</span>
-            </div>
-          </a>
-          <p class="rbp-mega-section-label">Browse by need</p>
-          <a href="/pages/core-services#health" class="rbp-mega-quick-link"><span class="rbp-mega-quick-link-dot"></span>Business health check</a>
-          <a href="/pages/core-services#advisory" class="rbp-mega-quick-link"><span class="rbp-mega-quick-link-dot"></span>Advisory services</a>
-          <a href="/pages/core-services#risk" class="rbp-mega-quick-link"><span class="rbp-mega-quick-link-dot"></span>Risk &amp; compliance</a>
-          <a href="/pages/custom-solutions" class="rbp-mega-quick-link"><span class="rbp-mega-quick-link-dot"></span>Custom Solutions</a>
-        </div>
-        <div class="rbp-mega-col">
-          <p class="rbp-mega-col-title">Our Services</p>
-          <ul class="rbp-mega-link-list">
-            <li><a href="/products/business-health-check" class="rbp-mega-link">
-              <div class="rbp-mega-link-icon">🩺</div>
-              <div class="rbp-mega-link-body">
-                <span class="rbp-mega-link-name">Business Health Check</span>
-                <span class="rbp-mega-link-desc">Comprehensive diagnostic of your operations</span>
-              </div>
-            </a></li>
-            <li><a href="/products/business-advisor" class="rbp-mega-link">
-              <div class="rbp-mega-link-icon">🧠</div>
-              <div class="rbp-mega-link-body">
-                <span class="rbp-mega-link-name">Business Advisor</span>
-                <span class="rbp-mega-link-desc">Strategic advice from experienced consultants</span>
-              </div>
-            </a></li>
-            <li><a href="/products/decision-desk" class="rbp-mega-link">
-              <div class="rbp-mega-link-icon">📋</div>
-              <div class="rbp-mega-link-body">
-                <span class="rbp-mega-link-name">Decision Desk</span>
-                <span class="rbp-mega-link-desc">Data-driven decisions for your business</span>
-              </div>
-            </a></li>
-          </ul>
-        </div>
-        <div class="rbp-mega-col">
-          <p class="rbp-mega-col-title">Specialist Services</p>
-          <ul class="rbp-mega-link-list">
-            <li><a href="/products/risk-advisor" class="rbp-mega-link">
-              <div class="rbp-mega-link-icon">🛡️</div>
-              <div class="rbp-mega-link-body">
-                <span class="rbp-mega-link-name">Risk Advisor</span>
-                <span class="rbp-mega-link-desc">Identify &amp; mitigate business risks</span>
-              </div>
-            </a></li>
-            <li><a href="/products/the-fixer" class="rbp-mega-link">
-              <div class="rbp-mega-link-icon">🔧</div>
-              <div class="rbp-mega-link-body">
-                <span class="rbp-mega-link-name">The Fixer</span>
-                <span class="rbp-mega-link-desc">Rapid problem resolution &amp; recovery</span>
-              </div>
-            </a></li>
-            <li><a href="/pages/core-services" class="rbp-mega-link">
-              <div class="rbp-mega-link-icon">➕</div>
-              <div class="rbp-mega-link-body">
-                <span class="rbp-mega-link-name">View All Services</span>
-                <span class="rbp-mega-link-desc">See our complete service catalogue</span>
-              </div>
-            </a></li>
-          </ul>
-        </div>
-        <div class="rbp-mega-footer">
-          <p class="rbp-mega-footer-text"><strong>Not sure where to start?</strong> Book a free discovery call with our team.</p>
-          <div class="rbp-mega-footer-actions">
-            <a href="/pages/core-services" class="rbp-mega-footer-btn rbp-mega-footer-btn-ghost">All services</a>
-            <a href="/pages/contact" class="rbp-mega-footer-btn rbp-mega-footer-btn-primary">Book a call →</a>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    {%- comment %} ── On-Demand mega ── {% endcomment %}
-    <div class="rbp-mega-wrap" id="mega-ondemand" role="dialog" aria-label="On-Demand Services menu" aria-hidden="true">
-      <div class="rbp-mega-content cols-4">
-        <div class="rbp-mega-sidebar">
-          <a href="/collections/on-demand-services" class="rbp-mega-hub">
-            <div class="rbp-mega-hub-icon">⚡</div>
-            <div class="rbp-mega-hub-text">
-              <span class="rbp-mega-hub-label">On-Demand Services</span>
-              <span class="rbp-mega-hub-sub">Browse all 699 services →</span>
-            </div>
-          </a>
-          <p class="rbp-mega-section-label">Service categories</p>
-          <a href="/collections/on-demand-accounting-finance" class="rbp-mega-quick-link"><span class="rbp-mega-quick-link-dot"></span>Accounting &amp; Finance</a>
-          <a href="/collections/on-demand-people" class="rbp-mega-quick-link"><span class="rbp-mega-quick-link-dot"></span>People &amp; HR</a>
-          <a href="/collections/on-demand-operations" class="rbp-mega-quick-link"><span class="rbp-mega-quick-link-dot"></span>Operations</a>
-          <a href="/collections/on-demand-growth" class="rbp-mega-quick-link"><span class="rbp-mega-quick-link-dot"></span>Growth &amp; Marketing</a>
-        </div>
-        <div class="rbp-mega-col">
-          <p class="rbp-mega-col-title">Business Operations</p>
-          <ul class="rbp-mega-link-list">
-            <li><a href="/collections/on-demand-management-consulting" class="rbp-mega-link">
-              <div class="rbp-mega-link-icon">📊</div>
-              <div class="rbp-mega-link-body">
-                <span class="rbp-mega-link-name">Management Consulting</span>
-                <span class="rbp-mega-link-desc">Strategy, structure &amp; systems</span>
-              </div>
-            </a></li>
-            <li><a href="/collections/on-demand-operations" class="rbp-mega-link">
-              <div class="rbp-mega-link-icon">⚙️</div>
-              <div class="rbp-mega-link-body">
-                <span class="rbp-mega-link-name">Operations</span>
-                <span class="rbp-mega-link-desc">Process improvement &amp; efficiency</span>
-              </div>
-            </a></li>
-            <li><a href="/collections/on-demand-change" class="rbp-mega-link">
-              <div class="rbp-mega-link-icon">🔄</div>
-              <div class="rbp-mega-link-body">
-                <span class="rbp-mega-link-name">Change Management</span>
-                <span class="rbp-mega-link-desc">Business transformation support</span>
-              </div>
-            </a></li>
-          </ul>
-        </div>
-        <div class="rbp-mega-col">
-          <p class="rbp-mega-col-title">People &amp; Finance</p>
-          <ul class="rbp-mega-link-list">
-            <li><a href="/collections/on-demand-people" class="rbp-mega-link">
-              <div class="rbp-mega-link-icon">👥</div>
-              <div class="rbp-mega-link-body">
-                <span class="rbp-mega-link-name">People &amp; HR</span>
-                <span class="rbp-mega-link-desc">Recruitment, culture &amp; compliance</span>
-              </div>
-            </a></li>
-            <li><a href="/collections/on-demand-accounting-finance" class="rbp-mega-link">
-              <div class="rbp-mega-link-icon">💰</div>
-              <div class="rbp-mega-link-body">
-                <span class="rbp-mega-link-name">Accounting &amp; Finance</span>
-                <span class="rbp-mega-link-desc">CFO services, reporting &amp; control</span>
-              </div>
-            </a></li>
-            <li><a href="/collections/on-demand-ai-advisory" class="rbp-mega-link">
-              <div class="rbp-mega-link-icon">🤖</div>
-              <div class="rbp-mega-link-body">
-                <span class="rbp-mega-link-name">AI Advisory</span>
-                <span class="rbp-mega-link-desc">AI strategy &amp; implementation support</span>
-              </div>
-            </a></li>
-          </ul>
-        </div>
-        <div class="rbp-mega-col">
-          <p class="rbp-mega-col-title">Growth &amp; Digital</p>
-          <ul class="rbp-mega-link-list">
-            <li><a href="/collections/on-demand-growth" class="rbp-mega-link">
-              <div class="rbp-mega-link-icon">📈</div>
-              <div class="rbp-mega-link-body">
-                <span class="rbp-mega-link-name">Growth &amp; Marketing</span>
-                <span class="rbp-mega-link-desc">Revenue strategy &amp; go-to-market</span>
-              </div>
-            </a></li>
-            <li><a href="/collections/on-demand-digital-support" class="rbp-mega-link">
-              <div class="rbp-mega-link-icon">💻</div>
-              <div class="rbp-mega-link-body">
-                <span class="rbp-mega-link-name">Digital Support</span>
-                <span class="rbp-mega-link-desc">Tech setup, tools &amp; digital transformation</span>
-              </div>
-            </a></li>
-            <li><a href="/collections/on-demand-services-auto" class="rbp-mega-link">
-              <div class="rbp-mega-link-icon">🗂️</div>
-              <div class="rbp-mega-link-body">
-                <span class="rbp-mega-link-name">All On-Demand</span>
-                <span class="rbp-mega-link-desc">Browse the full catalogue of 699+ services</span>
-              </div>
-            </a></li>
-          </ul>
-        </div>
-        <div class="rbp-mega-footer">
-          <p class="rbp-mega-footer-text"><strong>699 on-demand services</strong> across every area of your business — engage only what you need.</p>
-          <div class="rbp-mega-footer-actions">
-            <a href="/pages/applications" class="rbp-mega-footer-btn rbp-mega-footer-btn-ghost">Applications hub</a>
-            <a href="/collections/on-demand-services" class="rbp-mega-footer-btn rbp-mega-footer-btn-primary">Browse all →</a>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    {%- comment %} ── Marketplace mega ── {% endcomment %}
-    <div class="rbp-mega-wrap" id="mega-marketplace" role="dialog" aria-label="Marketplace menu" aria-hidden="true">
-      <div class="rbp-mega-content cols-3">
-        <div class="rbp-mega-sidebar">
-          <a href="/pages/marketplace" class="rbp-mega-hub">
-            <div class="rbp-mega-hub-icon">🏪</div>
-            <div class="rbp-mega-hub-text">
-              <span class="rbp-mega-hub-label">Marketplace</span>
-              <span class="rbp-mega-hub-sub">View full hub →</span>
-            </div>
-          </a>
-          <p class="rbp-mega-section-label">Partner Offers</p>
-          <a href="/pages/offers" class="rbp-mega-quick-link"><span class="rbp-mega-quick-link-dot"></span>All partner offers</a>
-          <a href="/pages/offer-categories" class="rbp-mega-quick-link"><span class="rbp-mega-quick-link-dot"></span>Browse by category</a>
-          <a href="/pages/claim-offer" class="rbp-mega-quick-link"><span class="rbp-mega-quick-link-dot"></span>Claim an offer</a>
-        </div>
-        <div class="rbp-mega-col">
-          <p class="rbp-mega-col-title">Buy a Business</p>
-          <ul class="rbp-mega-link-list">
-            <li><a href="/collections/business-in-a-box" class="rbp-mega-link">
-              <div class="rbp-mega-link-icon">📦</div>
-              <div class="rbp-mega-link-body">
-                <span class="rbp-mega-link-name">Business-In-A-Box</span>
-                <span class="rbp-mega-link-desc">Ready-to-launch business packages</span>
-              </div>
-            </a></li>
-            <li><a href="/collections/asset-sales" class="rbp-mega-link">
-              <div class="rbp-mega-link-icon">🏷️</div>
-              <div class="rbp-mega-link-body">
-                <span class="rbp-mega-link-name">Asset Sales</span>
-                <span class="rbp-mega-link-desc">Business assets &amp; IP for sale</span>
-              </div>
-            </a></li>
-            <li><a href="/collections/featured-opportunities" class="rbp-mega-link">
-              <div class="rbp-mega-link-icon">⭐</div>
-              <div class="rbp-mega-link-body">
-                <span class="rbp-mega-link-name">Featured Opportunities</span>
-                <span class="rbp-mega-link-desc">Curated high-value listings</span>
-              </div>
-            </a></li>
-          </ul>
-        </div>
-        <div class="rbp-mega-col">
-          <p class="rbp-mega-col-title">Sell &amp; List</p>
-          <ul class="rbp-mega-link-list">
-            <li><a href="/pages/sell-your-business" class="rbp-mega-link">
-              <div class="rbp-mega-link-icon">📢</div>
-              <div class="rbp-mega-link-body">
-                <span class="rbp-mega-link-name">Sell Your Business</span>
-                <span class="rbp-mega-link-desc">List your business or assets</span>
-              </div>
-            </a></li>
-            <li><a href="/pages/marketplace-enquiry" class="rbp-mega-link">
-              <div class="rbp-mega-link-icon">💬</div>
-              <div class="rbp-mega-link-body">
-                <span class="rbp-mega-link-name">Marketplace Enquiry</span>
-                <span class="rbp-mega-link-desc">Speak to our marketplace team</span>
-              </div>
-            </a></li>
-            <li><a href="/pages/marketplace-faq" class="rbp-mega-link">
-              <div class="rbp-mega-link-icon">❓</div>
-              <div class="rbp-mega-link-body">
-                <span class="rbp-mega-link-name">Marketplace FAQ</span>
-                <span class="rbp-mega-link-desc">Common questions answered</span>
-              </div>
-            </a></li>
-          </ul>
-        </div>
-        <div class="rbp-mega-footer">
-          <p class="rbp-mega-footer-text"><strong>Partner Offers &amp; Marketplace:</strong> exclusive deals and business opportunities for members.</p>
-          <div class="rbp-mega-footer-actions">
-            <a href="/pages/marketplace" class="rbp-mega-footer-btn rbp-mega-footer-btn-ghost">Explore marketplace</a>
-            <a href="/pages/offers" class="rbp-mega-footer-btn rbp-mega-footer-btn-primary">Partner Offers →</a>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    {%- comment %} ── Custom Solutions mega ── {% endcomment %}
-    <div class="rbp-mega-wrap" id="mega-custom" role="dialog" aria-label="Custom Solutions menu" aria-hidden="true">
+    <div class="rbp-mega-wrap" id="mega-support" role="dialog" aria-label="Support menu" aria-hidden="true">
       <div class="rbp-mega-content cols-2">
-        <div class="rbp-mega-sidebar">
-          <a href="/pages/custom-solutions" class="rbp-mega-hub">
-            <div class="rbp-mega-hub-icon">🛠️</div>
-            <div class="rbp-mega-hub-text">
-              <span class="rbp-mega-hub-label">Custom Solutions</span>
-              <span class="rbp-mega-hub-sub">View full hub →</span>
-            </div>
-          </a>
-          <p class="rbp-mega-section-label">Pathways</p>
-          <a href="/pages/custom-business-build" class="rbp-mega-quick-link"><span class="rbp-mega-quick-link-dot"></span>Custom Project</a>
-          <a href="/pages/custom-solutions-retainer" class="rbp-mega-quick-link"><span class="rbp-mega-quick-link-dot"></span>Retainer Builder</a>
-          <a href="/pages/contact" class="rbp-mega-quick-link"><span class="rbp-mega-quick-link-dot"></span>Request a quote</a>
-        </div>
-        <div class="rbp-mega-col">
-          <p class="rbp-mega-col-title">Custom Engagements</p>
-          <ul class="rbp-mega-link-list">
-            <li><a href="/pages/custom-business-build" class="rbp-mega-link">
-              <div class="rbp-mega-link-icon">🏗️</div>
-              <div class="rbp-mega-link-body">
-                <span class="rbp-mega-link-name">Custom Project Build</span>
-                <span class="rbp-mega-link-desc">One-off scoped projects tailored to your needs</span>
-              </div>
-            </a></li>
-            <li><a href="/pages/retainer-builder" class="rbp-mega-link">
-              <div class="rbp-mega-link-icon">🔁</div>
-              <div class="rbp-mega-link-body">
-                <span class="rbp-mega-link-name">Custom Solutions Retainer</span>
-                <span class="rbp-mega-link-desc">Ongoing fractional support on your terms</span>
-              </div>
-            </a></li>
-            <li><a href="/pages/contact" class="rbp-mega-link">
-              <div class="rbp-mega-link-icon">💬</div>
-              <div class="rbp-mega-link-body">
-                <span class="rbp-mega-link-name">Speak to Our Team</span>
-                <span class="rbp-mega-link-desc">Discuss your requirements with an expert</span>
-              </div>
-            </a></li>
-          </ul>
-        </div>
-        <div class="rbp-mega-footer">
-          <p class="rbp-mega-footer-text"><strong>Not a cookie-cutter product?</strong> We build bespoke solutions for unique business challenges.</p>
-          <div class="rbp-mega-footer-actions">
-            <a href="/pages/custom-solutions" class="rbp-mega-footer-btn rbp-mega-footer-btn-ghost">Learn more</a>
-            <a href="/pages/contact" class="rbp-mega-footer-btn rbp-mega-footer-btn-primary">Request a quote →</a>
-          </div>
-        </div>
+        <div class="rbp-mega-sidebar"><a href="/pages/help-centre" class="rbp-mega-hub"><div class="rbp-mega-hub-icon">?</div><div><span class="rbp-mega-hub-label">Support</span><span class="rbp-mega-hub-sub">Help, contact and policies →</span></div></a><p class="rbp-mega-section-label">Need help?</p><a href="/pages/contact" class="rbp-mega-quick-link"><span class="rbp-mega-quick-link-dot"></span>Contact</a><a href="/policies/privacy-policy" class="rbp-mega-quick-link"><span class="rbp-mega-quick-link-dot"></span>Policies</a></div>
+        <div class="rbp-mega-col"><p class="rbp-mega-col-title">Help and education</p><ul class="rbp-mega-link-list"><li><a href="/pages/help-centre" class="rbp-mega-link"><span class="rbp-mega-link-icon">HC</span><span><span class="rbp-mega-link-name">Help Centre</span><span class="rbp-mega-link-desc">Guides, support and service information.</span></span></a></li><li><a href="/pages/nbn-support-education" class="rbp-mega-link"><span class="rbp-mega-link-icon">NB</span><span><span class="rbp-mega-link-name">NBN Support & Education</span><span class="rbp-mega-link-desc">Learn about Business NBN options and support.</span></span></a></li><li><a href="/pages/contact" class="rbp-mega-link"><span class="rbp-mega-link-icon">✉</span><span><span class="rbp-mega-link-name">Contact</span><span class="rbp-mega-link-desc">Ask a question or request support.</span></span></a></li></ul></div>
+        <div class="rbp-mega-col"><p class="rbp-mega-col-title">Company and policies</p><ul class="rbp-mega-link-list"><li><a href="/pages/about" class="rbp-mega-link"><span class="rbp-mega-link-icon">AB</span><span><span class="rbp-mega-link-name">About</span><span class="rbp-mega-link-desc">Learn about Remote Business Partner.</span></span></a></li><li><a href="/policies/privacy-policy" class="rbp-mega-link"><span class="rbp-mega-link-icon">PL</span><span><span class="rbp-mega-link-name">Policies</span><span class="rbp-mega-link-desc">Privacy, terms, refunds and store policies.</span></span></a></li></ul></div>
+        <div class="rbp-mega-footer"><p class="rbp-mega-footer-text"><strong>Support should be easy to find.</strong> Use this area for help, education, contact and policies.</p><div class="rbp-mega-footer-actions"><a href="/pages/contact" class="rbp-mega-footer-btn rbp-mega-footer-btn-primary">Contact RBP →</a></div></div>
       </div>
     </div>
 
-    {%- comment %} ── Resources mega ── {% endcomment %}
-    <div class="rbp-mega-wrap" id="mega-resources" role="dialog" aria-label="Resources menu" aria-hidden="true">
-      <div class="rbp-mega-content cols-3">
-        <div class="rbp-mega-sidebar">
-          <a href="/pages/resources" class="rbp-mega-hub">
-            <div class="rbp-mega-hub-icon">📚</div>
-            <div class="rbp-mega-hub-text">
-              <span class="rbp-mega-hub-label">Resources Hub</span>
-              <span class="rbp-mega-hub-sub">View all resources →</span>
-            </div>
-          </a>
-          <p class="rbp-mega-section-label">Get support</p>
-          <a href="/pages/help-center" class="rbp-mega-quick-link"><span class="rbp-mega-quick-link-dot"></span>Help Center</a>
-          <a href="/pages/faq" class="rbp-mega-quick-link"><span class="rbp-mega-quick-link-dot"></span>FAQ</a>
-          <a href="/pages/contact" class="rbp-mega-quick-link"><span class="rbp-mega-quick-link-dot"></span>Contact us</a>
-        </div>
-        <div class="rbp-mega-col">
-          <p class="rbp-mega-col-title">Templates &amp; Tools</p>
-          <ul class="rbp-mega-link-list">
-            <li><a href="/collections/business-templates" class="rbp-mega-link">
-              <div class="rbp-mega-link-icon">📄</div>
-              <div class="rbp-mega-link-body">
-                <span class="rbp-mega-link-name">Business Templates</span>
-                <span class="rbp-mega-link-desc">Ready-to-use document templates</span>
-              </div>
-            </a></li>
-            <li><a href="/collections/toolkits" class="rbp-mega-link">
-              <div class="rbp-mega-link-icon">🧰</div>
-              <div class="rbp-mega-link-body">
-                <span class="rbp-mega-link-name">Toolkits</span>
-                <span class="rbp-mega-link-desc">Complete toolkit packs by function</span>
-              </div>
-            </a></li>
-            <li><a href="/collections/documentation-suites" class="rbp-mega-link">
-              <div class="rbp-mega-link-icon">📑</div>
-              <div class="rbp-mega-link-body">
-                <span class="rbp-mega-link-name">Documentation Suites</span>
-                <span class="rbp-mega-link-desc">Full documentation packs for your industry</span>
-              </div>
-            </a></li>
-          </ul>
-        </div>
-        <div class="rbp-mega-col">
-          <p class="rbp-mega-col-title">Knowledge &amp; Help</p>
-          <ul class="rbp-mega-link-list">
-            <li><a href="/pages/help-center" class="rbp-mega-link">
-              <div class="rbp-mega-link-icon">🆘</div>
-              <div class="rbp-mega-link-body">
-                <span class="rbp-mega-link-name">Help Center</span>
-                <span class="rbp-mega-link-desc">Guides, tutorials &amp; support articles</span>
-              </div>
-            </a></li>
-            <li><a href="/collections/free-resources" class="rbp-mega-link">
-              <div class="rbp-mega-link-icon">🎁</div>
-              <div class="rbp-mega-link-body">
-                <span class="rbp-mega-link-name">Free Resources</span>
-                <span class="rbp-mega-link-desc">No-cost templates &amp; guides</span>
-              </div>
-            </a></li>
-            <li><a href="/pages/document-hub" class="rbp-mega-link">
-              <div class="rbp-mega-link-icon">🗂️</div>
-              <div class="rbp-mega-link-body">
-                <span class="rbp-mega-link-name">Document Hub</span>
-                <span class="rbp-mega-link-desc">Centralised document library</span>
-              </div>
-            </a></li>
-          </ul>
-        </div>
-        <div class="rbp-mega-footer">
-          <p class="rbp-mega-footer-text"><strong>Need help?</strong> Our Help Center has guides for every step of your journey.</p>
-          <div class="rbp-mega-footer-actions">
-            <a href="/pages/faq" class="rbp-mega-footer-btn rbp-mega-footer-btn-ghost">Browse FAQ</a>
-            <a href="/pages/help-center" class="rbp-mega-footer-btn rbp-mega-footer-btn-primary">Help Center →</a>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    {%- comment %} ── Search overlay ── {% endcomment %}
     <div class="rbp-search-overlay" id="rbp-search-overlay" role="search" aria-label="Search" aria-hidden="true">
       <div class="rbp-search-inner">
         <form action="/search" method="get" class="rbp-search-form" role="search">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2.2" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-          <input type="search" name="q" placeholder="Search services, templates, resources…" autocomplete="off" aria-label="Search" autofocus>
+          <input type="search" name="q" placeholder="Search services, templates, support and resources..." autocomplete="off" aria-label="Search">
           <button type="submit" class="rbp-search-submit">Search</button>
         </form>
-        <div class="rbp-search-hints" aria-label="Popular searches">
-          <span style="font-size:11px;color:#94a3b8;font-weight:700;align-self:center;">Popular:</span>
-          <a href="/search?q=business+health+check" class="rbp-search-hint">Business Health Check</a>
-          <a href="/search?q=membership" class="rbp-search-hint">Membership</a>
-          <a href="/search?q=HR+templates" class="rbp-search-hint">HR Templates</a>
-          <a href="/search?q=business+nbn" class="rbp-search-hint">Business NBN</a>
-          <a href="/search?q=on+demand" class="rbp-search-hint">On-Demand Services</a>
-        </div>
+        <div class="rbp-search-hints" aria-label="Popular searches"><a href="/search?q=business+health+check" class="rbp-search-hint">Business Health Check</a><a href="/search?q=on-demand+services" class="rbp-search-hint">On-Demand Services</a><a href="/search?q=retainer+builder" class="rbp-search-hint">Retainer Builder</a><a href="/search?q=business+nbn" class="rbp-search-hint">Business NBN</a><a href="/search?q=templates" class="rbp-search-hint">Templates</a></div>
       </div>
     </div>
 
-    {%- comment %} ── Mobile nav drawer ── {% endcomment %}
     <nav class="rbp-mobile-nav" id="rbp-mobile-nav" aria-label="Mobile navigation" aria-hidden="true">
-      <div class="rbp-mobile-search-bar">
-        <form action="/search" method="get" role="search" aria-label="Mobile search">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2.2" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-          <input type="search" name="q" placeholder="Search…" aria-label="Search">
-        </form>
-      </div>
+      <div class="rbp-mobile-search-bar"><form action="/search" method="get" role="search"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94a3b8" stroke-width="2.2" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg><input type="search" name="q" placeholder="Search..." aria-label="Search"></form></div>
       <div class="rbp-mobile-accordion">
-        <div class="rbp-mobile-item">
-          <a href="/" class="rbp-mobile-item-btn">Home</a>
-        </div>
-        <details class="rbp-mobile-item">
-          <summary class="rbp-mobile-item-btn">Membership <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
-          <div class="rbp-mobile-sub">
-            <a href="/pages/membership">Membership Overview</a>
-            <a href="/pages/member-portal">Member Portal</a>
-            <a href="/pages/offers">Partner Offers</a>
-            <a href="/collections/free-resources">Free Resources</a>
-          </div>
-        </details>
-        <details class="rbp-mobile-item">
-          <summary class="rbp-mobile-item-btn">Core Services <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
-          <div class="rbp-mobile-sub">
-            <a href="/pages/core-services">All Core Services</a>
-            <a href="/products/business-health-check">Business Health Check</a>
-            <a href="/products/business-advisor">Business Advisor</a>
-            <a href="/products/decision-desk">Decision Desk</a>
-            <a href="/products/risk-advisor">Risk Advisor</a>
-            <a href="/products/the-fixer">The Fixer</a>
-          </div>
-        </details>
-        <details class="rbp-mobile-item">
-          <summary class="rbp-mobile-item-btn">On-Demand <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
-          <div class="rbp-mobile-sub">
-            <a href="/collections/on-demand-services">All On-Demand Services</a>
-            <a href="/collections/on-demand-accounting-finance">Accounting &amp; Finance</a>
-            <a href="/collections/on-demand-people">People &amp; HR</a>
-            <a href="/collections/on-demand-operations">Operations</a>
-            <a href="/collections/on-demand-growth">Growth &amp; Marketing</a>
-            <a href="/collections/on-demand-ai-advisory">AI Advisory</a>
-            <a href="/collections/on-demand-digital-support">Digital Support</a>
-          </div>
-        </details>
-        <div class="rbp-mobile-item">
-          <a href="/pages/business-nbn" class="rbp-mobile-item-btn">Business NBN</a>
-        </div>
-        <details class="rbp-mobile-item">
-          <summary class="rbp-mobile-item-btn">Marketplace <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
-          <div class="rbp-mobile-sub">
-            <a href="/pages/marketplace">Marketplace Overview</a>
-            <a href="/pages/offers">Partner Offers</a>
-            <a href="/collections/business-in-a-box">Business-In-A-Box</a>
-            <a href="/collections/asset-sales">Asset Sales</a>
-            <a href="/pages/sell-your-business">Sell Your Business</a>
-          </div>
-        </details>
-        <details class="rbp-mobile-item">
-          <summary class="rbp-mobile-item-btn">Custom Solutions <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
-          <div class="rbp-mobile-sub">
-            <a href="/pages/custom-solutions">Custom Solutions Overview</a>
-            <a href="/pages/custom-business-build">Custom Project Build</a>
-            <a href="/pages/retainer-builder">Retainer Builder</a>
-            <a href="/pages/contact">Request a Quote</a>
-          </div>
-        </details>
-        <details class="rbp-mobile-item">
-          <summary class="rbp-mobile-item-btn">Resources <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
-          <div class="rbp-mobile-sub">
-            <a href="/pages/resources">Resources Hub</a>
-            <a href="/pages/help-center">Help Center</a>
-            <a href="/collections/business-templates">Business Templates</a>
-            <a href="/collections/toolkits">Toolkits</a>
-            <a href="/collections/free-resources">Free Resources</a>
-            <a href="/pages/faq">FAQ</a>
-          </div>
-        </details>
-        <div class="rbp-mobile-item">
-          <a href="/pages/contact" class="rbp-mobile-item-btn">Contact</a>
-        </div>
+        <details class="rbp-mobile-item"><summary class="rbp-mobile-item-btn">Advisory <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary><div class="rbp-mobile-sub"><a href="/pages/core-services">Core Services</a><a href="/products/business-health-check">Business Health Check</a><a href="/products/business-advisor">Business Advisor</a><a href="/products/decision-desk">Decision Desk</a><a href="/products/the-fixer">The Fixer</a><a href="/pages/dispute-resolution-support">Dispute Resolution Support</a></div></details>
+        <details class="rbp-mobile-item"><summary class="rbp-mobile-item-btn">Consulting <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary><div class="rbp-mobile-sub"><a href="/collections/on-demand-services">On-Demand Services</a><a href="/collections/human-resources">Human Resources</a><a href="/collections/change-management">Change Management</a><a href="/collections/operations">Operations</a><a href="/collections/management">Management</a><a href="/collections/sales-marketing">Sales & Marketing</a><a href="/collections/artificial-intelligence">Artificial Intelligence</a><a href="/collections/it-digital">IT/Digital</a><a href="/collections/finance-accounting">Finance & Accounting</a><a href="/collections/bundled-on-demand">Bundled On-Demand</a></div></details>
+        <details class="rbp-mobile-item"><summary class="rbp-mobile-item-btn">Implementation <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary><div class="rbp-mobile-sub"><a href="/pages/custom-solutions">Custom Solutions</a><a href="/pages/retainer-builder">Retainer Builder</a><a href="/pages/applications">Applications</a><a href="/pages/managed-services">Managed Services</a><a href="/pages/bid-management">Bid Management</a><a href="/pages/property-field-services">Property Field Services</a></div></details>
+        <details class="rbp-mobile-item"><summary class="rbp-mobile-item-btn">Operations <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary><div class="rbp-mobile-sub"><a href="/pages/our-process">Our Process</a><a href="/collections/templates">Templates</a><a href="/collections/toolkits">Toolkits</a><a href="/collections/documentation-suites">Documentation Suites</a><a href="/collections/industry-packs">Industry Packs</a><a href="/pages/resources">Resources</a></div></details>
+        <details class="rbp-mobile-item"><summary class="rbp-mobile-item-btn">Essentials <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary><div class="rbp-mobile-sub"><a href="/pages/business-nbn">Business NBN</a><a href="/pages/business-finance">Business Finance</a><a href="/pages/business-insurance">Business Insurance</a><a href="/pages/marketplace">Marketplace</a><a href="/pages/offers">Partner Offers</a></div></details>
+        <details class="rbp-mobile-item"><summary class="rbp-mobile-item-btn">Membership <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary><div class="rbp-mobile-sub"><a href="/pages/membership">Overview</a><a href="/pages/membership#benefits">Member Benefits</a><a href="/pages/membership#faq">Frequently Asked Questions</a><a href="/pages/sign-up-today">Sign Up</a></div></details>
+        <details class="rbp-mobile-item"><summary class="rbp-mobile-item-btn">Support <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary><div class="rbp-mobile-sub"><a href="/pages/help-centre">Help Centre</a><a href="/pages/nbn-support-education">NBN Support & Education</a><a href="/pages/contact">Contact</a><a href="/pages/about">About</a><a href="/policies/privacy-policy">Policies</a></div></details>
       </div>
-      <div class="rbp-mobile-cta-row">
-        <a href="/account/login" class="rbp-mobile-cta rbp-mobile-cta-outline">Login</a>
-        <a href="/pages/membership" class="rbp-mobile-cta rbp-mobile-cta-primary">Join Free</a>
-      </div>
+      <div class="rbp-mobile-cta-row"><a href="/account/login" class="rbp-mobile-cta rbp-mobile-cta-outline">Account</a><a href="/pages/business-health-check" class="rbp-mobile-cta rbp-mobile-cta-primary">Health Check</a></div>
     </nav>
   </div>
 </header>
 
 <script>
 (function() {
-  'use strict';
   const header = document.getElementById('rbp-site-header');
   if (!header) return;
-
-  // ── Mega nav ────────────────────────────────────────────
   const navBtns = header.querySelectorAll('.rbp-nav-btn[data-mega]');
   const megaPanels = header.querySelectorAll('.rbp-mega-wrap');
   let activePanel = null;
   let closeTimer = null;
-
+  function closeMega() {
+    if (!activePanel) return;
+    activePanel.classList.remove('is-open');
+    activePanel.setAttribute('aria-hidden', 'true');
+    const btn = header.querySelector('[aria-controls="' + activePanel.id + '"]');
+    if (btn) btn.setAttribute('aria-expanded', 'false');
+    activePanel = null;
+  }
   function openMega(panelId, btn) {
     clearTimeout(closeTimer);
     if (activePanel && activePanel.id !== panelId) closeMega();
@@ -1057,70 +269,28 @@
     btn.setAttribute('aria-expanded', 'true');
     activePanel = panel;
   }
-
-  function closeMega() {
-    if (!activePanel) return;
-    activePanel.classList.remove('is-open');
-    activePanel.setAttribute('aria-hidden', 'true');
-    const btn = header.querySelector(`[aria-controls="${activePanel.id}"]`);
-    if (btn) btn.setAttribute('aria-expanded', 'false');
-    activePanel = null;
-  }
-
-  function scheduleClose() {
-    closeTimer = setTimeout(closeMega, 180);
-  }
-
-  navBtns.forEach(btn => {
+  function scheduleClose() { closeTimer = setTimeout(closeMega, 180); }
+  navBtns.forEach((btn) => {
     const panelId = 'mega-' + btn.dataset.mega;
     btn.addEventListener('mouseenter', () => openMega(panelId, btn));
     btn.addEventListener('mouseleave', scheduleClose);
-    btn.addEventListener('click', () => {
-      if (activePanel && activePanel.id === panelId) { closeMega(); }
-      else { openMega(panelId, btn); }
-    });
-    btn.addEventListener('keydown', e => {
-      if (e.key === 'Escape') closeMega();
-    });
+    btn.addEventListener('click', () => activePanel && activePanel.id === panelId ? closeMega() : openMega(panelId, btn));
   });
+  megaPanels.forEach((panel) => { panel.addEventListener('mouseenter', () => clearTimeout(closeTimer)); panel.addEventListener('mouseleave', scheduleClose); });
+  document.addEventListener('click', (event) => { if (!header.contains(event.target)) closeMega(); });
+  document.addEventListener('keydown', (event) => { if (event.key === 'Escape') closeMega(); });
 
-  megaPanels.forEach(panel => {
-    panel.addEventListener('mouseenter', () => clearTimeout(closeTimer));
-    panel.addEventListener('mouseleave', scheduleClose);
-  });
-
-  document.addEventListener('click', e => {
-    if (!header.contains(e.target)) closeMega();
-  });
-
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') closeMega();
-  });
-
-  // ── Search overlay ───────────────────────────────────────
   const searchBtn = document.getElementById('rbp-search-btn');
   const searchOverlay = document.getElementById('rbp-search-overlay');
   if (searchBtn && searchOverlay) {
     searchBtn.addEventListener('click', () => {
       const isOpen = searchOverlay.classList.toggle('is-open');
-      searchBtn.setAttribute('aria-expanded', isOpen);
-      searchOverlay.setAttribute('aria-hidden', !isOpen);
-      if (isOpen) {
-        closeMega();
-        const input = searchOverlay.querySelector('input');
-        if (input) setTimeout(() => input.focus(), 50);
-      }
+      searchBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      searchOverlay.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
+      if (isOpen) { closeMega(); const input = searchOverlay.querySelector('input'); if (input) setTimeout(() => input.focus(), 50); }
     });
-    document.addEventListener('keydown', e => {
-      if (e.key === 'Escape' && searchOverlay.classList.contains('is-open')) {
-        searchOverlay.classList.remove('is-open');
-        searchBtn.setAttribute('aria-expanded', 'false');
-        searchOverlay.setAttribute('aria-hidden', 'true');
-        searchBtn.focus();
-      }
-    });
-    document.addEventListener('click', e => {
-      if (!header.contains(e.target) && searchOverlay.classList.contains('is-open')) {
+    document.addEventListener('click', (event) => {
+      if (!header.contains(event.target) && searchOverlay.classList.contains('is-open')) {
         searchOverlay.classList.remove('is-open');
         searchBtn.setAttribute('aria-expanded', 'false');
         searchOverlay.setAttribute('aria-hidden', 'true');
@@ -1128,33 +298,22 @@
     });
   }
 
-  // ── Mobile drawer ────────────────────────────────────────
   const mobileToggle = document.getElementById('rbp-mobile-toggle');
   const mobileNav = document.getElementById('rbp-mobile-nav');
   if (mobileToggle && mobileNav) {
     mobileToggle.addEventListener('click', () => {
       const isOpen = mobileNav.classList.toggle('is-open');
-      mobileToggle.setAttribute('aria-expanded', isOpen);
-      mobileNav.setAttribute('aria-hidden', !isOpen);
+      mobileToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      mobileNav.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
       mobileToggle.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
       document.body.style.overflow = isOpen ? 'hidden' : '';
     });
-  }
-
-  // ── Scroll shadow ────────────────────────────────────────
-  const shell = header.querySelector('.rbp-nav-shell');
-  if (shell) {
-    const observer = new IntersectionObserver(
-      ([e]) => shell.classList.toggle('is-scrolled', !e.isIntersecting),
-      { threshold: [1], rootMargin: '-1px 0px 0px 0px' }
-    );
-    const sentinel = document.createElement('div');
-    sentinel.style.cssText = 'position:absolute;top:0;left:0;width:1px;height:1px;pointer-events:none;';
-    document.body.prepend(sentinel);
-    observer.observe(sentinel);
-    const style = document.createElement('style');
-    style.textContent = '.rbp-nav-shell.is-scrolled { box-shadow: 0 4px 20px rgba(15,23,42,.10); }';
-    document.head.appendChild(style);
+    mobileNav.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => {
+      mobileNav.classList.remove('is-open');
+      mobileToggle.setAttribute('aria-expanded', 'false');
+      mobileNav.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }));
   }
 })();
 </script>

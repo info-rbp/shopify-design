@@ -1,0 +1,205 @@
+.rbp-container {
+  width: min(100% - var(--rbp-container-x), var(--rbp-page-width));
+  margin-inline: auto;
+}
+
+.rbp-section {
+  padding-block: var(--rbp-section-y);
+}
+
+.rbp-section-head {
+  max-width: 760px;
+  margin: 0 auto clamp(28px, 4vw, 56px);
+  text-align: center;
+}
+
+.rbp-section-head > * + * {
+  margin-top: var(--rbp-stack-md);
+}
+
+.rbp-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  width: fit-content;
+  border-radius: 999px;
+  background: rgba(29, 78, 216, .1);
+  color: var(--rbp-blue-dark);
+  padding: .45rem .85rem;
+  font-size: .75rem;
+  font-weight: var(--rbp-font-weight-strong);
+  letter-spacing: .08em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.rbp-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  border: 1px solid transparent;
+  border-radius: var(--rbp-radius-md);
+  padding: .85rem 1.25rem;
+  font: inherit;
+  font-weight: var(--rbp-font-weight-strong);
+  line-height: 1.1;
+  text-align: center;
+  text-decoration: none;
+  transition: background-color .18s ease, border-color .18s ease, color .18s ease, opacity .18s ease, transform .18s ease;
+}
+
+.rbp-button:hover {
+  transform: translateY(-1px);
+}
+
+.rbp-button:focus-visible {
+  outline: 3px solid rgba(37, 99, 235, .35);
+  outline-offset: 3px;
+}
+
+.rbp-button--primary {
+  background: var(--rbp-blue);
+  color: #ffffff;
+  box-shadow: 0 10px 24px rgba(29, 78, 216, .2);
+}
+
+.rbp-button--primary:hover {
+  background: var(--rbp-blue-dark);
+  color: #ffffff;
+}
+
+.rbp-button--secondary {
+  background: #ffffff;
+  border-color: var(--rbp-border);
+  color: var(--rbp-ink);
+}
+
+.rbp-button--secondary:hover {
+  border-color: rgba(29, 78, 216, .24);
+  color: var(--rbp-blue-dark);
+}
+
+.rbp-card {
+  border: 1px solid var(--rbp-border);
+  border-radius: var(--rbp-radius-lg);
+  background: var(--rbp-panel);
+  box-shadow: var(--rbp-shadow-card);
+  padding: clamp(1.25rem, 3vw, 2rem);
+}
+
+.rbp-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+  gap: clamp(1rem, 2.4vw, 1.5rem);
+}
+
+.rbp-badge {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  border: 1px solid rgba(29, 78, 216, .16);
+  border-radius: 999px;
+  background: rgba(29, 78, 216, .08);
+  color: var(--rbp-blue-dark);
+  padding: .35rem .7rem;
+  font-size: .78rem;
+  font-weight: 750;
+  line-height: 1.2;
+}
+
+.rbp-notice {
+  border: 1px solid rgba(37, 99, 235, .18);
+  border-radius: var(--rbp-radius-lg);
+  background: linear-gradient(135deg, rgba(37, 99, 235, .08), rgba(79, 70, 229, .06));
+  color: var(--rbp-ink);
+  padding: clamp(1rem, 2.5vw, 1.5rem);
+}
+
+.rbp-notice > * + * {
+  margin-top: .65rem;
+}
+
+.rbp-cta-band {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: clamp(1rem, 4vw, 2rem);
+  border-radius: var(--rbp-radius-xl);
+  background: linear-gradient(135deg, var(--rbp-navy), var(--rbp-blue-dark));
+  color: #ffffff;
+  padding: clamp(1.5rem, 4vw, 3rem);
+  box-shadow: var(--rbp-shadow-soft);
+}
+
+.rbp-cta-band > * {
+  min-width: 0;
+}
+
+.rbp-support-panel {
+  display: grid;
+  gap: var(--rbp-stack-md);
+  border: 1px solid rgba(15, 23, 42, .08);
+  border-radius: var(--rbp-radius-lg);
+  background: var(--rbp-soft);
+  padding: clamp(1.25rem, 3vw, 2rem);
+}
+
+.rbp-trust-strip {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: .75rem 1.25rem;
+  color: var(--rbp-slate);
+  font-size: .9rem;
+  line-height: var(--rbp-line-body);
+}
+
+.rbp-trust-strip > * {
+  display: inline-flex;
+  align-items: center;
+  gap: .45rem;
+}
+
+.rbp-faq-list {
+  display: grid;
+  gap: .85rem;
+}
+
+.rbp-faq-list details {
+  border: 1px solid var(--rbp-border);
+  border-radius: var(--rbp-radius-md);
+  background: var(--rbp-panel);
+  padding: 1rem 1.1rem;
+}
+
+.rbp-faq-list summary {
+  cursor: pointer;
+  color: var(--rbp-ink);
+  font-weight: var(--rbp-font-weight-strong);
+}
+
+.rbp-faq-list details > * + * {
+  margin-top: .75rem;
+}
+
+@media (max-width: 760px) {
+  .rbp-section-head {
+    text-align: left;
+  }
+
+  .rbp-cta-band {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rbp-button {
+    transition: none;
+  }
+
+  .rbp-button:hover {
+    transform: none;
+  }
+}

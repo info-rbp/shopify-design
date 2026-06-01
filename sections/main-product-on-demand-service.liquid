@@ -1,0 +1,115 @@
+{% comment %}
+  RBP On-Demand Service product section.
+  Added during Phase 1B as an unpublished-theme additive template from the archived redevelopment work.
+{% endcomment %}
+{{ 'rbp-service-product.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign variant = product.selected_or_first_available_variant
+  assign brand_label = product.metafields.custom.brand_label.value | default: 'REMOTE BUSINESS PARTNER'
+  assign value_prop = product.metafields.custom.short_value_proposition.value | default: product.description | strip_html | truncate: 220
+  assign service_type = product.metafields.custom.service_type.value | default: 'On-Demand Service'
+  assign scope_type = product.metafields.custom.scope_type.value | default: 'Fixed Scope'
+  assign service_category = product.metafields.custom.service_category.value | default: product.type
+  if service_category == blank
+    assign service_category = 'Business Support'
+  endif
+  assign lifecycle_stage = product.metafields.custom.lifecycle_stage.value | default: 'Assessment & Delivery'
+  assign service_code = product.metafields.custom.service_code.value | default: product.handle
+  assign turnaround = product.metafields.custom.turnaround.value | default: 'Confirmed after onboarding'
+  assign delivery_model = product.metafields.custom.delivery_model.value | default: 'Remote service delivery'
+  assign onboarding_required = product.metafields.custom.onboarding_required.value | default: 'Required after purchase'
+  assign primary_output = product.metafields.custom.primary_output.value | default: 'Prepared service output'
+  assign client_input_summary = product.metafields.custom.client_input_summary.value | default: 'Onboarding form and relevant business information'
+  assign revision_allowance = product.metafields.custom.revision_allowance.value | default: 'Clarification review as stated in scope'
+  assign who_it_is_for = product.metafields.custom.who_it_is_for.value | default: 'Business owners and teams that need practical support without starting a broad project.'
+  assign primary_use_case = product.metafields.custom.primary_use_case.value | default: 'Getting a defined business task assessed, prepared, reviewed or delivered.'
+  assign business_outcome = product.metafields.custom.business_outcome.value | default: 'A clearer next step and a prepared output aligned to the selected service.'
+  assign delivery_intro = product.metafields.custom.delivery_intro.value | default: 'After purchase, onboarding confirms the information required before service delivery begins.'
+  assign service_limits_intro = product.metafields.custom.service_limits_intro.value | default: 'This service is limited to the stated scope. Extra implementation, custom work or ongoing support can be quoted separately.'
+  assign final_cta_heading = product.metafields.custom.final_cta_heading.value | default: 'Ready to start this service?'
+  assign final_cta_text = product.metafields.custom.final_cta_text.value | default: 'Purchase the service and complete onboarding so Remote Business Partner can confirm the scope and begin delivery.'
+  assign scope_call_url = section.settings.scope_call_url | default: '/pages/contact'
+  assign question_url = section.settings.question_url | default: '/pages/contact'
+-%}
+
+<div class="rbps">
+  <section class="rbps-hero rbps-wrap">
+    <div class="rbps-media-card">
+      {% if product.featured_media %}
+        {{ product.featured_media.preview_image | image_url: width: 1400 | image_tag: loading: 'eager', class: 'rbps-media-card__image', alt: product.title }}
+      {% else %}
+        <div class="rbps-media-card__placeholder"><span>RBP</span><strong>{{ product.title }}</strong></div>
+      {% endif %}
+      <div class="rbps-media-card__overlay"><span class="rbps-icon">✓</span><strong>{{ product.title }}</strong><small>{{ service_type }}</small></div>
+    </div>
+
+    <div class="rbps-buy-card">
+      <p class="rbps-eyebrow">{{ brand_label }}</p>
+      <div class="rbps-badges"><span>{{ service_type }}</span><span>{{ scope_type }}</span><span>{{ service_category }}</span><span>{{ lifecycle_stage }}</span></div>
+      <h1>{{ product.title }}</h1>
+      {% if value_prop != blank %}<p class="rbps-value">{{ value_prop }}</p>{% endif %}
+      <div class="rbps-price">{{ variant.price | money }}</div>
+      <div class="rbps-hero-facts">
+        <div><small>Turnaround</small><strong>{{ turnaround }}</strong></div>
+        <div><small>Delivery model</small><strong>{{ delivery_model }}</strong></div>
+        <div><small>Onboarding</small><strong>{{ onboarding_required }}</strong></div>
+        <div><small>Primary output</small><strong>{{ primary_output }}</strong></div>
+      </div>
+      {% form 'product', product, class: 'rbps-form' %}
+        {% unless product.has_only_default_variant %}
+          <label class="rbps-label" for="rbps-variant-{{ section.id }}">Service option</label>
+          <select id="rbps-variant-{{ section.id }}" name="id" class="rbps-select">
+            {% for option_variant in product.variants %}
+              <option value="{{ option_variant.id }}" {% if option_variant.id == variant.id %}selected{% endif %} {% unless option_variant.available %}disabled{% endunless %}>{{ option_variant.title }}{% unless option_variant.available %} - Unavailable{% endunless %}</option>
+            {% endfor %}
+          </select>
+        {% else %}
+          <input type="hidden" name="id" value="{{ variant.id }}">
+        {% endunless %}
+        <input type="hidden" name="quantity" value="1">
+        <button id="ProductSubmitButton-{{ section.id }}" type="submit" name="add" class="rbps-button rbps-button--primary" {% unless variant.available %}disabled{% endunless %}>{% if variant.available %}Start Service{% else %}Unavailable{% endif %}</button>
+      {% endform %}
+      <div class="rbps-cta-row"><a class="rbps-button rbps-button--secondary" href="{{ scope_call_url }}">Book Scope Call</a><a class="rbps-link" href="{{ question_url }}">Ask a Question</a></div>
+    </div>
+  </section>
+
+  {% if section.settings.show_trust_strip %}<section class="rbps-trust rbps-wrap" aria-label="Service trust indicators"><span>✓ Australian owned</span><span>✓ Secure payment</span><span>✓ GST invoice included</span><span>✓ Onboarding-led delivery</span></section>{% endif %}
+
+  <div class="rbps-layout rbps-wrap">
+    <aside class="rbps-sidebar"><div class="rbps-side-card"><h2>Service Details</h2><p>Remote Business Partner</p><nav><a href="#overview">Overview</a><a href="#inclusions">What's Included</a><a href="#inputs">Inputs Required</a><a href="#delivery">Delivery</a><a href="#limits">Service Limits</a><a href="#faqs">FAQs</a></nav></div></aside>
+    <main class="rbps-content">
+      <nav class="rbps-mobile-tabs" aria-label="Service sections"><a href="#overview">Overview</a><a href="#inclusions">Included</a><a href="#delivery">Delivery</a><a href="#limits">Limits</a><a href="#faqs">FAQs</a></nav>
+
+      <section id="overview" class="rbps-section"><div class="rbps-head"><span class="rbps-kicker">Overview</span><h2>Is this the right service for your business?</h2>{% if product.metafields.custom.service_overview != blank %}<div class="rbps-copy">{{ product.metafields.custom.service_overview | metafield_tag }}</div>{% else %}<p>{{ product.description | strip_html | default: 'This service provides defined support through a structured onboarding and delivery process.' }}</p>{% endif %}</div><div class="rbps-grid rbps-grid--3"><article class="rbps-card"><span class="rbps-card-icon">1</span><h3>Who it is for</h3><p>{{ who_it_is_for }}</p></article><article class="rbps-card"><span class="rbps-card-icon">2</span><h3>Primary use case</h3><p>{{ primary_use_case }}</p></article><article class="rbps-card"><span class="rbps-card-icon">3</span><h3>Business outcome</h3><p>{{ business_outcome }}</p></article></div></section>
+
+      <section class="rbps-section rbps-grid rbps-grid--2"><article class="rbps-card"><h2>Product classification</h2><div class="rbps-badges"><span>{{ service_type }}</span><span>{{ service_category }}</span><span>{{ lifecycle_stage }}</span><span>{{ scope_type }}</span><span>{{ service_code }}</span></div></article><article class="rbps-card rbps-card--blue"><h2>Quick facts</h2><dl class="rbps-facts"><div><dt>Delivery model</dt><dd>{{ delivery_model }}</dd></div><div><dt>Turnaround</dt><dd>{{ turnaround }}</dd></div><div><dt>Onboarding</dt><dd>{{ onboarding_required }}</dd></div><div><dt>Client input</dt><dd>{{ client_input_summary }}</dd></div><div><dt>Final output</dt><dd>{{ primary_output }}</dd></div><div><dt>Revision allowance</dt><dd>{{ revision_allowance }}</dd></div></dl></article></section>
+
+      <section id="inclusions" class="rbps-section"><div class="rbps-head"><span class="rbps-kicker">What is included</span><h2>Service inclusions</h2></div><div class="rbps-grid rbps-grid--2">{% assign inclusions = product.metafields.custom.service_inclusions.value %}{% if inclusions != blank %}{% for inclusion in inclusions %}<article class="rbps-card rbps-line-card"><span>✓</span><div><h3>{{ inclusion.title.value | default: inclusion.title }}</h3><p>{{ inclusion.description.value | default: inclusion.description }}</p></div></article>{% endfor %}{% else %}<article class="rbps-card rbps-line-card"><span>✓</span><div><h3>Structured review</h3><p>We review the information provided through onboarding and confirm the service focus.</p></div></article><article class="rbps-card rbps-line-card"><span>✓</span><div><h3>Defined service output</h3><p>You receive the output stated for this service, prepared against the agreed scope.</p></div></article><article class="rbps-card rbps-line-card"><span>✓</span><div><h3>Handover guidance</h3><p>We explain the result, next steps and any follow-up options.</p></div></article><article class="rbps-card rbps-line-card"><span>✓</span><div><h3>Support pathway</h3><p>You can request extra help, implementation or ongoing support separately.</p></div></article>{% endif %}</div></section>
+
+      <section id="inputs" class="rbps-section"><div class="rbps-head"><span class="rbps-kicker">Customer inputs</span><h2>Customer inputs required</h2></div><div class="rbps-grid rbps-grid--2">{% assign inputs = product.metafields.custom.customer_inputs.value %}{% if inputs != blank %}{% for input in inputs %}<article class="rbps-card"><h3>{{ input.input_title.value | default: input.title }}{% if input.required.value == true %} <em>Required</em>{% endif %}</h3><p>{{ input.input_description.value | default: input.description }}</p></article>{% endfor %}{% else %}<article class="rbps-card"><h3>Completed onboarding form <em>Required</em></h3><p>Provides the details needed to confirm scope and begin service delivery.</p></article><article class="rbps-card"><h3>Relevant business information</h3><p>Documents, screenshots, workflow notes or examples may be requested depending on the service.</p></article>{% endif %}</div></section>
+
+      <section id="delivery" class="rbps-section"><div class="rbps-head"><span class="rbps-kicker">Delivery</span><h2>How your service is delivered</h2><p>{{ delivery_intro }}</p></div><div class="rbps-process">{% assign steps = product.metafields.custom.delivery_process_steps.value %}{% if steps != blank %}{% for step in steps %}<article><h3>{{ step.title.value | default: step.title }}</h3><p>{{ step.description.value | default: step.description }}</p></article>{% endfor %}{% else %}<article><h3>Purchase the service</h3><p>Complete checkout and receive your order confirmation.</p></article><article><h3>Complete onboarding</h3><p>We collect the required information and confirm the service focus.</p></article><article><h3>Service delivery begins</h3><p>Remote Business Partner completes the service within the confirmed scope and timeframe.</p></article><article><h3>Handover</h3><p>You receive the service output and relevant next-step guidance.</p></article>{% endif %}</div></section>
+
+      <section id="limits" class="rbps-section"><div class="rbps-head"><span class="rbps-kicker">Scope boundaries</span><h2>Service limits</h2><p>{{ service_limits_intro }}</p></div><div class="rbps-grid rbps-grid--2">{% assign limits = product.metafields.custom.service_limits.value %}{% if limits != blank %}{% for limit in limits %}<article class="rbps-card"><h3>{{ limit.limit_title.value | default: limit.title }}</h3><p>{{ limit.limit_description.value | default: limit.description }}</p></article>{% endfor %}{% else %}<article class="rbps-card"><h3>Out-of-scope work</h3><p>Implementation, extra analysis, custom development or ongoing management are excluded unless separately agreed.</p></article><article class="rbps-card"><h3>Customer inputs</h3><p>Delivery timing depends on receiving the required information through onboarding.</p></article>{% endif %}</div></section>
+
+      <section id="faqs" class="rbps-section"><div class="rbps-head"><span class="rbps-kicker">Questions</span><h2>Frequently asked questions</h2></div><div class="rbps-faq">{% assign faqs = product.metafields.custom.service_faqs.value %}{% if faqs != blank %}{% for faq in faqs %}<details><summary>{{ faq.question.value | default: faq.question }}</summary><div>{{ faq.answer | metafield_tag }}</div></details>{% endfor %}{% else %}<details><summary>What happens after I purchase?</summary><div>We contact you with onboarding requirements and confirm the information needed to begin.</div></details><details><summary>Is this an implementation service?</summary><div>This product covers the scope stated on the page. Implementation or ongoing support can be purchased separately where available.</div></details><details><summary>How long does it take?</summary><div>The estimated turnaround is {{ turnaround }}, depending on onboarding completion and service complexity.</div></details>{% endif %}</div></section>
+
+      <section class="rbps-final"><h2>{{ final_cta_heading }}</h2><p>{{ final_cta_text }}</p><div><a class="rbps-button rbps-button--light" href="#ProductSubmitButton-{{ section.id }}">Start Service</a><a class="rbps-button rbps-button--outline-light" href="{{ scope_call_url }}">Book Scope Call</a></div></section>
+    </main>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "RBP On-Demand Service",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    { "type": "url", "id": "scope_call_url", "label": "Scope call URL" },
+    { "type": "url", "id": "question_url", "label": "Ask a question URL" },
+    { "type": "checkbox", "id": "show_trust_strip", "label": "Show trust strip", "default": true }
+  ],
+  "presets": [ { "name": "RBP On-Demand Service" } ]
+}
+{% endschema %}

@@ -1,11 +1,20 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "rbp_membership_page": {
       "type": "rbp-membership-page",
       "settings": {
-        "eyebrow": "RBP Membership",
-        "hero_heading": "Your business, better supported.",
-        "hero_subtext": "RBP Membership gives Australian SMEs structured access to business support, professional resources, document guidance and service pathways — through one connected membership relationship."
+        "eyebrow": "Membership",
+        "hero_heading": "Ongoing access to practical business support.",
+        "hero_subtext": "Membership pathways for businesses that want structured access to resources, benefits, offers and support pathways."
       }
     }
   },

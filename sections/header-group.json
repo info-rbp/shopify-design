@@ -1,1 +1,37 @@
-{"name":"t:sections.header.name","type":"header","sections":{"rbp_header":{"type":"rbp-header","settings":{"menu":"header-menu","search_placeholder":"Search services, applications, resources...","join_label":"Join Now","join_link":"/pages/sign-up-today","mega_cta_text":"Need help choosing the right pathway? Start with the overview or contact us for guidance."}},"rbp_header_spacing":{"type":"rbp-header-spacing","settings":{}},"rbp_header_controller":{"type":"rbp-header-controller","settings":{}},"rbp_cart_drawer_guidance":{"type":"rbp-cart-drawer-guidance","settings":{}}},"order":["rbp_header","rbp_header_spacing","rbp_header_controller","rbp_cart_drawer_guidance"]}
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "name": "t:sections.header.name",
+  "type": "header",
+  "sections": {
+    "rbp_css_loader": {
+      "type": "rbp-css-loader",
+      "settings": {}
+    },
+    "rbp_header": {
+      "type": "rbp-header",
+      "settings": {}
+    },
+    "rbp_nav_fixes": {
+      "type": "rbp-nav-fixes",
+      "settings": {}
+    },
+    "rbp_cart_drawer_guidance": {
+      "type": "rbp-cart-drawer-guidance",
+      "settings": {}
+    }
+  },
+  "order": [
+    "rbp_css_loader",
+    "rbp_header",
+    "rbp_nav_fixes",
+    "rbp_cart_drawer_guidance"
+  ]
+}
