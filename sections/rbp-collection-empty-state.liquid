@@ -1,0 +1,159 @@
+{%- comment -%}
+  RBP Collection Empty State
+  Shown when a collection has no products.
+  Provides helpful messaging and suggests next steps.
+{%- endcomment -%}
+
+{% if collection.products_count == 0 %}
+<style>
+.rbp-empty-state {
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  padding: 80px 0;
+  text-align: center;
+}
+.rbp-empty-state__wrapper {
+  width: min(100% - 2.5rem, 1200px);
+  margin: 0 auto;
+  max-width: 740px;
+}
+.rbp-empty-state__icon {
+  font-size: 64px;
+  margin-bottom: 24px;
+  opacity: 0.6;
+}
+.rbp-empty-state h2 {
+  font-size: clamp(28px, 4vw, 42px);
+  font-weight: 900;
+  line-height: 1.2;
+  margin: 0 0 16px;
+  letter-spacing: -0.02em;
+  color: #0f172a;
+}
+.rbp-empty-state p {
+  font-size: 16px;
+  line-height: 1.7;
+  color: #475569;
+  margin: 0 0 32px;
+}
+.rbp-empty-state__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  margin-bottom: 40px;
+}
+.rbp-empty-state__actions a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 13px 24px;
+  border-radius: 14px;
+  font-weight: 900;
+  font-size: 14px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+.rbp-empty-state__actions a.primary {
+  background: #1d4ed8;
+  color: #fff;
+  box-shadow: 0 10px 28px rgba(29,78,216,.28);
+}
+.rbp-empty-state__actions a.primary:hover {
+  background: #1e40af;
+  transform: translateY(-2px);
+  box-shadow: 0 14px 36px rgba(29,78,216,.36);
+}
+.rbp-empty-state__actions a.secondary {
+  background: #fff;
+  color: #1d4ed8;
+  border: 1px solid rgba(29,78,216,.2);
+}
+.rbp-empty-state__actions a.secondary:hover {
+  background: #f0f4ff;
+  border-color: rgba(29,78,216,.4);
+}
+.rbp-empty-state__next-steps {
+  background: #fff;
+  border: 1px solid rgba(15,23,42,.1);
+  border-radius: 20px;
+  padding: 28px;
+  text-align: left;
+}
+.rbp-empty-state__next-steps h3 {
+  font-size: 16px;
+  font-weight: 900;
+  margin: 0 0 16px;
+  color: #0f172a;
+}
+.rbp-empty-state__next-steps ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 12px;
+}
+.rbp-empty-state__next-steps li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 0;
+  color: #334155;
+  font-size: 14px;
+}
+.rbp-empty-state__next-steps li:before {
+  content: "→";
+  color: #1d4ed8;
+  font-weight: 900;
+  min-width: 16px;
+}
+@media (max-width: 749px) {
+  .rbp-empty-state {
+    padding: 54px 0;
+  }
+  .rbp-empty-state__actions {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .rbp-empty-state__actions a {
+    width: 100%;
+  }
+}
+</style>
+
+<div class="rbp-empty-state">
+  <div class="rbp-empty-state__wrapper">
+    <div class="rbp-empty-state__icon">📦</div>
+    <h2>This pathway is being prepared.</h2>
+    <p>RBP is organising this category so related services and resources can be added in a structured way. Start with the broader on-demand service catalogue, a Business Health Check, or contact RBP if you need help choosing the right pathway.</p>
+    
+    <div class="rbp-empty-state__actions">
+      <a href="/collections/on-demand-services" class="primary">View On-Demand Services →</a>
+      <a href="/pages/business-health-check" class="secondary">Start with a Health Check</a>
+      <a href="/pages/contact" class="secondary">Contact RBP</a>
+    </div>
+
+    <div class="rbp-empty-state__next-steps">
+      <h3>Suggested next steps</h3>
+      <ul>
+        <li>Browse our comprehensive on-demand services</li>
+        <li>Start with a Business Health Check</li>
+        <li>Contact RBP for guidance on the right pathway</li>
+      </ul>
+    </div>
+  </div>
+</div>
+{% endif %}
+
+{% schema %}
+{
+  "name": "RBP Collection Empty State",
+  "description": "Shows a helpful message when a collection has no products",
+  "settings": [],
+  "presets": [
+    {
+      "name": "RBP Collection Empty State"
+    }
+  ]
+}
+{% endschema %}

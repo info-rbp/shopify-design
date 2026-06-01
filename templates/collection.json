@@ -44,12 +44,17 @@
     "rbp_collection_help": {
       "type": "rbp-collection-help",
       "settings": {}
+    },
+    "empty_state": {
+      "type": "rbp-collection-empty-state",
+      "settings": {}
     }
   },
   "order": [
     "banner",
     "rbp_card_fallback_styles",
     "product-grid",
+    "empty_state",
     "rbp_collection_help"
   ]
 }
