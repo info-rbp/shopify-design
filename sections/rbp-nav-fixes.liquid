@@ -1,3 +1,36 @@
-<style>@media(max-width:989px){.rbp-mobile-ia{display:grid;gap:.5rem;padding:1rem 0}.rbp-mobile-ia details{border:1px solid rgba(15,23,42,.12);border-radius:12px;background:#fff}.rbp-mobile-ia summary{min-height:48px;display:flex;align-items:center;padding:.8rem 1rem;font-weight:900}.rbp-mobile-ia div{display:grid;padding:0 1rem 1rem}.rbp-mobile-ia a{min-height:44px;display:flex;align-items:center;color:inherit;text-decoration:none}}@media(min-width:990px){.rbp-mobile-ia{display:none}.rbp-ia-links{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:.5rem;margin:1rem 0}.rbp-ia-links a{min-height:44px;display:flex;align-items:center;text-decoration:none}}</style>
-<script>(()=>{const A=[['advisory','Advisory','/pages/advisory',[['Core Services','/pages/core-services'],['Business Health Check','/pages/business-health-check'],['Business Advisor','/products/business-advisor'],['Decision Desk','/products/decision-desk'],['The Fixer','/products/the-fixer'],['Dispute Resolution Support','/pages/dispute-resolution-support']]],['consulting','Consulting','/pages/consulting',[['On-Demand Services','/collections/on-demand-services'],['HR Advisory','/collections/human-resources'],['Finance & Accounting','/collections/finance-accounting'],['Growth & Sales','/collections/sales-marketing'],['AI & Digital','/collections/artificial-intelligence'],['IT / Digital','/collections/it-digital'],['Change Management','/collections/change-management'],['Operations Consulting','/collections/operations'],['Bundled On-Demand','/collections/bundled-on-demand']]],['implementation','Implementation','/pages/implementation',[['Custom Solutions','/pages/custom-solutions'],['Custom Solutions Retainer','/pages/custom-solutions-retainer'],['Retainer Builder','/pages/retainer-builder'],['Applications','/pages/applications'],['Managed Services','/pages/managed-services'],['Bid Management','/pages/bid-management'],['Property Field Services','/pages/property-field-services']]],['operations','Operations','/pages/operations',[['Our Process','/pages/our-process'],['Templates','/collections/templates'],['Documentation Suites','/collections/documentation-suites'],['Toolkits','/collections/toolkits'],['Industry Packs','/collections/industry-packs'],['Resources','/pages/resources']]],['essentials','Essentials','/pages/essentials',[['Business NBN','/pages/business-nbn'],['Business Finance','/pages/business-finance'],['Business Insurance','/pages/business-insurance'],['Marketplace','/pages/marketplace'],['Partner Offers','/pages/offers']]],['membership','Membership','/pages/membership',[['Membership Overview','/pages/membership'],['Benefits','/pages/membership#benefits'],['Compare Plans','/pages/membership#rbp-plans'],['Member Portal / Account','/account'],['Sign Up','/pages/sign-up-today'],['FAQs','/pages/membership#faq']]],['support','Support','/pages/support',[['Help Centre','/pages/help-centre'],['NBN Support & Education','/pages/nbn-support-education'],['Contact','/pages/contact'],['About','/pages/about'],['Privacy Policy','/policies/privacy-policy'],['Terms of Service','/policies/terms-of-service'],['Refund Policy','/policies/refund-policy']]]],M={'/account/login':'/account','/products/business-health-check':'/pages/business-health-check','/pages/membership-options':'/pages/membership','/collections/template-packs':'/collections/templates','/pages/help-center':'/pages/help-centre'},P=h=>{try{let u=new URL(h,location.origin);return u.origin==location.origin?u.pathname+u.search+u.hash:h}catch(e){return h}},B=(t,h)=>{let a=document.createElement('a');a.textContent=t;a.href=h;return a},H=(c,h)=>[...c.querySelectorAll('a[href]')].some(a=>P(a.getAttribute('href')).replace(/[?#].*$/,'')==h.replace(/[?#].*$/,''));function run(){document.querySelectorAll('a[href]').forEach(a=>{let p=P(a.getAttribute('href')),q=p.replace(/[?#].*$/,'');if(M[p])a.href=M[p];else if(M[q])a.href=M[q]+(p.includes('#')?p.slice(p.indexOf('#')):'');a.textContent=a.textContent.replace(/Help Center/g,'Help Centre')});document.querySelectorAll('header a,header button,#rbp-mobile-nav a,#rbp-mobile-nav button,#rbp-mobile-nav summary').forEach(x=>{if((x.textContent||'').trim().toLowerCase()=='outsourced'){let w=x.closest('li,details,.rbp-nav-item,.rbp-mobile-nav-item')||x;w.hidden=true;w.setAttribute('aria-hidden','true')}});A.forEach(([k,l,r,ch])=>{let p=document.getElementById('mega-'+k);if(p){p.querySelectorAll('.rbp-mega-hub').forEach(a=>{if(a.matches('a')){a.href=r;a.textContent='View '+l}});if(!p.querySelector('[data-rbp-ia]')){let d=document.createElement('div');d.className='rbp-ia-links';d.dataset.rbpIa=k;d.appendChild(B('View '+l,r));ch.forEach(x=>{if(!H(p,x[1]))d.appendChild(B(x[0],x[1]))});p.appendChild(d)}}});let m=document.getElementById('rbp-mobile-nav');if(m&&!m.querySelector('[data-rbp-mobile-ia]')){let n=document.createElement('nav');n.className='rbp-mobile-ia';n.dataset.rbpMobileIa='1';n.setAttribute('aria-label','RBP core navigation');A.forEach(([k,l,r,ch])=>{let de=document.createElement('details'),s=document.createElement('summary'),d=document.createElement('div');s.textContent=l;d.appendChild(B('View '+l,r));ch.forEach(x=>d.appendChild(B(x[0],x[1])));de.append(s,d);n.appendChild(de)});let u=document.createElement('div');[['Business Health Check','/pages/business-health-check'],['Search','/search'],['Account','/account'],['Cart','/cart']].forEach(x=>u.appendChild(B(x[0],x[1])));n.appendChild(u);m.appendChild(n)}if(location.pathname.replace(/\/$/,'')=='/pages/membership'){let main=document.querySelectorAll('main')||document.body;['benefits','rbp-plans','faq'].forEach(id=>{if(!document.getElementById(id)){let s=document.createElement('span');s.id=id;s.setAttribute('aria-hidden','true');s.style.cssText='position:relative;top:-96px';main.prepend(s)}})}}document.readyState=='loading'?document.addEventListener('DOMContentLoaded',run,{once:true}):run();document.addEventListener('shopify:section:load',run);document.addEventListener('cart:updated',run)})();</script>
-{% schema %}{"name":"RBP nav fixes","settings":[]}{% endschema %}
+{% comment %}
+  RBP Nav Fixes — Legacy fallback only
+  
+  DEPRECATED: This section is retained as a legacy fallback only.
+  It is NOT actively loaded in header-group.json as of the baseline cleanup.
+  
+  All IA fixes have been moved to source-level:
+  - Header and mobile navigation are now rendered from rbp-header.liquid
+  - Membership anchors are now defined in rbp-membership-page.liquid
+  - Old route normalization is handled here as a final safety net
+  
+  This file may be re-enabled if admin-generated links require runtime patching.
+{% endcomment %}
+
+<script>
+(function() {
+  // Legacy route normalization fallback
+  // Only applies old route → new route mappings if they somehow appear in the DOM
+  const M = {
+    '/account/login': '/account',
+    '/products/business-health-check': '/pages/business-health-check',
+    '/pages/membership-options': '/pages/membership',
+    '/collections/template-packs': '/collections/templates',
+    '/pages/help-center': '/pages/help-centre'
+  };
+  
+  document.querySelectorAll('a[href]').forEach(a => {
+    const href = a.getAttribute('href');
+    if (M[href]) {
+      a.href = M[href];
+    }
+  });
+})();
+</script>
+
+{% schema %}{"name":"RBP nav fixes (legacy)","settings":[]}{% endschema %}

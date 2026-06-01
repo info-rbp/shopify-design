@@ -19,10 +19,6 @@
       "type": "rbp-header",
       "settings": {}
     },
-    "rbp_nav_fixes": {
-      "type": "rbp-nav-fixes",
-      "settings": {}
-    },
     "rbp_cart_drawer_guidance": {
       "type": "rbp-cart-drawer-guidance",
       "settings": {}
@@ -31,7 +27,6 @@
   "order": [
     "rbp_css_loader",
     "rbp_header",
-    "rbp_nav_fixes",
     "rbp_cart_drawer_guidance"
   ]
 }
