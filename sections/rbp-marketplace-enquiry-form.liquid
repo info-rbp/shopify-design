@@ -1,0 +1,303 @@
+{%- style -%}
+  .rbp-enquiry-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+  @media screen and (min-width: 750px) {
+    .rbp-enquiry-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+  .rbp-enquiry-card {
+    border: 1px solid rgba(var(--color-foreground), .14);
+    border-radius: var(--text-boxes-radius);
+    background: rgb(var(--color-background));
+    padding: clamp(2rem, 4vw, 4rem);
+  }
+  .rbp-enquiry-grid {
+    display: grid;
+    gap: 2rem;
+  }
+  @media screen and (min-width: 750px) {
+    .rbp-enquiry-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .rbp-enquiry-full {
+      grid-column: 1 / -1;
+    }
+  }
+  .rbp-enquiry-label {
+    display: block;
+    margin-bottom: .8rem;
+    font-size: 1.4rem;
+  }
+  .rbp-enquiry-select,
+  .rbp-enquiry-textarea {
+    width: 100%;
+    min-height: 4.8rem;
+    border: .1rem solid rgba(var(--color-foreground), .2);
+    border-radius: var(--inputs-radius);
+    padding: 1.2rem 1.5rem;
+    color: rgb(var(--color-foreground));
+    background: rgb(var(--color-background));
+    font: inherit;
+  }
+  .rbp-enquiry-textarea {
+    min-height: 14rem;
+    resize: vertical;
+  }
+  .rbp-enquiry-helper {
+    margin-top: .6rem;
+    font-size: 1.3rem;
+    opacity: .75;
+  }
+  .rbp-enquiry-required {
+    color: rgb(var(--color-button));
+  }
+  .rbp-enquiry-note {
+    border-radius: var(--text-boxes-radius);
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    background: rgba(var(--color-foreground), .05);
+  }
+  .rbp-enquiry-honeypot {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+{%- endstyle -%}
+
+<section class="color-{{ section.settings.color_scheme }} gradient">
+  <div class="page-width rbp-enquiry-{{ section.id }}">
+    <div class="rbp-enquiry-card">
+      <div class="rte" style="margin-bottom: 2.4rem;">
+        <p style="letter-spacing:.16em;text-transform:uppercase;font-size:1.2rem;opacity:.75;margin:0 0 1rem;">{{ section.settings.kicker }}</p>
+        <h2 class="h1">{{ section.settings.heading }}</h2>
+        {{ section.settings.intro }}
+      </div>
+
+      {%- form 'contact', id: 'RbpMarketplaceEnquiryForm', class: 'isolate' -%}
+        <input type="hidden" name="contact[Form source]" value="Marketplace enquiry">
+        <input type="hidden" name="contact[Source page]" value="{{ request.path | escape }}">
+        <input type="hidden" id="RbpUrlContext" name="contact[Product or listing URL context]" value="">
+        <input type="hidden" name="contact[Workflow base tag]" value="lead-marketplace">
+        <input type="hidden" id="RbpWorkflowTags" name="contact[Workflow tags to apply]" value="lead-marketplace">
+        <input type="hidden" id="RbpMetafieldLeadType" name="contact[Metafield marketplace.lead_type]" value="">
+        <input type="hidden" id="RbpMetafieldBudgetRange" name="contact[Metafield marketplace.budget_range]" value="">
+        <input type="hidden" id="RbpMetafieldTimeline" name="contact[Metafield marketplace.timeline]" value="">
+        <input type="hidden" id="RbpMetafieldQualificationStatus" name="contact[Metafield marketplace.qualification_status]" value="New enquiry">
+        <input type="hidden" id="RbpMetafieldNdaStatus" name="contact[Metafield marketplace.nda_status]" value="Not requested">
+
+        <div class="rbp-enquiry-honeypot" aria-hidden="true">
+          <label for="RbpMarketplaceWebsite">Website</label>
+          <input id="RbpMarketplaceWebsite" type="text" name="contact[website]" tabindex="-1" autocomplete="off">
+        </div>
+
+        {%- if form.posted_successfully? -%}
+          <div class="form-status form-status-list form__message rbp-enquiry-note" tabindex="-1" autofocus>
+            <h3 class="form-status caption-large text-body" style="margin:0;">{{ section.settings.success_message }}</h3>
+          </div>
+        {%- elsif form.errors -%}
+          <div class="form__message rbp-enquiry-note">
+            <h3 class="form-status caption-large text-body" tabindex="-1" autofocus>There was a problem with the form. Please check the required fields.</h3>
+            {{ form.errors | default_errors }}
+          </div>
+        {%- endif -%}
+
+        <div class="rbp-enquiry-grid">
+          <div class="field">
+            <input class="field__input" autocomplete="name" type="text" id="RbpEnquiryName" name="contact[name]" value="{% if form.name %}{{ form.name }}{% endif %}" placeholder="Name" required>
+            <label class="field__label" for="RbpEnquiryName">Name <span class="rbp-enquiry-required">*</span></label>
+          </div>
+
+          <div class="field">
+            <input class="field__input" autocomplete="email" type="email" id="RbpEnquiryEmail" name="contact[email]" spellcheck="false" autocapitalize="off" value="{% if form.email %}{{ form.email }}{% endif %}" placeholder="Email" required>
+            <label class="field__label" for="RbpEnquiryEmail">Email <span class="rbp-enquiry-required">*</span></label>
+          </div>
+
+          <div class="field">
+            <input class="field__input" autocomplete="tel" type="tel" id="RbpEnquiryPhone" name="contact[phone]" value="{% if form.phone %}{{ form.phone }}{% endif %}" placeholder="Phone">
+            <label class="field__label" for="RbpEnquiryPhone">Phone</label>
+          </div>
+
+          <div>
+            <label class="rbp-enquiry-label" for="RbpLeadType">I am enquiring as <span class="rbp-enquiry-required">*</span></label>
+            <select class="rbp-enquiry-select" id="RbpLeadType" name="contact[Lead type]" required>
+              <option value="">Select one</option>
+              <option value="Buyer">Buyer</option>
+              <option value="Seller">Seller</option>
+              <option value="Partner or referral">Partner or referral</option>
+              <option value="Custom business build">Custom business build</option>
+              <option value="General marketplace enquiry">General marketplace enquiry</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="rbp-enquiry-label" for="RbpInterestType">Interested in <span class="rbp-enquiry-required">*</span></label>
+            <select class="rbp-enquiry-select" id="RbpInterestType" name="contact[Interest type]" required>
+              <option value="">Select one</option>
+              <option value="Business-In-A-Box">Business-In-A-Box</option>
+              <option value="Asset sale">Asset sale</option>
+              <option value="Due diligence or review pack">Due diligence or review pack</option>
+              <option value="Seller listing package">Seller listing package</option>
+              <option value="Custom business build">Custom business build</option>
+              <option value="Partner or referral pathway">Partner or referral pathway</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="rbp-enquiry-label" for="RbpInterestedListing">Interested product or listing</label>
+            <input class="rbp-enquiry-select" type="text" id="RbpInterestedListing" name="contact[Interested product or listing]" placeholder="Product, listing, or opportunity name">
+            <p class="rbp-enquiry-helper">This can be a Business-In-A-Box, asset listing, service package, or draft opportunity.</p>
+          </div>
+
+          <div>
+            <label class="rbp-enquiry-label" for="RbpBudgetRange">Budget range</label>
+            <select class="rbp-enquiry-select" id="RbpBudgetRange" name="contact[Budget range]">
+              <option value="">Select one</option>
+              <option>Under $500</option>
+              <option>$500 to $2,500</option>
+              <option>$2,500 to $10,000</option>
+              <option>$10,000 to $25,000</option>
+              <option>$25,000+</option>
+              <option>Not sure yet</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="rbp-enquiry-label" for="RbpTimeline">Timeline</label>
+            <select class="rbp-enquiry-select" id="RbpTimeline" name="contact[Timeline]">
+              <option value="">Select one</option>
+              <option>Immediately</option>
+              <option>Within 30 days</option>
+              <option>1 to 3 months</option>
+              <option>3 to 6 months</option>
+              <option>6 months+</option>
+              <option>Exploring only</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="rbp-enquiry-label" for="RbpPrivateInfo">Private information request</label>
+            <select class="rbp-enquiry-select" id="RbpPrivateInfo" name="contact[Private information request]">
+              <option value="">Select one</option>
+              <option>No private information requested yet</option>
+              <option>I would like to request deeper listing information</option>
+              <option>I am prepared to complete confidentiality steps if required</option>
+              <option>I need more information about the process first</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="rbp-enquiry-label" for="RbpPreferredNextStep">Preferred next step</label>
+            <select class="rbp-enquiry-select" id="RbpPreferredNextStep" name="contact[Preferred next step]">
+              <option value="">Select one</option>
+              <option>Send me more information</option>
+              <option>Book an advisory conversation</option>
+              <option>Request a review pack</option>
+              <option>Discuss a custom build</option>
+              <option>Discuss listing an asset</option>
+              <option>Help me choose the right pathway</option>
+            </select>
+          </div>
+
+          <div class="rbp-enquiry-full">
+            <label class="rbp-enquiry-label" for="RbpEnquiryMessage">Message <span class="rbp-enquiry-required">*</span></label>
+            <textarea class="rbp-enquiry-textarea" rows="8" id="RbpEnquiryMessage" name="contact[body]" placeholder="Tell us what you want to buy, build, sell, assess, or discuss." required>{% if form.body %}{{ form.body }}{% endif %}</textarea>
+          </div>
+        </div>
+
+        <div style="margin-top: 2.4rem;">
+          <button type="submit" class="button button--primary">{{ section.settings.button_label }}</button>
+        </div>
+      {%- endform -%}
+    </div>
+  </div>
+</section>
+
+<script>
+  (function () {
+    var params = new URLSearchParams(window.location.search);
+    var context = [];
+    ['product', 'asset', 'listing', 'source'].forEach(function (key) {
+      if (params.get(key)) context.push(key + ': ' + params.get(key));
+    });
+    var contextField = document.getElementById('RbpUrlContext');
+    if (contextField) contextField.value = context.join(' | ');
+    var listingField = document.getElementById('RbpInterestedListing');
+    if (listingField && !listingField.value && (params.get('product') || params.get('asset') || params.get('listing'))) {
+      listingField.value = params.get('product') || params.get('asset') || params.get('listing');
+    }
+
+    var leadType = document.getElementById('RbpLeadType');
+    var interestType = document.getElementById('RbpInterestType');
+    var budgetRange = document.getElementById('RbpBudgetRange');
+    var timeline = document.getElementById('RbpTimeline');
+    var privateInfo = document.getElementById('RbpPrivateInfo');
+    var tagsField = document.getElementById('RbpWorkflowTags');
+    var leadTypeMeta = document.getElementById('RbpMetafieldLeadType');
+    var budgetMeta = document.getElementById('RbpMetafieldBudgetRange');
+    var timelineMeta = document.getElementById('RbpMetafieldTimeline');
+    var ndaMeta = document.getElementById('RbpMetafieldNdaStatus');
+
+    function updateWorkflowFields() {
+      var tags = ['lead-marketplace'];
+      var selectedLead = leadType ? leadType.value : '';
+      var selectedInterest = interestType ? interestType.value : '';
+      var privateRequest = privateInfo ? privateInfo.value : '';
+
+      if (selectedLead === 'Buyer') tags.push('lead-buyer');
+      if (selectedLead === 'Seller') tags.push('lead-seller');
+      if (selectedLead === 'Partner or referral') tags.push('partner-referral');
+      if (selectedLead === 'Custom business build') tags.push('custom-build-lead');
+
+      if (selectedInterest === 'Business-In-A-Box') tags.push('lead-biab');
+      if (selectedInterest === 'Asset sale') tags.push('lead-asset-sale');
+      if (selectedInterest === 'Due diligence or review pack') tags.push('lead-asset-sale');
+      if (selectedInterest === 'Seller listing package') tags.push('lead-seller');
+      if (selectedInterest === 'Custom business build') tags.push('custom-build-lead');
+      if (selectedInterest === 'Partner or referral pathway') tags.push('partner-referral');
+
+      if (privateRequest === 'I would like to request deeper listing information' || privateRequest === 'I am prepared to complete confidentiality steps if required') {
+        tags.push('nda-requested');
+        if (ndaMeta) ndaMeta.value = 'Requested';
+      } else {
+        if (ndaMeta) ndaMeta.value = 'Not requested';
+      }
+
+      var uniqueTags = tags.filter(function (tag, index) { return tags.indexOf(tag) === index; });
+      if (tagsField) tagsField.value = uniqueTags.join(', ');
+      if (leadTypeMeta) leadTypeMeta.value = selectedLead;
+      if (budgetMeta) budgetMeta.value = budgetRange ? budgetRange.value : '';
+      if (timelineMeta) timelineMeta.value = timeline ? timeline.value : '';
+    }
+
+    [leadType, interestType, budgetRange, timeline, privateInfo].forEach(function (field) {
+      if (field) field.addEventListener('change', updateWorkflowFields);
+    });
+    updateWorkflowFields();
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "RBP enquiry form",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" },
+    { "type": "text", "id": "kicker", "label": "Kicker", "default": "Structured enquiry" },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Marketplace enquiry form" },
+    { "type": "richtext", "id": "intro", "label": "Intro text", "default": "<p>Use this form to start a buyer, seller, partner, or custom build enquiry. The more specific the information, the easier it is to route the next step.</p>" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Submit marketplace enquiry" },
+    { "type": "text", "id": "success_message", "label": "Success message", "default": "Your marketplace enquiry has been received." },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 100, "step": 4, "unit": "px", "label": "Top padding", "default": 20 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 100, "step": 4, "unit": "px", "label": "Bottom padding", "default": 60 }
+  ],
+  "presets": [{ "name": "RBP enquiry form" }]
+}
+{% endschema %}

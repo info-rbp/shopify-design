@@ -1,0 +1,59 @@
+{%- if page.handle == 'business-nbn-status' -%}
+<section class="rbp-bridge-status" aria-label="RBP bridge status helper">
+  <div class="rbp-bridge-status__inner page-width">
+    <div class="rbp-bridge-status__panel">
+      <div>
+        <div class="rbp-bridge-status__eyebrow">RBP Integration Bridge</div>
+        <h2>Bridge-backed status lookup</h2>
+        <p>The Shopify app proxy is configured at <strong>/apps/rbp-bridge</strong>. Storefront requests should use paths such as <strong>/apps/rbp-bridge/api/check-address</strong>, which proxy to the bridge backend app-proxy route.</p>
+      </div>
+      <div class="rbp-bridge-status__box">
+        <span>Proxy path</span>
+        <strong>/apps/rbp-bridge</strong>
+        <small>Backend target: /api/app-proxy</small>
+      </div>
+    </div>
+    <div class="rbp-bridge-status__grid">
+      <div class="rbp-bridge-status__card"><span>01</span><h3>Address check</h3><p>Business NBN availability checks should call <code>/apps/rbp-bridge/api/check-address</code>.</p></div>
+      <div class="rbp-bridge-status__card"><span>02</span><h3>Provisioning status</h3><p>Status lookup can use the same bridge path once the backend endpoint is exposed for order/provisioning state.</p></div>
+      <div class="rbp-bridge-status__card"><span>03</span><h3>Frontend-safe route</h3><p>The storefront should call the Shopify proxy path, not the Cloud Run URL directly.</p></div>
+    </div>
+    <form class="rbp-bridge-status__lookup" id="rbp-bridge-status-form">
+      <label for="rbp-bridge-status-ref">Order or provisioning reference</label>
+      <div>
+        <input id="rbp-bridge-status-ref" name="reference" type="text" placeholder="Enter order number or provisioning reference">
+        <button type="submit">Check status</button>
+      </div>
+      <p id="rbp-bridge-status-result" aria-live="polite">Status lookup is prepared for the bridge. If the backend endpoint is not active yet, customers should contact support.</p>
+    </form>
+  </div>
+</section>
+<style>
+.rbp-bridge-status{background:#f8fafc;padding:72px 0}.rbp-bridge-status__inner{display:grid;gap:20px}.rbp-bridge-status__panel{display:grid;grid-template-columns:minmax(0,1fr) minmax(260px,.32fr);gap:22px;align-items:center;border-radius:30px;background:radial-gradient(circle at top right,rgba(59,130,246,.18),transparent 34%),linear-gradient(135deg,#0f172a,#172554);color:#fff;padding:clamp(26px,4vw,46px)}.rbp-bridge-status__eyebrow{display:inline-flex;border-radius:999px;background:rgba(59,130,246,.18);color:#93c5fd;border:1px solid rgba(147,197,253,.28);padding:7px 12px;font-size:12px;font-weight:900;letter-spacing:.08em;text-transform:uppercase}.rbp-bridge-status h2{margin:14px 0 0;color:#fff;font-size:clamp(30px,4vw,48px);line-height:1.06;letter-spacing:-.035em;font-weight:900}.rbp-bridge-status p{margin:12px 0 0;color:#cbd5e1;line-height:1.7}.rbp-bridge-status__box{border:1px solid rgba(255,255,255,.16);border-radius:24px;background:rgba(255,255,255,.08);padding:20px}.rbp-bridge-status__box span{display:block;color:#bfdbfe;font-size:12px;font-weight:900;letter-spacing:.08em;text-transform:uppercase}.rbp-bridge-status__box strong{display:block;margin-top:8px;color:#fff;font-size:22px;font-weight:900}.rbp-bridge-status__box small{display:block;margin-top:8px;color:#cbd5e1}.rbp-bridge-status__grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}.rbp-bridge-status__card,.rbp-bridge-status__lookup{border:1px solid rgba(15,23,42,.1);border-radius:22px;background:#fff;padding:22px;box-shadow:0 1px 2px rgba(15,23,42,.05)}.rbp-bridge-status__card span{width:42px;height:42px;border-radius:15px;background:#dbeafe;color:#1d4ed8;display:grid;place-items:center;font-weight:900;margin-bottom:14px}.rbp-bridge-status__card h3{margin:0 0 8px;color:#0f172a;font-size:18px;font-weight:900}.rbp-bridge-status__card p,.rbp-bridge-status__lookup p{color:#64748b;font-size:14px}.rbp-bridge-status code{background:#f1f5f9;border-radius:8px;padding:2px 5px;color:#0f172a}.rbp-bridge-status__lookup label{display:block;color:#0f172a;font-weight:900;margin-bottom:10px}.rbp-bridge-status__lookup div{display:flex;gap:10px}.rbp-bridge-status__lookup input{flex:1;min-width:0;border:1px solid rgba(15,23,42,.16);border-radius:14px;padding:13px 14px}.rbp-bridge-status__lookup button{border:0;border-radius:14px;background:#1d4ed8;color:#fff;font-weight:900;padding:13px 16px;cursor:pointer}@media(max-width:989px){.rbp-bridge-status__panel,.rbp-bridge-status__grid{grid-template-columns:1fr}.rbp-bridge-status__lookup div{display:grid}}@media(max-width:749px){.rbp-bridge-status{padding:54px 0}}
+</style>
+<script>
+(() => {
+  const form = document.getElementById('rbp-bridge-status-form');
+  const result = document.getElementById('rbp-bridge-status-result');
+  if (!form || !result) return;
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const reference = (document.getElementById('rbp-bridge-status-ref')?.value || '').trim();
+    if (!reference) {
+      result.textContent = 'Enter an order or provisioning reference first.';
+      return;
+    }
+    result.textContent = 'Checking the RBP bridge...';
+    try {
+      const response = await fetch('/apps/rbp-bridge/api/status?reference=' + encodeURIComponent(reference), { headers: { 'Accept': 'application/json' } });
+      const body = await response.json().catch(() => ({}));
+      if (!response.ok) throw new Error(body.error || 'Status lookup is not available yet.');
+      result.textContent = body.message || body.status || 'Status response received from the RBP bridge.';
+    } catch (error) {
+      result.textContent = 'Status lookup is prepared, but the status endpoint may not be active yet. Contact support with your reference.';
+    }
+  });
+})();
+</script>
+{%- endif -%}
+{% schema %}{"name":"RBP bridge status helper","settings":[],"presets":[{"name":"RBP bridge status helper"}]}{% endschema %}

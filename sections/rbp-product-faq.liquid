@@ -1,0 +1,74 @@
+{{ 'rbp-product.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign delivery_time = product.metafields.custom.delivery_time.value | default: section.settings.default_delivery_time
+  assign file_formats = product.metafields.custom.file_formats.value
+  assign onboarding_form = product.metafields.custom.onboarding_form.value
+-%}
+
+<section class="rbp-product-section rbp-product-section--muted">
+  <div class="rbp-product-container">
+    <div class="rbp-product-grid rbp-product-grid--2">
+      <div class="rbp-product-head" style="margin-bottom: 0;">
+        <div class="rbp-product-eyebrow">Before you buy</div>
+        <h2 class="rbp-product-heading">Product FAQ</h2>
+        <p class="rbp-product-copy">These answers explain the purchase, onboarding, delivery, review and revision process for this document product.</p>
+      </div>
+
+      <div class="rbp-product-faq">
+        <details open>
+          <summary>Do I receive the document instantly after purchase?</summary>
+          <div class="rbp-product-faq-answer">No. After checkout, you complete the onboarding form so the document can be prepared using the information you provide. The delivery timeframe is: {{ delivery_time }}.</div>
+        </details>
+
+        <details>
+          <summary>What happens after I place my order?</summary>
+          <div class="rbp-product-faq-answer">After purchase, you complete the onboarding form. We then prepare the document, deliver it for review, and you can either use it immediately or request revisions where revisions are included or available.</div>
+        </details>
+
+        <details>
+          <summary>Why do I need to complete an onboarding form?</summary>
+          <div class="rbp-product-faq-answer">The onboarding form collects the business details needed to prepare the document properly. Without it, we would be guessing, and guessing is not a business model despite what the internet keeps demonstrating.</div>
+        </details>
+
+        <details>
+          <summary>How long does delivery take?</summary>
+          <div class="rbp-product-faq-answer">The delivery timeframe is shown on this product page and may depend on the information provided in the onboarding form. If the form is incomplete, delivery may be delayed until the required details are received.</div>
+        </details>
+
+        <details>
+          <summary>Can I request changes after I review the document?</summary>
+          <div class="rbp-product-faq-answer">Yes, where revisions are included or available for the product. Review the delivered document carefully and request revisions if something needs to be adjusted before you use it.</div>
+        </details>
+
+        <details>
+          <summary>What format will the document be delivered in?</summary>
+          <div class="rbp-product-faq-answer">
+            {%- if file_formats != blank -%}
+              The listed format{% if file_formats.size > 1 %}s are{% else %} is{% endif %}: {%- for format in file_formats -%}{{ format }}{%- unless forloop.last -%}, {% endunless -%}{%- endfor -%}.
+            {%- else -%}
+              The delivery format will be listed in the product description or confirmed during the order process.
+            {%- endif -%}
+          </div>
+        </details>
+
+        <details>
+          <summary>Can I use this for more than one business?</summary>
+          <div class="rbp-product-faq-answer">Unless the product page states otherwise, the default licence is for single business use. Multi-business, resale, redistribution or client-use rights are not included unless specifically stated.</div>
+        </details>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "RBP product FAQ",
+  "settings": [
+    { "type": "text", "id": "default_delivery_time", "label": "Default delivery time", "default": "Delivered after onboarding is completed" }
+  ],
+  "presets": [
+    { "name": "RBP product FAQ" }
+  ]
+}
+{% endschema %}

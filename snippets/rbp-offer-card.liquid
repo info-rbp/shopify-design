@@ -1,0 +1,14 @@
+{% liquid
+assign partner = offer.partner.value
+assign category = offer.category.value
+assign category_slug = category.slug.value | default: category.system.handle | default: ''
+assign category_name = category.name.value | default: 'Partner offer'
+assign partner_name = partner.name.value | default: ''
+assign search_text = offer.title.value | append: ' ' | append: offer.short_description.value | append: ' ' | append: partner_name | append: ' ' | append: category_name | downcase | escape
+assign hero_image = offer.hero_image.value
+assign offer_detail_url = offer.system.url
+if offer_detail_url == blank
+assign offer_detail_url = '/offers/' | append: offer.system.handle
+endif
+%}
+<article class="rbp-offer-card" data-rbp-offer data-category="{{ category_slug | escape }}" data-search="{{ search_text }}"><a href="{{ offer_detail_url }}" class="rbp-offer-card-link" aria-label="View {{ offer.title.value | escape }}"><div class="rbp-offer-media">{% if hero_image != blank %}{{ hero_image | image_url: width: 900 | image_tag: loading: 'lazy', alt: offer.title.value }}{% else %}<div class="rbp-offer-mark">{{ offer.title.value | slice: 0, 2 | upcase }}</div>{% endif %}<div class="rbp-offer-badges">{% if offer.is_top_offer.value == true or offer.is_top_offer.value == 'true' %}<span class="rbp-offer-badge">Top</span>{% endif %}{% if offer.is_exclusive_offer.value == true or offer.is_exclusive_offer.value == 'true' %}<span class="rbp-offer-badge">Exclusive</span>{% endif %}{% if offer.is_limited_time_offer.value == true or offer.is_limited_time_offer.value == 'true' %}<span class="rbp-offer-badge">Limited time</span>{% endif %}{% if offer.is_new_offer.value == true or offer.is_new_offer.value == 'true' %}<span class="rbp-offer-badge">New</span>{% endif %}</div></div></a><div class="rbp-offer-body"><div class="rbp-offer-meta">{% if partner_name != blank %}<span class="rbp-offer-pill rbp-offer-pill-blue">{{ partner_name }}</span>{% endif %}<span class="rbp-offer-pill">{{ category_name }}</span></div><h3 class="rbp-offer-title"><a href="{{ offer_detail_url }}">{{ offer.title.value }}</a></h3>{% if offer.short_description.value != blank %}<p class="rbp-offer-text">{{ offer.short_description.value }}</p>{% endif %}<div class="rbp-offer-footer">{% if offer.offer_code.value != blank %}<span class="rbp-offer-code">{{ offer.offer_code.value }}</span>{% endif %}<a class="rbp-offers-btn rbp-offers-btn-p" href="{{ offer_detail_url }}">View Offer</a></div></div></article>

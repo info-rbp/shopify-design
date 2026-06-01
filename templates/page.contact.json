@@ -1,0 +1,31 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "rbp_contact": {
+      "type": "rbp-contact-page",
+      "settings": {
+        "eyebrow": "Contact Remote Business Partner",
+        "heading": "Need help choosing the right business pathway?",
+        "hero_text": "Whether you need a document prepared, business advisory support, membership guidance, marketplace help or operational assistance, send the details and we will direct your enquiry to the right pathway.",
+        "help_link": "/pages/help-center",
+        "documents_link": "/pages/nucleus",
+        "advisory_link": "/pages/business-advisor",
+        "managed_link": "/pages/managed-services",
+        "membership_link": "/pages/membership-options",
+        "marketplace_link": "/pages/marketplace",
+        "templates_link": "/pages/templates"
+      }
+    }
+  },
+  "order": [
+    "rbp_contact"
+  ]
+}

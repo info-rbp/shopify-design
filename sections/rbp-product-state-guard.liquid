@@ -1,0 +1,38 @@
+<script>
+  (function () {
+    var checkButton = document.getElementById('rbp-nbn-check-btn');
+    if (!checkButton) return;
+
+    checkButton.addEventListener('click', function (event) {
+      var addressField = document.getElementById('rbp-nbn-address');
+      var result = document.getElementById('rbp-avail-result');
+
+      event.preventDefault();
+      event.stopImmediatePropagation();
+
+      if (!result) return;
+
+      result.style.display = 'block';
+      result.style.color = '#334155';
+
+      if (addressField && addressField.value.trim() === '') {
+        result.style.color = '#b45309';
+        result.textContent = 'Please enter your business address before requesting an availability check.';
+        return;
+      }
+
+      result.innerHTML = '<strong>Availability checks are not connected online yet.</strong> Please contact the Remote Business Partner team and include your business address so availability can be confirmed manually.';
+      checkButton.textContent = 'Contact us to check availability';
+      checkButton.disabled = false;
+    }, true);
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "RBP product state guard",
+  "tag": "div",
+  "class": "rbp-product-state-guard-section",
+  "settings": []
+}
+{% endschema %}

@@ -1,0 +1,983 @@
+<style>
+/* ─── RBP Homepage Tokens ────────────────────────────────────────── */
+.rbp-home {
+  --h-navy:        #0f172a;
+  --h-navy-mid:    #172554;
+  --h-blue:        #1d4ed8;
+  --h-blue-light:  #3b82f6;
+  --h-blue-pale:   #dbeafe;
+  --h-teal:        #0d9488;
+  --h-teal-pale:   #ccfbf1;
+  --h-purple:      #7c3aed;
+  --h-purple-pale: #ede9fe;
+  --h-amber:       #d97706;
+  --h-amber-pale:  #fef3c7;
+  --h-green:       #059669;
+  --h-green-pale:  #d1fae5;
+  --h-slate-9:     #0f172a;
+  --h-slate-7:     #334155;
+  --h-slate-6:     #475569;
+  --h-slate-4:     #94a3b8;
+  --h-slate-2:     #e2e8f0;
+  --h-slate-1:     #f1f5f9;
+  --h-slate-0:     #f8fafc;
+  --h-white:       #ffffff;
+  --h-radius:      16px;
+  --h-radius-lg:   24px;
+  --h-shadow:      0 4px 24px rgba(15,23,42,.10);
+  --h-shadow-lg:   0 16px 56px rgba(15,23,42,.14);
+  background: var(--h-white); color: var(--h-slate-9);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+.rbp-home *, .rbp-home *::before, .rbp-home *::after { box-sizing: border-box; margin: 0; }
+.rbp-home a { text-decoration: none; color: inherit; }
+.rbp-home ul { list-style: none; padding: 0; }
+.rbp-home-c { width: min(100% - 2.5rem, 1260px); margin-inline: auto; }
+.rbp-home-sec { padding: 96px 0; }
+.rbp-home-sec-sm { padding: 56px 0; }
+.rbp-home-muted { background: var(--h-slate-0); }
+
+/* ─── Eyebrow ────────────────────────────────────────────────────── */
+.rbp-home-eye {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 6px 14px; border-radius: 999px;
+  font-size: 11px; font-weight: 800; letter-spacing: .10em; text-transform: uppercase;
+  background: var(--h-blue-pale); color: var(--h-blue);
+}
+.rbp-home-eye--white  { background: rgba(255,255,255,.14); color: rgba(255,255,255,.9); border: 1px solid rgba(255,255,255,.22); }
+.rbp-home-eye--amber  { background: var(--h-amber-pale); color: var(--h-amber); }
+.rbp-home-eye--green  { background: var(--h-green-pale); color: var(--h-green); }
+.rbp-home-eye--purple { background: var(--h-purple-pale); color: var(--h-purple); }
+.rbp-home-eye--teal   { background: var(--h-teal-pale); color: var(--h-teal); }
+.rbp-home-eye-dot { width: 6px; height: 6px; border-radius: 999px; background: currentColor; }
+
+/* ─── Headings ───────────────────────────────────────────────────── */
+.rbp-home-h1 { font-size: clamp(44px,7vw,90px); font-weight: 900; line-height: 1.0; letter-spacing: -.05em; color: var(--h-white); }
+.rbp-home-h2 { font-size: clamp(30px,4vw,52px); font-weight: 900; line-height: 1.04; letter-spacing: -.035em; }
+.rbp-home-h3 { font-size: clamp(18px,2.5vw,24px); font-weight: 800; line-height: 1.2; }
+.rbp-home-p  { font-size: 16px; line-height: 1.75; color: var(--h-slate-6); }
+.rbp-home-head { text-align: center; max-width: 760px; margin: 0 auto 60px; }
+.rbp-home-head .rbp-home-eye { margin-bottom: 16px; }
+.rbp-home-head .rbp-home-h2  { margin: 12px 0 16px; }
+
+/* ─── Buttons ────────────────────────────────────────────────────── */
+.rbp-home-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 15px 26px; border-radius: 14px; border: none;
+  font-size: 15px; font-weight: 800; cursor: pointer; line-height: 1;
+  transition: all .2s ease; text-decoration: none; white-space: nowrap;
+}
+.rbp-home-btn--primary { background: var(--h-blue); color: var(--h-white); box-shadow: 0 10px 28px rgba(29,78,216,.28); }
+.rbp-home-btn--primary:hover { background: #1e40af; transform: translateY(-2px); box-shadow: 0 14px 36px rgba(29,78,216,.36); }
+.rbp-home-btn--white   { background: var(--h-white); color: var(--h-blue); }
+.rbp-home-btn--white:hover { background: var(--h-blue-pale); }
+.rbp-home-btn--ghost   { background: transparent; color: rgba(255,255,255,.8); border: 1.5px solid rgba(255,255,255,.24); }
+.rbp-home-btn--ghost:hover { background: rgba(255,255,255,.08); }
+.rbp-home-btn--sm { padding: 11px 20px; font-size: 13px; }
+.rbp-home-actions { display: flex; flex-wrap: wrap; gap: 14px; }
+
+/* ═══════════════════════════════════════════════════
+   HERO
+═══════════════════════════════════════════════════ */
+.rbp-home-hero {
+  background:
+    radial-gradient(ellipse 90% 70% at 65% 20%, rgba(59,130,246,.22), transparent 60%),
+    radial-gradient(ellipse 50% 80% at 5% 85%, rgba(13,148,136,.16), transparent 55%),
+    radial-gradient(ellipse 40% 40% at 85% 85%, rgba(124,58,237,.12), transparent 50%),
+    linear-gradient(160deg, #0f172a 0%, #1e3a8a 45%, #0f172a 100%);
+  min-height: 100vh; position: relative; overflow: hidden;
+  display: flex; align-items: center;
+}
+.rbp-home-hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Ccircle cx='40' cy='40' r='1' fill='%23ffffff' fill-opacity='0.03'/%3E%3C/g%3E%3C/svg%3E");
+  pointer-events: none;
+}
+/* Animated gradient orb */
+.rbp-home-hero-orb {
+  position: absolute; top: 10%; right: -10%;
+  width: 600px; height: 600px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(59,130,246,.14), transparent 70%);
+  animation: hero-float 8s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes hero-float { 0%,100%{transform:translateY(0) scale(1)} 50%{transform:translateY(-30px) scale(1.05)} }
+.rbp-home-hero-in {
+  display: grid;
+  grid-template-columns: minmax(0,1fr) minmax(380px,.85fr);
+  gap: 72px; align-items: center;
+  padding: 120px 0 100px;
+}
+.rbp-home-hero-text { position: relative; z-index: 1; }
+.rbp-home-hero-text .rbp-home-eye { margin-bottom: 24px; }
+.rbp-home-hero-text .rbp-home-h1 { margin-bottom: 24px; }
+.rbp-home-hero-text .rbp-home-p {
+  color: #94a3b8; font-size: 19px; max-width: 580px;
+  line-height: 1.75; margin-bottom: 36px;
+}
+.rbp-home-hero-text .rbp-home-actions { margin-bottom: 48px; }
+
+/* ─── Live stats bar under hero CTAs ─────────────────────────────── */
+.rbp-home-hero-stats {
+  display: flex; flex-wrap: wrap; gap: 32px;
+  padding-top: 36px; border-top: 1px solid rgba(255,255,255,.1);
+}
+.rbp-home-hero-stat-num {
+  font-size: 36px; font-weight: 900; color: var(--h-white); letter-spacing: -.04em; line-height: 1;
+}
+.rbp-home-hero-stat-label { font-size: 12px; color: #64748b; font-weight: 600; margin-top: 3px; }
+
+/* ─── Hero visual panel ──────────────────────────────────────────── */
+.rbp-home-hero-panel {
+  position: relative; z-index: 1;
+}
+.rbp-home-hero-card-main {
+  background: rgba(255,255,255,.05);
+  border: 1px solid rgba(255,255,255,.14);
+  backdrop-filter: blur(28px);
+  border-radius: var(--h-radius-lg); padding: 36px 32px;
+  position: relative; overflow: hidden;
+}
+.rbp-home-hero-card-main::before {
+  content: ''; position: absolute; top:0;left:0;right:0;height:4px;
+  background: linear-gradient(90deg, #3b82f6, #0d9488, #7c3aed);
+}
+.rbp-home-hero-card-main h3 { color: var(--h-white); font-size: 20px; font-weight: 900; letter-spacing: -.02em; margin-bottom: 6px; }
+.rbp-home-hero-card-main p  { color: #64748b; font-size: 14px; line-height: 1.6; margin-bottom: 24px; }
+.rbp-home-journey-btns { display: flex; flex-direction: column; gap: 10px; }
+.rbp-home-journey-btn {
+  display: flex; align-items: center; gap: 14px;
+  padding: 14px 16px; border-radius: var(--h-radius);
+  background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1);
+  color: var(--h-white); font-size: 14px; font-weight: 700;
+  text-decoration: none; transition: all .2s ease;
+}
+.rbp-home-journey-btn:hover { background: rgba(255,255,255,.12); border-color: rgba(255,255,255,.22); transform: translateX(4px); }
+.rbp-home-journey-btn-icon {
+  width: 36px; height: 36px; border-radius: 10px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center; font-size: 18px;
+}
+.rbp-home-journey-btn-arrow { margin-left: auto; color: rgba(255,255,255,.4); font-size: 16px; transition: transform .2s; }
+.rbp-home-journey-btn:hover .rbp-home-journey-btn-arrow { transform: translateX(4px); color: rgba(255,255,255,.8); }
+
+/* ─── Floating mini-cards ────────────────────────────────────────── */
+.rbp-home-hero-float {
+  display: flex; gap: 12px; margin-top: 12px;
+}
+.rbp-home-hero-float-card {
+  flex: 1; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.1);
+  border-radius: var(--h-radius); padding: 16px;
+  text-align: center;
+}
+.rbp-home-hero-float-card-num { font-size: 22px; font-weight: 900; color: var(--h-white); }
+.rbp-home-hero-float-card-label { font-size: 11px; color: #64748b; margin-top: 3px; font-weight: 600; }
+
+/* ═══════════════════════════════════════════════════
+   TRUST BAR
+═══════════════════════════════════════════════════ */
+.rbp-home-trust-bar {
+  background: var(--h-navy); padding: 24px 0;
+  border-top: 1px solid rgba(255,255,255,.06);
+  border-bottom: 1px solid rgba(255,255,255,.06);
+}
+.rbp-home-trust-items {
+  display: flex; align-items: center; justify-content: center;
+  flex-wrap: wrap; gap: 40px;
+}
+.rbp-home-trust-item {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 13px; color: #475569; font-weight: 600; white-space: nowrap;
+}
+.rbp-home-trust-item svg { color: var(--h-blue); flex-shrink: 0; }
+
+/* ═══════════════════════════════════════════════════
+   SERVICE JOURNEY ROUTING
+═══════════════════════════════════════════════════ */
+.rbp-home-journey {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+}
+.rbp-home-journey-card {
+  background: var(--h-white); border: 1.5px solid var(--h-slate-2);
+  border-radius: var(--h-radius-lg); padding: 40px 32px;
+  position: relative; overflow: hidden;
+  transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+  text-decoration: none; color: inherit; display: flex; flex-direction: column;
+}
+.rbp-home-journey-card:hover { transform: translateY(-6px); box-shadow: var(--h-shadow-lg); border-color: var(--h-accent-color, var(--h-blue)); }
+.rbp-home-journey-card::after {
+  content: ''; position: absolute; top:0;left:0;right:0;height:4px;
+  background: var(--h-accent-color, var(--h-blue));
+  transform: scaleX(0); transform-origin: left;
+  transition: transform .3s ease;
+}
+.rbp-home-journey-card:hover::after { transform: scaleX(1); }
+.rbp-home-journey-card-bg {
+  position: absolute; bottom: -20px; right: -20px;
+  font-size: 100px; opacity: .04; pointer-events: none; line-height: 1;
+}
+.rbp-home-journey-icon {
+  width: 64px; height: 64px; border-radius: 20px;
+  background: var(--h-icon-bg, var(--h-blue-pale));
+  color: var(--h-icon-color, var(--h-blue));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 28px; margin-bottom: 24px;
+}
+.rbp-home-journey-card h3 { font-size: 20px; font-weight: 900; color: var(--h-slate-9); letter-spacing: -.02em; margin-bottom: 12px; }
+.rbp-home-journey-card p  { font-size: 14px; color: var(--h-slate-6); line-height: 1.7; flex: 1; margin-bottom: 24px; }
+.rbp-home-journey-card-link {
+  font-size: 13px; font-weight: 800; color: var(--h-accent-color, var(--h-blue));
+  display: flex; align-items: center; gap: 6px;
+  transition: gap .2s ease;
+}
+.rbp-home-journey-card:hover .rbp-home-journey-card-link { gap: 10px; }
+
+/* ═══════════════════════════════════════════════════
+   STATS SECTION
+═══════════════════════════════════════════════════ */
+.rbp-home-stats {
+  background: linear-gradient(135deg, var(--h-navy) 0%, #1e3a8a 50%, var(--h-navy) 100%);
+  padding: 80px 0; position: relative; overflow: hidden;
+}
+.rbp-home-stats::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse 60% 80% at 50% 50%, rgba(59,130,246,.12), transparent 70%);
+  pointer-events: none;
+}
+.rbp-home-stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; position: relative; z-index: 1; }
+.rbp-home-stat-block {
+  text-align: center; padding: 32px 24px;
+  border-right: 1px solid rgba(255,255,255,.08);
+}
+.rbp-home-stat-block:last-child { border-right: none; }
+.rbp-home-stat-block-num {
+  font-size: clamp(36px,5vw,60px); font-weight: 900;
+  color: var(--h-white); letter-spacing: -.045em; line-height: 1;
+  background: linear-gradient(135deg, var(--h-white), #94a3b8);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.rbp-home-stat-block-label { font-size: 14px; color: #475569; font-weight: 600; margin-top: 8px; }
+.rbp-home-stat-block-sub   { font-size: 12px; color: #334155; margin-top: 4px; }
+
+/* ═══════════════════════════════════════════════════
+   SERVICE CATEGORIES
+═══════════════════════════════════════════════════ */
+.rbp-home-services { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.rbp-home-service {
+  background: var(--h-white); border: 1.5px solid var(--h-slate-2);
+  border-radius: var(--h-radius-lg); padding: 28px 24px;
+  display: flex; align-items: flex-start; gap: 18px;
+  text-decoration: none; color: inherit;
+  transition: transform .2s, box-shadow .2s, border-color .2s;
+  position: relative; overflow: hidden;
+}
+.rbp-home-service:hover { transform: translateY(-3px); box-shadow: var(--h-shadow); border-color: var(--h-service-color, var(--h-blue)); }
+.rbp-home-service::after {
+  content: ''; position: absolute; bottom:0;left:0;right:0;height:3px;
+  background: var(--h-service-color, var(--h-blue));
+  transform: scaleX(0); transform-origin: left; transition: transform .25s;
+}
+.rbp-home-service:hover::after { transform: scaleX(1); }
+.rbp-home-service-icon {
+  width: 48px; height: 48px; border-radius: 14px;
+  background: var(--h-icon-bg, var(--h-blue-pale));
+  color: var(--h-icon-color, var(--h-blue));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px; flex-shrink: 0;
+}
+.rbp-home-service h3 { font-size: 15px; font-weight: 800; color: var(--h-slate-9); margin-bottom: 5px; }
+.rbp-home-service p  { font-size: 13px; color: var(--h-slate-6); line-height: 1.6; }
+.rbp-home-service-arrow { margin-left: auto; flex-shrink: 0; color: var(--h-slate-4); align-self: center; font-size: 18px; transition: transform .2s, color .2s; }
+.rbp-home-service:hover .rbp-home-service-arrow { transform: translateX(4px); color: var(--h-service-color, var(--h-blue)); }
+
+/* ═══════════════════════════════════════════════════
+   WHY RBP — Features grid
+═══════════════════════════════════════════════════ */
+.rbp-home-why { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 60px; align-items: center; }
+.rbp-home-why-features { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.rbp-home-why-feat {
+  background: var(--h-white); border: 1.5px solid var(--h-slate-2);
+  border-radius: var(--h-radius-lg); padding: 28px 24px;
+  transition: transform .2s, box-shadow .2s;
+}
+.rbp-home-why-feat:hover { transform: translateY(-3px); box-shadow: var(--h-shadow); }
+.rbp-home-why-feat-icon {
+  width: 48px; height: 48px; border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px; margin-bottom: 16px;
+}
+.rbp-home-why-feat h3 { font-size: 15px; font-weight: 800; color: var(--h-slate-9); margin-bottom: 6px; }
+.rbp-home-why-feat p  { font-size: 13px; color: var(--h-slate-6); line-height: 1.65; }
+
+/* ═══════════════════════════════════════════════════
+   FEATURED SHOWCASE — On-demand
+═══════════════════════════════════════════════════ */
+.rbp-home-showcase {
+  background: linear-gradient(135deg, #0f172a 0%, #172554 55%, #0f172a 100%);
+  padding: 96px 0; position: relative; overflow: hidden;
+}
+.rbp-home-showcase::before {
+  content: ''; position: absolute; inset:0;
+  background: radial-gradient(ellipse 70% 60% at 70% 40%, rgba(59,130,246,.14), transparent 60%);
+}
+.rbp-home-showcase-in { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1.2fr); gap: 72px; align-items: center; position: relative; z-index: 1; }
+.rbp-home-showcase-tag { display: flex; align-items: center; gap: 10px; font-size: 11px; font-weight: 800; letter-spacing: .10em; text-transform: uppercase; color: #64748b; margin-bottom: 20px; }
+.rbp-home-showcase-tag-line { flex: 1; height: 1px; background: rgba(255,255,255,.1); }
+.rbp-home-showcase h2 { color: var(--h-white); }
+.rbp-home-showcase .rbp-home-p { color: #94a3b8; margin: 16px 0 32px; }
+.rbp-home-showcase-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.rbp-home-showcase-card {
+  background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.1);
+  border-radius: var(--h-radius-lg); padding: 24px 20px;
+  transition: background .2s, border-color .2s;
+}
+.rbp-home-showcase-card:hover { background: rgba(255,255,255,.09); border-color: rgba(255,255,255,.2); }
+.rbp-home-showcase-card-icon { font-size: 28px; margin-bottom: 14px; display: block; }
+.rbp-home-showcase-card h4 { font-size: 14px; font-weight: 800; color: var(--h-white); margin-bottom: 6px; }
+.rbp-home-showcase-card p  { font-size: 13px; color: #64748b; line-height: 1.6; }
+.rbp-home-showcase-card-count { font-size: 11px; color: #3b82f6; font-weight: 800; margin-top: 10px; letter-spacing: .04em; }
+
+/* ═══════════════════════════════════════════════════
+   MEMBERSHIP CTA SPLIT
+═══════════════════════════════════════════════════ */
+.rbp-home-split { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.rbp-home-split-card {
+  border-radius: var(--h-radius-lg); padding: 52px 44px;
+  position: relative; overflow: hidden;
+}
+.rbp-home-split-card::before { content: ''; position: absolute; top:-30%;right:-10%; width: 300px; height: 300px; border-radius: 50%; background: radial-gradient(circle, rgba(255,255,255,.08), transparent 70%); }
+.rbp-home-split-card--member { background: linear-gradient(135deg, #1e3a8a, #172554); }
+.rbp-home-split-card--partner { background: linear-gradient(135deg, #134e4a, #0f172a); }
+.rbp-home-split-card-eye { display: inline-flex; align-items: center; gap: 8px; padding: 5px 12px; border-radius: 999px; font-size: 11px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; margin-bottom: 20px; }
+.rbp-home-split-card--member .rbp-home-split-card-eye { background: rgba(59,130,246,.2); color: #93c5fd; }
+.rbp-home-split-card--partner .rbp-home-split-card-eye { background: rgba(13,148,136,.2); color: #5eead4; }
+.rbp-home-split-card h3 { color: var(--h-white); font-size: 28px; font-weight: 900; letter-spacing: -.03em; margin-bottom: 12px; }
+.rbp-home-split-card p  { color: rgba(255,255,255,.6); font-size: 15px; line-height: 1.7; margin-bottom: 28px; }
+.rbp-home-split-card ul { margin-bottom: 32px; display: flex; flex-direction: column; gap: 8px; }
+.rbp-home-split-card li { display: flex; align-items: center; gap: 10px; font-size: 14px; color: rgba(255,255,255,.78); font-weight: 600; }
+.rbp-home-split-card li::before { content: '✓'; color: #22c55e; font-weight: 900; flex-shrink: 0; }
+
+/* ═══════════════════════════════════════════════════
+   RESOURCES PREVIEW
+═══════════════════════════════════════════════════ */
+.rbp-home-resources { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+.rbp-home-resource {
+  background: var(--h-white); border: 1.5px solid var(--h-slate-2);
+  border-radius: var(--h-radius-lg); padding: 28px 24px;
+  text-decoration: none; color: inherit;
+  transition: transform .2s, box-shadow .2s, border-color .2s;
+  position: relative; overflow: hidden;
+}
+.rbp-home-resource:hover { transform: translateY(-4px); box-shadow: var(--h-shadow-lg); border-color: var(--h-blue); }
+.rbp-home-resource-type {
+  display: inline-flex; padding: 3px 10px; border-radius: 999px;
+  font-size: 10px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase;
+  background: var(--h-blue-pale); color: var(--h-blue); margin-bottom: 14px;
+}
+.rbp-home-resource h3 { font-size: 15px; font-weight: 800; color: var(--h-slate-9); line-height: 1.3; margin-bottom: 8px; }
+.rbp-home-resource p  { font-size: 13px; color: var(--h-slate-6); line-height: 1.6; }
+
+/* ═══════════════════════════════════════════════════
+   CTA BAND
+═══════════════════════════════════════════════════ */
+.rbp-home-cta-band {
+  background: linear-gradient(135deg, var(--h-blue) 0%, #1e40af 50%, var(--h-navy) 100%);
+  border-radius: var(--h-radius-lg); padding: 72px 60px;
+  position: relative; overflow: hidden;
+  text-align: center;
+}
+.rbp-home-cta-band::before { content: ''; position: absolute; top:-40%;left:50%;transform:translateX(-50%); width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.07),transparent 70%); }
+.rbp-home-cta-band h2 { color: var(--h-white); font-size: clamp(28px,4vw,48px); font-weight: 900; letter-spacing: -.04em; margin: 0 0 16px; position: relative; }
+.rbp-home-cta-band p  { color: rgba(255,255,255,.7); font-size: 18px; line-height: 1.65; max-width: 600px; margin: 0 auto 40px; position: relative; }
+.rbp-home-cta-band .rbp-home-actions { justify-content: center; position: relative; }
+
+/* ─── Responsive ─────────────────────────────────────────────────── */
+@media (max-width: 1100px) {
+  .rbp-home-journey { grid-template-columns: repeat(2, 1fr); }
+  .rbp-home-stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .rbp-home-stat-block { border-bottom: 1px solid rgba(255,255,255,.06); }
+  .rbp-home-resources { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 900px) {
+  .rbp-home-hero-in { grid-template-columns: 1fr; gap: 48px; padding: 88px 0 72px; }
+  .rbp-home-why { grid-template-columns: 1fr; gap: 40px; }
+  .rbp-home-showcase-in { grid-template-columns: 1fr; gap: 40px; }
+  .rbp-home-split { grid-template-columns: 1fr; }
+  .rbp-home-cta-band { padding: 56px 36px; }
+}
+@media (max-width: 640px) {
+  .rbp-home-sec { padding: 64px 0; }
+  .rbp-home-journey { grid-template-columns: 1fr; }
+  .rbp-home-why-features { grid-template-columns: 1fr; }
+  .rbp-home-services { grid-template-columns: 1fr; }
+  .rbp-home-showcase-grid { grid-template-columns: 1fr; }
+  .rbp-home-resources { grid-template-columns: 1fr 1fr; }
+  .rbp-home-stats-grid { grid-template-columns: 1fr 1fr; }
+}
+</style>
+
+<div class="rbp-home" data-rbp-section="homepage">
+
+  {%- comment -%} ══════════════════════════════════════
+    HERO — Full viewport, animated, with service journey shortcuts
+  ══════════════════════════════════════ {%- endcomment -%}
+  <section class="rbp-home-hero" aria-label="Remote Business Partner homepage hero">
+    <div class="rbp-home-hero-orb"></div>
+    <div class="rbp-home-c" style="width:100%;max-width:1260px;margin-inline:auto;padding:0 1.25rem">
+      <div class="rbp-home-hero-in">
+
+        <div class="rbp-home-hero-text">
+          <div class="rbp-home-eye rbp-home-eye--white">
+            <span class="rbp-home-eye-dot" style="background:#22c55e;animation:none"></span>
+            Australia's remote business partner
+          </div>
+          <h1 class="rbp-home-h1">
+            {%- if section.settings.hero_heading != blank -%}
+              {{ section.settings.hero_heading }}
+            {%- else -%}
+              Your business,<br>connected<br>and supported.
+            {%- endif -%}
+          </h1>
+          <p class="rbp-home-p">
+            {{ section.settings.hero_subtext | default: 'Remote Business Partner connects Australian SMEs with professional services, business resources, document support and partner offers — through one structured, accessible platform.' }}
+          </p>
+          <div class="rbp-home-actions">
+            <a class="rbp-home-btn rbp-home-btn--primary" href="/pages/core-services">
+              Explore services
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+            <a class="rbp-home-btn rbp-home-btn--ghost" href="/pages/contact">Talk to us first</a>
+          </div>
+          <div class="rbp-home-hero-stats">
+            <div>
+              <div class="rbp-home-hero-stat-num">699+</div>
+              <div class="rbp-home-hero-stat-label">On-demand services</div>
+            </div>
+            <div>
+              <div class="rbp-home-hero-stat-num">3</div>
+              <div class="rbp-home-hero-stat-label">Membership tiers</div>
+            </div>
+            <div>
+              <div class="rbp-home-hero-stat-num">10</div>
+              <div class="rbp-home-hero-stat-label">Product categories</div>
+            </div>
+            <div>
+              <div class="rbp-home-hero-stat-num">AU</div>
+              <div class="rbp-home-hero-stat-label">Australia focused</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rbp-home-hero-panel">
+          <div class="rbp-home-hero-card-main">
+            <h3>Where would you like to go?</h3>
+            <p>Choose your business pathway — or browse any area below.</p>
+            <div class="rbp-home-journey-btns">
+              <a class="rbp-home-journey-btn" href="/pages/core-services" data-rbp-flow="hero-nav">
+                <span class="rbp-home-journey-btn-icon" style="background:rgba(29,78,216,.2)">🎯</span>
+                Core Services &amp; Advisory
+                <span class="rbp-home-journey-btn-arrow">→</span>
+              </a>
+              <a class="rbp-home-journey-btn" href="/collections/on-demand-services" data-rbp-flow="hero-nav">
+                <span class="rbp-home-journey-btn-icon" style="background:rgba(7,182,212,.15)">⚡</span>
+                On-Demand Services (699+)
+                <span class="rbp-home-journey-btn-arrow">→</span>
+              </a>
+              <a class="rbp-home-journey-btn" href="/pages/membership" data-rbp-flow="hero-nav">
+                <span class="rbp-home-journey-btn-icon" style="background:rgba(245,158,11,.15)">🏆</span>
+                Membership Plans
+                <span class="rbp-home-journey-btn-arrow">→</span>
+              </a>
+              <a class="rbp-home-journey-btn" href="/pages/offers" data-rbp-flow="hero-nav">
+                <span class="rbp-home-journey-btn-icon" style="background:rgba(124,58,237,.15)">🏪</span>
+                Marketplace &amp; Offers
+                <span class="rbp-home-journey-btn-arrow">→</span>
+              </a>
+              <a class="rbp-home-journey-btn" href="/pages/business-nbn" data-rbp-flow="hero-nav">
+                <span class="rbp-home-journey-btn-icon" style="background:rgba(13,148,136,.15)">🌐</span>
+                Business NBN
+                <span class="rbp-home-journey-btn-arrow">→</span>
+              </a>
+            </div>
+          </div>
+          <div class="rbp-home-hero-float">
+            <div class="rbp-home-hero-float-card">
+              <div class="rbp-home-hero-float-card-num">SME</div>
+              <div class="rbp-home-hero-float-card-label">Focused</div>
+            </div>
+            <div class="rbp-home-hero-float-card">
+              <div class="rbp-home-hero-float-card-num">AU</div>
+              <div class="rbp-home-hero-float-card-label">Based</div>
+            </div>
+            <div class="rbp-home-hero-float-card">
+              <div class="rbp-home-hero-float-card-num">B2B</div>
+              <div class="rbp-home-hero-float-card-label">Platform</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} ── TRUST BAR ── {%- endcomment -%}
+  <div class="rbp-home-trust-bar" aria-label="Trust indicators">
+    <div class="rbp-home-c">
+      <div class="rbp-home-trust-items">
+        <div class="rbp-home-trust-item">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          Australian SME focused
+        </div>
+        <div class="rbp-home-trust-item">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+          Professional B2B services platform
+        </div>
+        <div class="rbp-home-trust-item">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          699+ on-demand services
+        </div>
+        <div class="rbp-home-trust-item">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+          Template packs, toolkits, document suites
+        </div>
+        <div class="rbp-home-trust-item">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.79 19.79 0 0 1 11.69 19 19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9.91a16 16 0 0 0 6.06 6.06l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          No lock-in required to enquire
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {%- comment -%} ── SERVICE JOURNEY ROUTING ── {%- endcomment -%}
+  <section class="rbp-home-sec" aria-label="Service categories and routing">
+    <div class="rbp-home-c">
+      <div class="rbp-home-head">
+        <div class="rbp-home-eye">Where do you want to go?</div>
+        <h2 class="rbp-home-h2">Every service pathway in one place</h2>
+        <p class="rbp-home-p">Remote Business Partner covers the full range of Australian SME support needs — from document resources and on-demand services through to connectivity, membership and partner offers.</p>
+      </div>
+      <div class="rbp-home-journey">
+
+        <a class="rbp-home-journey-card" href="/pages/core-services"
+           style="--h-accent-color:var(--h-blue);--h-icon-bg:var(--h-blue-pale);--h-icon-color:var(--h-blue)"
+           data-rbp-flow="homepage-routing">
+          <div class="rbp-home-journey-card-bg">🎯</div>
+          <div class="rbp-home-journey-icon">🎯</div>
+          <h3>Core Services</h3>
+          <p>Professional business advisory, support services and structured service pathways for Australian SMEs.</p>
+          <span class="rbp-home-journey-card-link">Explore core services →</span>
+        </a>
+
+        <a class="rbp-home-journey-card" href="/collections/on-demand-services"
+           style="--h-accent-color:#06b6d4;--h-icon-bg:#cffafe;--h-icon-color:#0e7490"
+           data-rbp-flow="homepage-routing">
+          <div class="rbp-home-journey-card-bg">⚡</div>
+          <div class="rbp-home-journey-icon">⚡</div>
+          <h3>On-Demand Services</h3>
+          <p>Browse and request from 699+ on-demand business services — structured around your specific operational needs.</p>
+          <span class="rbp-home-journey-card-link">Browse 699+ services →</span>
+        </a>
+
+        <a class="rbp-home-journey-card" href="/pages/membership"
+           style="--h-accent-color:var(--h-amber);--h-icon-bg:var(--h-amber-pale);--h-icon-color:var(--h-amber)"
+           data-rbp-flow="homepage-routing">
+          <div class="rbp-home-journey-card-bg">🏆</div>
+          <div class="rbp-home-journey-icon">🏆</div>
+          <h3>Membership</h3>
+          <p>Three structured membership tiers — Foundation, Growth and Premium — giving you expanded access to resources, services and support.</p>
+          <span class="rbp-home-journey-card-link">Compare membership plans →</span>
+        </a>
+
+        <a class="rbp-home-journey-card" href="/pages/marketplace"
+           style="--h-accent-color:var(--h-purple);--h-icon-bg:var(--h-purple-pale);--h-icon-color:var(--h-purple)"
+           data-rbp-flow="homepage-routing">
+          <div class="rbp-home-journey-card-bg">🏪</div>
+          <div class="rbp-home-journey-icon">🏪</div>
+          <h3>Marketplace</h3>
+          <p>Partner-sourced offers on software, services, resources and tools — curated for Australian SMEs through the RBP partner network.</p>
+          <span class="rbp-home-journey-card-link">Browse partner offers →</span>
+        </a>
+
+        <a class="rbp-home-journey-card" href="/pages/business-nbn"
+           style="--h-accent-color:var(--h-teal);--h-icon-bg:var(--h-teal-pale);--h-icon-color:var(--h-teal)"
+           data-rbp-flow="homepage-routing">
+          <div class="rbp-home-journey-card-bg">🌐</div>
+          <div class="rbp-home-journey-icon">🌐</div>
+          <h3>Business NBN</h3>
+          <p>Fast, reliable Business NBN plans for Australian SMEs. Check availability at your address and choose the right speed tier.</p>
+          <span class="rbp-home-journey-card-link">Check availability →</span>
+        </a>
+
+        <a class="rbp-home-journey-card" href="/pages/help-center"
+           style="--h-accent-color:var(--h-green);--h-icon-bg:var(--h-green-pale);--h-icon-color:var(--h-green)"
+           data-rbp-flow="homepage-routing">
+          <div class="rbp-home-journey-card-bg">🆘</div>
+          <div class="rbp-home-journey-icon">🆘</div>
+          <h3>Help Center</h3>
+          <p>Support articles, guides and structured help pathways — find answers, navigate services and get the assistance your business needs.</p>
+          <span class="rbp-home-journey-card-link">Visit Help Center →</span>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} ── STATS ── {%- endcomment -%}
+  <div class="rbp-home-stats" aria-label="Platform statistics">
+    <div class="rbp-home-c">
+      <div class="rbp-home-stats-grid">
+        <div class="rbp-home-stat-block">
+          <div class="rbp-home-stat-block-num">699+</div>
+          <div class="rbp-home-stat-block-label">On-demand services</div>
+          <div class="rbp-home-stat-block-sub">Across all business categories</div>
+        </div>
+        <div class="rbp-home-stat-block">
+          <div class="rbp-home-stat-block-num">10</div>
+          <div class="rbp-home-stat-block-label">Product categories</div>
+          <div class="rbp-home-stat-block-sub">Templates, toolkits, core services &amp; more</div>
+        </div>
+        <div class="rbp-home-stat-block">
+          <div class="rbp-home-stat-block-num">3</div>
+          <div class="rbp-home-stat-block-label">Membership tiers</div>
+          <div class="rbp-home-stat-block-sub">Foundation · Growth · Premium</div>
+        </div>
+        <div class="rbp-home-stat-block">
+          <div class="rbp-home-stat-block-num">SME</div>
+          <div class="rbp-home-stat-block-label">Focused exclusively</div>
+          <div class="rbp-home-stat-block-sub">Built for Australian small business</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {%- comment -%} ── SERVICE CATEGORIES ── {%- endcomment -%}
+  <section class="rbp-home-sec rbp-home-muted" aria-label="Service categories">
+    <div class="rbp-home-c">
+      <div class="rbp-home-head">
+        <div class="rbp-home-eye rbp-home-eye--amber">Product &amp; service categories</div>
+        <h2 class="rbp-home-h2">Everything your SME needs</h2>
+        <p class="rbp-home-p">From instant-download template packs to structured advisory services — RBP offers 10 distinct product categories covering the full range of Australian SME support needs.</p>
+      </div>
+      <div class="rbp-home-services">
+        <a class="rbp-home-service" href="/collections/template-packs"
+           style="--h-service-color:var(--h-blue);--h-icon-bg:var(--h-blue-pale);--h-icon-color:var(--h-blue)"
+           data-rbp-flow="homepage-service-cat">
+          <div class="rbp-home-service-icon">📄</div>
+          <div>
+            <h3>Template Packs</h3>
+            <p>Instant-download business document templates</p>
+          </div>
+          <span class="rbp-home-service-arrow">→</span>
+        </a>
+        <a class="rbp-home-service" href="/collections/toolkits"
+           style="--h-service-color:#06b6d4;--h-icon-bg:#cffafe;--h-icon-color:#0e7490"
+           data-rbp-flow="homepage-service-cat">
+          <div class="rbp-home-service-icon">🧰</div>
+          <div>
+            <h3>Toolkits</h3>
+            <p>Curated business tool bundles and guides</p>
+          </div>
+          <span class="rbp-home-service-arrow">→</span>
+        </a>
+        <a class="rbp-home-service" href="/collections/documentation-suites"
+           style="--h-service-color:var(--h-purple);--h-icon-bg:var(--h-purple-pale);--h-icon-color:var(--h-purple)"
+           data-rbp-flow="homepage-service-cat">
+          <div class="rbp-home-service-icon">📋</div>
+          <div>
+            <h3>Documentation Suites</h3>
+            <p>Comprehensive multi-document business packages</p>
+          </div>
+          <span class="rbp-home-service-arrow">→</span>
+        </a>
+        <a class="rbp-home-service" href="/collections/on-demand-services"
+           style="--h-service-color:#f59e0b;--h-icon-bg:#fef3c7;--h-icon-color:#d97706"
+           data-rbp-flow="homepage-service-cat">
+          <div class="rbp-home-service-icon">⚡</div>
+          <div>
+            <h3>On-Demand Services</h3>
+            <p>699+ individual on-demand business services</p>
+          </div>
+          <span class="rbp-home-service-arrow">→</span>
+        </a>
+        <a class="rbp-home-service" href="/pages/core-services"
+           style="--h-service-color:var(--h-blue);--h-icon-bg:var(--h-blue-pale);--h-icon-color:var(--h-blue)"
+           data-rbp-flow="homepage-service-cat">
+          <div class="rbp-home-service-icon">🎯</div>
+          <div>
+            <h3>Core Services</h3>
+            <p>Professional advisory and structured support</p>
+          </div>
+          <span class="rbp-home-service-arrow">→</span>
+        </a>
+        <a class="rbp-home-service" href="/pages/custom-solutions"
+           style="--h-service-color:var(--h-teal);--h-icon-bg:var(--h-teal-pale);--h-icon-color:var(--h-teal)"
+           data-rbp-flow="homepage-service-cat">
+          <div class="rbp-home-service-icon">🔧</div>
+          <div>
+            <h3>Custom Solutions</h3>
+            <p>Bespoke builds and retainer service pathways</p>
+          </div>
+          <span class="rbp-home-service-arrow">→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} ── WHY RBP ── {%- endcomment -%}
+  <section class="rbp-home-sec" aria-label="Why Remote Business Partner">
+    <div class="rbp-home-c">
+      <div class="rbp-home-why">
+        <div>
+          <div class="rbp-home-eye" style="margin-bottom:20px">Why Remote Business Partner</div>
+          <h2 class="rbp-home-h2" style="margin-bottom:20px">Built for the way Australian SMEs actually work.</h2>
+          <p class="rbp-home-p" style="margin-bottom:32px">Most business service platforms are built for enterprise. Remote Business Partner is built from the ground up for small and medium Australian businesses — with the structure, access and support pathways that actually fit how SMEs operate.</p>
+          <div class="rbp-home-actions">
+            <a class="rbp-home-btn rbp-home-btn--primary" href="/pages/core-services">See all services →</a>
+            <a class="rbp-home-btn" href="/pages/contact" style="background:var(--h-slate-1);color:var(--h-slate-7)">Contact us</a>
+          </div>
+        </div>
+        <div class="rbp-home-why-features">
+          <div class="rbp-home-why-feat">
+            <div class="rbp-home-why-feat-icon" style="background:#dbeafe;color:#1d4ed8">🎯</div>
+            <h3>SME focused</h3>
+            <p>Every product, service and support pathway is designed around the needs of Australian small and medium businesses.</p>
+          </div>
+          <div class="rbp-home-why-feat">
+            <div class="rbp-home-why-feat-icon" style="background:#d1fae5;color:#059669">🗂️</div>
+            <h3>Structured pathways</h3>
+            <p>Clear service routing, enquiry pathways and support flows — no confusing enterprise noise, just what your business needs.</p>
+          </div>
+          <div class="rbp-home-why-feat">
+            <div class="rbp-home-why-feat-icon" style="background:#fef3c7;color:#d97706">⚡</div>
+            <h3>Instant to managed</h3>
+            <p>From instant-download templates to structured managed arrangements — RBP covers the full fulfilment spectrum.</p>
+          </div>
+          <div class="rbp-home-why-feat">
+            <div class="rbp-home-why-feat-icon" style="background:#ede9fe;color:#7c3aed">🤝</div>
+            <h3>Partner ecosystem</h3>
+            <p>Marketplace offers, partner connections and NBN connectivity — one platform for the full range of SME support needs.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} ── ON-DEMAND SERVICES SHOWCASE ── {%- endcomment -%}
+  <div class="rbp-home-showcase" aria-label="On-demand services showcase">
+    <div class="rbp-home-c">
+      <div class="rbp-home-showcase-in">
+        <div>
+          <div class="rbp-home-showcase-tag">
+            <span>On-Demand Services</span>
+            <div class="rbp-home-showcase-tag-line"></div>
+          </div>
+          <h2 class="rbp-home-h2">699+ services ready<br>when you need them.</h2>
+          <p class="rbp-home-p">Remote Business Partner's on-demand service catalogue covers the full range of operational needs for Australian SMEs — from admin and HR through to compliance, finance, marketing and technology.</p>
+          <div class="rbp-home-actions">
+            <a class="rbp-home-btn rbp-home-btn--primary" href="/collections/on-demand-services" data-rbp-flow="homepage-ondemand">
+              Browse all services
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+            <a class="rbp-home-btn rbp-home-btn--ghost" href="/pages/core-services">Core services</a>
+          </div>
+        </div>
+        <div>
+          <div class="rbp-home-showcase-grid">
+            <div class="rbp-home-showcase-card">
+              <span class="rbp-home-showcase-card-icon">📋</span>
+              <h4>Administration</h4>
+              <p>Office management, document admin and operational support services.</p>
+              <div class="rbp-home-showcase-card-count">Available on-demand</div>
+            </div>
+            <div class="rbp-home-showcase-card">
+              <span class="rbp-home-showcase-card-icon">👥</span>
+              <h4>HR &amp; People</h4>
+              <p>Human resources, contracts, onboarding and people management support.</p>
+              <div class="rbp-home-showcase-card-count">Available on-demand</div>
+            </div>
+            <div class="rbp-home-showcase-card">
+              <span class="rbp-home-showcase-card-icon">⚖️</span>
+              <h4>Compliance</h4>
+              <p>Regulatory support, policy documents and compliance pathway services.</p>
+              <div class="rbp-home-showcase-card-count">Available on-demand</div>
+            </div>
+            <div class="rbp-home-showcase-card">
+              <span class="rbp-home-showcase-card-icon">💰</span>
+              <h4>Finance &amp; Accounting</h4>
+              <p>Financial administration, bookkeeping support and accounting pathway services.</p>
+              <div class="rbp-home-showcase-card-count">Available on-demand</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {%- comment -%} ── MEMBERSHIP + PARTNER SPLIT CTA ── {%- endcomment -%}
+  <section class="rbp-home-sec" aria-label="Membership and partner opportunities">
+    <div class="rbp-home-c">
+      <div class="rbp-home-split">
+        <div class="rbp-home-split-card rbp-home-split-card--member">
+          <div class="rbp-home-split-card-eye">
+            <span style="width:6px;height:6px;border-radius:50%;background:currentColor;display:inline-block"></span>
+            Membership
+          </div>
+          <h3>Become an RBP member</h3>
+          <p>Unlock expanded access to resources, structured service pathways and member-exclusive support through one of three membership tiers.</p>
+          <ul>
+            <li>Foundation, Growth &amp; Premium tiers</li>
+            <li>Expanded resource library access</li>
+            <li>Structured service routing</li>
+            <li>Member-exclusive marketplace offers</li>
+          </ul>
+          <a class="rbp-home-btn rbp-home-btn--white" href="/pages/membership" data-rbp-flow="homepage-membership">
+            Explore membership plans →
+          </a>
+        </div>
+        <div class="rbp-home-split-card rbp-home-split-card--partner">
+          <div class="rbp-home-split-card-eye">
+            <span style="width:6px;height:6px;border-radius:50%;background:currentColor;display:inline-block"></span>
+            Partner with RBP
+          </div>
+          <h3>List your offer on the marketplace</h3>
+          <p>Are you a service provider, software vendor or resource creator? Apply to list your offer through the RBP Marketplace partner programme.</p>
+          <ul>
+            <li>Access to Australian SME audience</li>
+            <li>Structured enquiry routing</li>
+            <li>Partner-managed offer listings</li>
+            <li>Member-exclusive offer designation</li>
+          </ul>
+          <a class="rbp-home-btn" href="/pages/contact?inquiry=partner" style="background:var(--h-teal);color:var(--h-white)" data-rbp-flow="homepage-partner">
+            Apply to be a partner →
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} ── RESOURCES PREVIEW ── {%- endcomment -%}
+  <section class="rbp-home-sec rbp-home-muted" aria-label="Resource previews">
+    <div class="rbp-home-c">
+      <div class="rbp-home-head">
+        <div class="rbp-home-eye rbp-home-eye--green">Resources &amp; guides</div>
+        <h2 class="rbp-home-h2">Business resources for Australian SMEs</h2>
+        <p class="rbp-home-p">From template packs and toolkits through to help guides and business documentation suites — RBP resources are built for the practical needs of growing Australian businesses.</p>
+      </div>
+      <div class="rbp-home-resources">
+        <a class="rbp-home-resource" href="/collections/template-packs" data-rbp-flow="homepage-resource">
+          <div class="rbp-home-resource-type">Template Pack</div>
+          <h3>Business document templates</h3>
+          <p>Ready-to-use, professionally structured templates for core business operations.</p>
+        </a>
+        <a class="rbp-home-resource" href="/collections/toolkits" data-rbp-flow="homepage-resource">
+          <div class="rbp-home-resource-type" style="background:#cffafe;color:#0e7490">Toolkit</div>
+          <h3>Business operation toolkits</h3>
+          <p>Curated bundles combining templates, guides and operational tools.</p>
+        </a>
+        <a class="rbp-home-resource" href="/collections/documentation-suites" data-rbp-flow="homepage-resource">
+          <div class="rbp-home-resource-type" style="background:#ede9fe;color:#7c3aed">Documentation Suite</div>
+          <h3>Comprehensive documentation packs</h3>
+          <p>Multi-document suites covering a complete area of business operations.</p>
+        </a>
+        <a class="rbp-home-resource" href="/pages/help-center" data-rbp-flow="homepage-resource">
+          <div class="rbp-home-resource-type" style="background:#d1fae5;color:#059669">Help Center</div>
+          <h3>Support guides and articles</h3>
+          <p>Find answers, navigate services and access structured support pathways.</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} ── CTA BAND ── {%- endcomment -%}
+  <section class="rbp-home-sec-sm" aria-label="Homepage call to action">
+    <div class="rbp-home-c">
+      <div class="rbp-home-cta-band">
+        <h2>Ready to connect your business with the right support?</h2>
+        <p>Browse services, explore membership options, or contact the RBP team to find the right pathway for your business. No lock-in required to start.</p>
+        <div class="rbp-home-actions">
+          <a class="rbp-home-btn rbp-home-btn--white" href="/pages/core-services">Explore services →</a>
+          <a class="rbp-home-btn rbp-home-btn--ghost" href="/pages/contact">Talk to us first</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+(function() {
+  // ── Scroll-triggered entrance animations
+  if ('IntersectionObserver' in window) {
+    var targets = document.querySelectorAll('.rbp-home-journey-card, .rbp-home-why-feat, .rbp-home-service, .rbp-home-resource, .rbp-home-showcase-card, .rbp-home-stat-block');
+    var io = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        if (e.isIntersecting) {
+          e.target.style.opacity = '1';
+          e.target.style.transform = 'translateY(0)';
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.08 });
+    targets.forEach(function(el) {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(20px)';
+      el.style.transition = 'opacity .5s ease, transform .5s ease';
+      io.observe(el);
+    });
+  }
+
+  // ── Stat counter animation
+  var statNums = document.querySelectorAll('.rbp-home-stat-block-num');
+  var counted = false;
+  function countUp(el) {
+    var text = el.textContent;
+    var num = parseFloat(text.replace(/[^0-9.]/g, ''));
+    if (isNaN(num)) return;
+    var suffix = text.replace(/[0-9.]/g, '');
+    var duration = 1200;
+    var start = performance.now();
+    function update(ts) {
+      var progress = Math.min((ts - start) / duration, 1);
+      var eased = 1 - Math.pow(1 - progress, 3);
+      el.textContent = Math.round(num * eased) + suffix;
+      if (progress < 1) requestAnimationFrame(update);
+    }
+    requestAnimationFrame(update);
+  }
+  if ('IntersectionObserver' in window) {
+    var statsEl = document.querySelector('.rbp-home-stats');
+    if (statsEl) {
+      new IntersectionObserver(function(entries) {
+        if (entries[0].isIntersecting && !counted) {
+          counted = true;
+          statNums.forEach(countUp);
+        }
+      }, { threshold: 0.3 }).observe(statsEl);
+    }
+  }
+})();
+</script>
+
+{% schema %}
+{
+  "name": "RBP Homepage",
+  "settings": [
+    {
+      "type": "text",
+      "id": "hero_heading",
+      "label": "Hero heading",
+      "default": "Your business, connected and supported."
+    },
+    {
+      "type": "textarea",
+      "id": "hero_subtext",
+      "label": "Hero subtext",
+      "default": "Remote Business Partner connects Australian SMEs with professional services, business resources, document support and partner offers — through one structured, accessible platform."
+    }
+  ],
+  "presets": [
+    { "name": "RBP Homepage" }
+  ]
+}
+{% endschema %}

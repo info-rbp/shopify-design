@@ -1,0 +1,581 @@
+<style>
+/* ─── RBP Marketplace Tokens ─────────────────────────────────────── */
+.rbp-mkt {
+  --mkt-navy:      #0f172a;
+  --mkt-purple:    #7c3aed;
+  --mkt-purple-mid:#6d28d9;
+  --mkt-purple-pale:#ede9fe;
+  --mkt-violet:    #8b5cf6;
+  --mkt-blue:      #1d4ed8;
+  --mkt-blue-pale: #dbeafe;
+  --mkt-teal:      #0d9488;
+  --mkt-teal-pale: #ccfbf1;
+  --mkt-amber:     #d97706;
+  --mkt-amber-pale:#fef3c7;
+  --mkt-green:     #059669;
+  --mkt-green-pale:#d1fae5;
+  --mkt-slate-9:   #0f172a;
+  --mkt-slate-7:   #334155;
+  --mkt-slate-6:   #475569;
+  --mkt-slate-4:   #94a3b8;
+  --mkt-slate-2:   #e2e8f0;
+  --mkt-slate-1:   #f1f5f9;
+  --mkt-slate-0:   #f8fafc;
+  --mkt-white:     #ffffff;
+  --mkt-radius:    16px;
+  --mkt-radius-lg: 24px;
+  --mkt-shadow:    0 4px 24px rgba(15,23,42,.10);
+  --mkt-shadow-lg: 0 16px 56px rgba(15,23,42,.14);
+  background: var(--mkt-white); color: var(--mkt-slate-9);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+.rbp-mkt *, .rbp-mkt *::before, .rbp-mkt *::after { box-sizing: border-box; margin: 0; }
+.rbp-mkt a { text-decoration: none; color: inherit; }
+.rbp-mkt ul { list-style: none; padding: 0; }
+.rbp-mkt-c { width: min(100% - 2.5rem, 1260px); margin-inline: auto; }
+.rbp-mkt-sec { padding: 88px 0; }
+.rbp-mkt-sec-sm { padding: 56px 0; }
+.rbp-mkt-muted { background: var(--mkt-slate-0); }
+
+/* ─── Eyebrow ────────────────────────────────────────────────────── */
+.rbp-mkt-eye {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 6px 14px; border-radius: 999px;
+  font-size: 11px; font-weight: 800; letter-spacing: .10em; text-transform: uppercase;
+  background: var(--mkt-purple-pale); color: var(--mkt-purple);
+}
+.rbp-mkt-eye--white  { background: rgba(255,255,255,.14); color: rgba(255,255,255,.9); border: 1px solid rgba(255,255,255,.22); }
+.rbp-mkt-eye--amber  { background: var(--mkt-amber-pale); color: var(--mkt-amber); }
+.rbp-mkt-eye--teal   { background: var(--mkt-teal-pale);  color: var(--mkt-teal); }
+.rbp-mkt-eye--green  { background: var(--mkt-green-pale); color: var(--mkt-green); }
+.rbp-mkt-eye-dot { width: 6px; height: 6px; border-radius: 999px; background: currentColor; }
+
+/* ─── Headings ───────────────────────────────────────────────────── */
+.rbp-mkt-h1 { font-size: clamp(40px,6vw,76px); font-weight: 900; line-height: 1.0; letter-spacing: -.045em; color: var(--mkt-white); }
+.rbp-mkt-h2 { font-size: clamp(28px,4vw,50px); font-weight: 900; line-height: 1.05; letter-spacing: -.035em; }
+.rbp-mkt-h3 { font-size: 20px; font-weight: 800; line-height: 1.2; letter-spacing: -.02em; }
+.rbp-mkt-p  { font-size: 16px; line-height: 1.75; color: var(--mkt-slate-6); }
+.rbp-mkt-head { text-align: center; max-width: 760px; margin: 0 auto 56px; }
+.rbp-mkt-head .rbp-mkt-eye { margin-bottom: 16px; }
+.rbp-mkt-head .rbp-mkt-h2 { margin: 12px 0 16px; }
+
+/* ─── Hero ───────────────────────────────────────────────────────── */
+.rbp-mkt-hero {
+  background:
+    radial-gradient(ellipse 70% 60% at 75% 25%, rgba(124,58,237,.25), transparent 60%),
+    radial-gradient(ellipse 50% 70% at 10% 75%, rgba(13,148,136,.14), transparent 55%),
+    linear-gradient(145deg, #0f172a 0%, #2e1065 55%, #0f172a 100%);
+  overflow: hidden; position: relative;
+}
+.rbp-mkt-hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%238b5cf6' fill-opacity='0.04'%3E%3Cpolygon points='50,15 85,85 15,85'/%3E%3C/g%3E%3C/svg%3E");
+  pointer-events: none;
+}
+.rbp-mkt-hero-in {
+  display: grid;
+  grid-template-columns: minmax(0,1fr) minmax(340px,.8fr);
+  gap: 64px; align-items: center;
+  padding: 96px 0 80px; min-height: 580px;
+}
+.rbp-mkt-hero-text .rbp-mkt-eye { margin-bottom: 20px; }
+.rbp-mkt-hero-text .rbp-mkt-h1 { margin-bottom: 18px; }
+.rbp-mkt-hero-text .rbp-mkt-p  { color: #94a3b8; font-size: 18px; max-width: 560px; margin-bottom: 32px; }
+
+/* ─── Hero info card ─────────────────────────────────────────────── */
+.rbp-mkt-hero-card {
+  background: rgba(255,255,255,.05);
+  border: 1px solid rgba(255,255,255,.14);
+  backdrop-filter: blur(24px);
+  border-radius: var(--mkt-radius-lg);
+  padding: 36px 32px; position: relative; overflow: hidden;
+}
+.rbp-mkt-hero-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 4px;
+  background: linear-gradient(90deg, #8b5cf6, #0d9488);
+}
+.rbp-mkt-hero-card h3 { color: var(--mkt-white); font-size: 20px; font-weight: 800; margin-bottom: 12px; }
+.rbp-mkt-hero-card p  { color: #94a3b8; font-size: 14px; line-height: 1.7; margin-bottom: 20px; }
+.rbp-mkt-stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 20px; }
+.rbp-mkt-stat { background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.08); border-radius: var(--mkt-radius); padding: 16px; text-align: center; }
+.rbp-mkt-stat-num { font-size: 26px; font-weight: 900; color: var(--mkt-white); letter-spacing: -.03em; }
+.rbp-mkt-stat-label { font-size: 12px; color: #64748b; margin-top: 2px; }
+
+/* ─── Filter bar ─────────────────────────────────────────────────── */
+.rbp-mkt-filter-bar {
+  background: var(--mkt-white); border-bottom: 1px solid var(--mkt-slate-2);
+  padding: 16px 0; position: sticky; top: 0; z-index: 10;
+  box-shadow: 0 4px 16px rgba(15,23,42,.06);
+}
+.rbp-mkt-filter-inner { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.rbp-mkt-filter-label { font-size: 12px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--mkt-slate-4); white-space: nowrap; }
+.rbp-mkt-filters { display: flex; flex-wrap: wrap; gap: 8px; flex: 1; }
+.rbp-mkt-filter-btn {
+  padding: 8px 16px; border-radius: 999px; border: 1.5px solid var(--mkt-slate-2);
+  font-size: 13px; font-weight: 700; color: var(--mkt-slate-7);
+  background: var(--mkt-white); cursor: pointer; transition: all .15s;
+  white-space: nowrap;
+}
+.rbp-mkt-filter-btn:hover { border-color: var(--mkt-purple); color: var(--mkt-purple); }
+.rbp-mkt-filter-btn.active { border-color: var(--mkt-purple); background: var(--mkt-purple-pale); color: var(--mkt-purple); }
+.rbp-mkt-search {
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 16px; border-radius: 10px;
+  border: 1.5px solid var(--mkt-slate-2); background: var(--mkt-white);
+  min-width: 220px;
+}
+.rbp-mkt-search input { border: none; outline: none; font-size: 13px; color: var(--mkt-slate-9); width: 100%; font-family: inherit; }
+.rbp-mkt-search svg { color: var(--mkt-slate-4); flex-shrink: 0; }
+
+/* ─── Offer grid ─────────────────────────────────────────────────── */
+.rbp-mkt-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.rbp-mkt-card {
+  background: var(--mkt-white); border: 1.5px solid var(--mkt-slate-2);
+  border-radius: var(--mkt-radius-lg); overflow: hidden;
+  display: flex; flex-direction: column;
+  transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+  position: relative;
+}
+.rbp-mkt-card:hover { transform: translateY(-4px); box-shadow: var(--mkt-shadow-lg); border-color: var(--mkt-purple); }
+.rbp-mkt-card-img {
+  height: 180px; background: var(--mkt-img-bg, var(--mkt-purple-pale));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 56px; position: relative; overflow: hidden;
+}
+.rbp-mkt-card-img::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(180deg, transparent 60%, rgba(15,23,42,.12));
+}
+.rbp-mkt-card-badges {
+  position: absolute; top: 12px; left: 12px;
+  display: flex; flex-direction: column; gap: 6px; z-index: 1;
+}
+.rbp-mkt-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 4px 10px; border-radius: 999px;
+  font-size: 10px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase;
+  backdrop-filter: blur(8px);
+}
+.rbp-mkt-badge--partner  { background: rgba(124,58,237,.85); color: #fff; }
+.rbp-mkt-badge--exclusive{ background: rgba(245,158,11,.9);  color: #fff; }
+.rbp-mkt-badge--member   { background: rgba(29,78,216,.85);  color: #fff; }
+.rbp-mkt-badge--new      { background: rgba(5,150,105,.85);  color: #fff; }
+.rbp-mkt-badge--free     { background: rgba(220,38,38,.85);  color: #fff; }
+.rbp-mkt-card-body { padding: 24px 24px; flex: 1; display: flex; flex-direction: column; }
+.rbp-mkt-card-category { font-size: 11px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--mkt-slate-4); margin-bottom: 8px; }
+.rbp-mkt-card-title { font-size: 18px; font-weight: 800; color: var(--mkt-slate-9); line-height: 1.25; margin-bottom: 10px; letter-spacing: -.02em; }
+.rbp-mkt-card-desc { font-size: 14px; color: var(--mkt-slate-6); line-height: 1.65; flex: 1; margin-bottom: 20px; }
+.rbp-mkt-card-meta { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; }
+.rbp-mkt-card-partner { display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 700; color: var(--mkt-slate-6); }
+.rbp-mkt-card-partner-logo { width: 28px; height: 28px; border-radius: 8px; background: var(--mkt-slate-1); display: flex; align-items: center; justify-content: center; font-size: 14px; }
+.rbp-mkt-card-price { font-size: 16px; font-weight: 900; color: var(--mkt-slate-9); letter-spacing: -.02em; margin-left: auto; }
+.rbp-mkt-card-price-tbc { font-size: 13px; font-weight: 700; color: var(--mkt-slate-4); margin-left: auto; }
+.rbp-mkt-card-cta .rbp-mkt-btn { width: 100%; justify-content: center; }
+
+/* ─── Buttons ────────────────────────────────────────────────────── */
+.rbp-mkt-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 12px 22px; border-radius: 12px; border: none;
+  font-size: 14px; font-weight: 800; cursor: pointer; line-height: 1;
+  transition: all .2s ease; white-space: nowrap; text-decoration: none;
+}
+.rbp-mkt-btn--purple { background: var(--mkt-purple); color: var(--mkt-white); box-shadow: 0 8px 24px rgba(124,58,237,.24); }
+.rbp-mkt-btn--purple:hover { background: var(--mkt-purple-mid); transform: translateY(-1px); }
+.rbp-mkt-btn--teal   { background: var(--mkt-teal); color: var(--mkt-white); }
+.rbp-mkt-btn--teal:hover { background: #0f766e; transform: translateY(-1px); }
+.rbp-mkt-btn--ghost  { background: transparent; color: var(--mkt-slate-7); border: 1.5px solid var(--mkt-slate-2); }
+.rbp-mkt-btn--ghost:hover { border-color: var(--mkt-purple); color: var(--mkt-purple); }
+.rbp-mkt-btn--white  { background: var(--mkt-white); color: var(--mkt-purple); }
+.rbp-mkt-btn--white:hover { background: var(--mkt-purple-pale); }
+.rbp-mkt-btn--sm { padding: 9px 16px; font-size: 13px; }
+.rbp-mkt-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+
+/* ─── Partner become ─────────────────────────────────────────────── */
+.rbp-mkt-partner-band {
+  background: linear-gradient(135deg, #2e1065 0%, #4c1d95 50%, #0f172a 100%);
+  border-radius: var(--mkt-radius-lg); padding: 60px 52px;
+  display: flex; align-items: center; justify-content: space-between; gap: 40px;
+  position: relative; overflow: hidden;
+}
+.rbp-mkt-partner-band::before {
+  content: '';
+  position: absolute; top: -30%; right: -5%; width: 360px; height: 360px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,255,255,.07), transparent 70%);
+}
+.rbp-mkt-partner-band h2 { color: var(--mkt-white); font-size: clamp(24px,3.5vw,38px); font-weight: 900; letter-spacing: -.03em; margin-bottom: 10px; }
+.rbp-mkt-partner-band p { color: rgba(255,255,255,.68); font-size: 16px; line-height: 1.65; }
+
+/* ─── Category sections ──────────────────────────────────────────── */
+.rbp-mkt-cat-tag {
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 32px;
+}
+.rbp-mkt-cat-tag-line { flex: 1; height: 1px; background: var(--mkt-slate-2); }
+.rbp-mkt-cat-label { font-size: 12px; font-weight: 800; letter-spacing: .10em; text-transform: uppercase; color: var(--mkt-slate-4); white-space: nowrap; }
+
+/* ─── CTA band ───────────────────────────────────────────────────── */
+.rbp-mkt-cta-band {
+  background: linear-gradient(135deg, var(--mkt-purple) 0%, var(--mkt-purple-mid) 50%, var(--mkt-navy) 100%);
+  border-radius: var(--mkt-radius-lg); padding: 60px 52px;
+  display: flex; align-items: center; justify-content: space-between; gap: 40px;
+  position: relative; overflow: hidden;
+}
+.rbp-mkt-cta-band::before { content: ''; position: absolute; top: -40%; right: -8%; width: 400px; height: 400px; border-radius: 50%; background: radial-gradient(circle, rgba(255,255,255,.07), transparent 70%); }
+.rbp-mkt-cta-band h2 { color: var(--mkt-white); font-size: clamp(24px,3.5vw,38px); font-weight: 900; letter-spacing: -.03em; margin-bottom: 10px; }
+.rbp-mkt-cta-band p { color: rgba(255,255,255,.68); font-size: 16px; line-height: 1.65; }
+
+/* ─── Responsive ─────────────────────────────────────────────────── */
+@media (max-width: 1024px) { .rbp-mkt-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 900px)  {
+  .rbp-mkt-hero-in { grid-template-columns: 1fr; gap: 40px; padding: 72px 0 56px; min-height: unset; }
+  .rbp-mkt-partner-band, .rbp-mkt-cta-band { flex-direction: column; padding: 48px 32px; }
+}
+@media (max-width: 640px)  { .rbp-mkt-sec { padding: 60px 0; } .rbp-mkt-grid { grid-template-columns: 1fr; } }
+
+/* ─── G10 QA: Focus-visible accessibility ──────────────────────── */
+.rbp-mkt a:focus-visible,
+.rbp-mkt button:focus-visible,
+.rbp-mkt input:focus-visible {
+  outline: 3px solid #7c3aed;
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+/* ─── G10 QA: Scroll entrance animations ───────────────────────── */
+.rbp-mkt-anim {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity .5s cubic-bezier(.16,1,.3,1), transform .5s cubic-bezier(.16,1,.3,1);
+}
+.rbp-mkt-anim.rbp-mkt-anim--in { opacity: 1; transform: translateY(0); }
+.rbp-mkt-anim--d1 { transition-delay: .07s; }
+.rbp-mkt-anim--d2 { transition-delay: .14s; }
+.rbp-mkt-anim--d3 { transition-delay: .21s; }
+.rbp-mkt-anim--d4 { transition-delay: .28s; }
+.rbp-mkt-anim--d5 { transition-delay: .35s; }
+.rbp-mkt-anim--d6 { transition-delay: .42s; }
+</style>
+
+<div class="rbp-mkt" data-rbp-section="marketplace-page">
+
+  {%- comment -%} ── HERO ── {%- endcomment -%}
+  <section class="rbp-mkt-hero" aria-label="Marketplace hero">
+    <div class="rbp-mkt-c">
+      <div class="rbp-mkt-hero-in">
+        <div class="rbp-mkt-hero-text">
+          <div class="rbp-mkt-eye rbp-mkt-eye--white">
+            <span class="rbp-mkt-eye-dot"></span>
+            RBP Marketplace
+          </div>
+          <h1 class="rbp-mkt-h1">Partner offers,<br>curated for your business.</h1>
+          <p class="rbp-mkt-p">Browse partner-sourced offers, tools, services and resources from trusted providers — curated specifically for Australian SMEs through the Remote Business Partner marketplace.</p>
+          <div class="rbp-mkt-actions">
+            <a class="rbp-mkt-btn rbp-mkt-btn--purple" href="#rbp-mkt-offers">
+              Browse offers
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+            <a class="rbp-mkt-btn rbp-mkt-btn--white" href="#rbp-mkt-partner">Become a partner</a>
+          </div>
+        </div>
+        <aside class="rbp-mkt-hero-card">
+          <h3>Trusted partner offers</h3>
+          <p>Each marketplace offer is sourced through vetted partner relationships. Browse, enquire and access offers that support your business operations.</p>
+          <div class="rbp-mkt-stat-grid">
+            <div class="rbp-mkt-stat"><div class="rbp-mkt-stat-num">TBC</div><div class="rbp-mkt-stat-label">Active offers</div></div>
+            <div class="rbp-mkt-stat"><div class="rbp-mkt-stat-num">TBC</div><div class="rbp-mkt-stat-label">Partner providers</div></div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} ── STICKY FILTER BAR ── {%- endcomment -%}
+  <div class="rbp-mkt-filter-bar" aria-label="Marketplace filters" id="rbp-mkt-offers">
+    <div class="rbp-mkt-c">
+      <div class="rbp-mkt-filter-inner">
+        <span class="rbp-mkt-filter-label">Filter:</span>
+        <div class="rbp-mkt-filters" role="group" aria-label="Category filters">
+          <button class="rbp-mkt-filter-btn active" data-filter="all">All offers</button>
+          <button class="rbp-mkt-filter-btn" data-filter="software">Software & Tools</button>
+          <button class="rbp-mkt-filter-btn" data-filter="services">Services</button>
+          <button class="rbp-mkt-filter-btn" data-filter="resources">Resources</button>
+          <button class="rbp-mkt-filter-btn" data-filter="finance">Finance</button>
+          <button class="rbp-mkt-filter-btn" data-filter="member">Member only</button>
+        </div>
+        <div class="rbp-mkt-search">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          <input type="text" placeholder="Search marketplace..." aria-label="Search offers" id="rbp-mkt-search-input">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {%- comment -%} ── FEATURED OFFERS ── {%- endcomment -%}
+  <section class="rbp-mkt-sec" aria-label="Featured marketplace offers">
+    <div class="rbp-mkt-c">
+
+      <div class="rbp-mkt-cat-tag">
+        <span class="rbp-mkt-cat-label">Featured offers</span>
+        <div class="rbp-mkt-cat-tag-line"></div>
+      </div>
+
+      <div class="rbp-mkt-grid" data-rbp-grid="offers" id="rbp-mkt-grid">
+
+        {%- comment -%} Offer card 1 — Software {%- endcomment -%}
+        <div class="rbp-mkt-card rbp-mkt-anim rbp-mkt-anim--d1" data-category="software" data-offer-id="mkt-001">
+          <div class="rbp-mkt-card-img" style="--mkt-img-bg:#ede9fe">🖥️
+            <div class="rbp-mkt-card-badges">
+              <span class="rbp-mkt-badge rbp-mkt-badge--new">New</span>
+            </div>
+          </div>
+          <div class="rbp-mkt-card-body">
+            <div class="rbp-mkt-card-category">Software & Tools</div>
+            <h3 class="rbp-mkt-card-title">Business productivity platform</h3>
+            <p class="rbp-mkt-card-desc">Placeholder — a partner-sourced software offer for Australian SMEs. Description to be updated when offer details are confirmed.</p>
+            <div class="rbp-mkt-card-meta">
+              <div class="rbp-mkt-card-partner">
+                <div class="rbp-mkt-card-partner-logo">🤝</div>
+                Partner offer
+              </div>
+              <span class="rbp-mkt-card-price-tbc">TBC pricing</span>
+            </div>
+            <div class="rbp-mkt-card-cta">
+              <a class="rbp-mkt-btn rbp-mkt-btn--ghost" href="/pages/offers" data-rbp-flow="offer-enquiry" data-offer-id="mkt-001">
+                Enquire about offer
+              </a>
+            </div>
+          </div>
+        </div>
+
+        {%- comment -%} Offer card 2 — Member only {%- endcomment -%}
+        <div class="rbp-mkt-card rbp-mkt-anim rbp-mkt-anim--d2" data-category="services member" data-offer-id="mkt-002">
+          <div class="rbp-mkt-card-img" style="--mkt-img-bg:#dbeafe">⚡
+            <div class="rbp-mkt-card-badges">
+              <span class="rbp-mkt-badge rbp-mkt-badge--member">Member</span>
+              <span class="rbp-mkt-badge rbp-mkt-badge--exclusive">Exclusive</span>
+            </div>
+          </div>
+          <div class="rbp-mkt-card-body">
+            <div class="rbp-mkt-card-category">Services · Member exclusive</div>
+            <h3 class="rbp-mkt-card-title">Member-exclusive service offer</h3>
+            <p class="rbp-mkt-card-desc">This offer is available exclusively to RBP Growth and Premium members. Details to be confirmed when the partner arrangement is finalised.</p>
+            <div class="rbp-mkt-card-meta">
+              <div class="rbp-mkt-card-partner">
+                <div class="rbp-mkt-card-partner-logo">🌐</div>
+                Partner offer
+              </div>
+              <span class="rbp-mkt-card-price-tbc">Member pricing</span>
+            </div>
+            <div class="rbp-mkt-card-cta">
+              <a class="rbp-mkt-btn rbp-mkt-btn--purple" href="/pages/membership" data-rbp-flow="member-gate" data-member-required="true" data-offer-id="mkt-002">
+                🔒 Members only
+              </a>
+            </div>
+          </div>
+        </div>
+
+        {%- comment -%} Offer card 3 — Resources {%- endcomment -%}
+        <div class="rbp-mkt-card rbp-mkt-anim rbp-mkt-anim--d3" data-category="resources" data-offer-id="mkt-003">
+          <div class="rbp-mkt-card-img" style="--mkt-img-bg:#ccfbf1">📊
+            <div class="rbp-mkt-card-badges">
+              <span class="rbp-mkt-badge rbp-mkt-badge--partner">Partner</span>
+            </div>
+          </div>
+          <div class="rbp-mkt-card-body">
+            <div class="rbp-mkt-card-category">Resources & Guides</div>
+            <h3 class="rbp-mkt-card-title">Business resource package</h3>
+            <p class="rbp-mkt-card-desc">Placeholder — a curated business resource package from a vetted partner. Final content and pricing to be confirmed before publishing.</p>
+            <div class="rbp-mkt-card-meta">
+              <div class="rbp-mkt-card-partner">
+                <div class="rbp-mkt-card-partner-logo">📁</div>
+                Partner offer
+              </div>
+              <span class="rbp-mkt-card-price-tbc">TBC pricing</span>
+            </div>
+            <div class="rbp-mkt-card-cta">
+              <a class="rbp-mkt-btn rbp-mkt-btn--ghost" href="/pages/offers" data-rbp-flow="offer-enquiry" data-offer-id="mkt-003">
+                Learn more
+              </a>
+            </div>
+          </div>
+        </div>
+
+        {%- comment -%} Offer card 4 — Finance {%- endcomment -%}
+        <div class="rbp-mkt-card rbp-mkt-anim rbp-mkt-anim--d4" data-category="finance" data-offer-id="mkt-004">
+          <div class="rbp-mkt-card-img" style="--mkt-img-bg:#fef3c7">💼</div>
+          <div class="rbp-mkt-card-body">
+            <div class="rbp-mkt-card-category">Finance & Accounting</div>
+            <h3 class="rbp-mkt-card-title">Financial tools offer</h3>
+            <p class="rbp-mkt-card-desc">Placeholder — a partner-sourced finance or accounting tool offer. Details to be updated when the offer terms are confirmed.</p>
+            <div class="rbp-mkt-card-meta">
+              <div class="rbp-mkt-card-partner">
+                <div class="rbp-mkt-card-partner-logo">💳</div>
+                Partner offer
+              </div>
+              <span class="rbp-mkt-card-price-tbc">TBC pricing</span>
+            </div>
+            <div class="rbp-mkt-card-cta">
+              <a class="rbp-mkt-btn rbp-mkt-btn--ghost" href="/pages/offers" data-rbp-flow="offer-enquiry" data-offer-id="mkt-004">Enquire about offer</a>
+            </div>
+          </div>
+        </div>
+
+        {%- comment -%} Offer card 5 — Software {%- endcomment -%}
+        <div class="rbp-mkt-card rbp-mkt-anim rbp-mkt-anim--d5" data-category="software" data-offer-id="mkt-005">
+          <div class="rbp-mkt-card-img" style="--mkt-img-bg:#ede9fe">🔧</div>
+          <div class="rbp-mkt-card-body">
+            <div class="rbp-mkt-card-category">Software & Tools</div>
+            <h3 class="rbp-mkt-card-title">Business operations software</h3>
+            <p class="rbp-mkt-card-desc">Placeholder — a business operations software offer. Content to be confirmed when partner details are finalised.</p>
+            <div class="rbp-mkt-card-meta">
+              <div class="rbp-mkt-card-partner">
+                <div class="rbp-mkt-card-partner-logo">⚙️</div>
+                Partner offer
+              </div>
+              <span class="rbp-mkt-card-price-tbc">TBC pricing</span>
+            </div>
+            <div class="rbp-mkt-card-cta">
+              <a class="rbp-mkt-btn rbp-mkt-btn--ghost" href="/pages/offers" data-rbp-flow="offer-enquiry" data-offer-id="mkt-005">Enquire about offer</a>
+            </div>
+          </div>
+        </div>
+
+        {%- comment -%} Offer card 6 — Services {%- endcomment -%}
+        <div class="rbp-mkt-card rbp-mkt-anim rbp-mkt-anim--d6" data-category="services" data-offer-id="mkt-006">
+          <div class="rbp-mkt-card-img" style="--mkt-img-bg:#d1fae5">🌍</div>
+          <div class="rbp-mkt-card-body">
+            <div class="rbp-mkt-card-category">Professional Services</div>
+            <h3 class="rbp-mkt-card-title">Partner professional service</h3>
+            <p class="rbp-mkt-card-desc">Placeholder — a professional services offer from a vetted partner. Details, pricing and service scope to be confirmed before launch.</p>
+            <div class="rbp-mkt-card-meta">
+              <div class="rbp-mkt-card-partner">
+                <div class="rbp-mkt-card-partner-logo">🤝</div>
+                Partner offer
+              </div>
+              <span class="rbp-mkt-card-price-tbc">Quote on request</span>
+            </div>
+            <div class="rbp-mkt-card-cta">
+              <a class="rbp-mkt-btn rbp-mkt-btn--ghost" href="/pages/contact" data-rbp-flow="offer-enquiry" data-offer-id="mkt-006">Request quote</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div id="rbp-mkt-noresults" style="display:none;text-align:center;padding:48px 0;color:var(--mkt-slate-4)">
+        <div style="font-size:40px;margin-bottom:16px">🔍</div>
+        <p style="font-size:16px;font-weight:700">No offers match your search</p>
+        <p style="font-size:14px;margin-top:8px">Try a different search term or filter</p>
+      </div>
+
+    </div>
+  </section>
+
+  {%- comment -%} ── BECOME A PARTNER ── {%- endcomment -%}
+  <section class="rbp-mkt-sec rbp-mkt-muted" aria-label="Become a marketplace partner" id="rbp-mkt-partner">
+    <div class="rbp-mkt-c">
+      <div class="rbp-mkt-partner-band">
+        <div>
+          <div class="rbp-mkt-eye rbp-mkt-eye--white" style="margin-bottom:16px">
+            <span class="rbp-mkt-eye-dot"></span>
+            Partner with RBP
+          </div>
+          <h2>List your offer on the RBP Marketplace</h2>
+          <p>Are you a service provider, software vendor or resource creator with an offer suited to Australian SMEs? Apply to list your offer through the RBP Marketplace partner programme.</p>
+        </div>
+        <div class="rbp-mkt-actions" style="flex-shrink:0">
+          <a class="rbp-mkt-btn rbp-mkt-btn--white" href="/pages/contact?inquiry=partner" data-rbp-flow="partner-enquiry">Apply to be a partner →</a>
+          <a class="rbp-mkt-btn rbp-mkt-btn--ghost" href="/pages/contact" style="color:#94a3b8;border-color:rgba(255,255,255,.2)">Ask us a question</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} ── CTA BAND ── {%- endcomment -%}
+  <section class="rbp-mkt-sec-sm" aria-label="Marketplace call to action">
+    <div class="rbp-mkt-c">
+      <div class="rbp-mkt-cta-band">
+        <div>
+          <h2>Find the right partner offer for your business.</h2>
+          <p>Browse the marketplace, enquire about offers, or contact us to discuss which partners and solutions might suit your business needs.</p>
+        </div>
+        <div class="rbp-mkt-actions" style="flex-shrink:0">
+          <a class="rbp-mkt-btn rbp-mkt-btn--white" href="#rbp-mkt-offers">Browse offers →</a>
+          <a class="rbp-mkt-btn rbp-mkt-btn--ghost" href="/pages/contact" style="color:rgba(255,255,255,.7);border-color:rgba(255,255,255,.2)">Contact us</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+(function() {
+  // ── Filter buttons
+  var filterBtns = document.querySelectorAll('[data-filter]');
+  var cards = document.querySelectorAll('.rbp-mkt-card');
+  var noResults = document.getElementById('rbp-mkt-noresults');
+  var searchInput = document.getElementById('rbp-mkt-search-input');
+  var activeFilter = 'all';
+  var searchQuery = '';
+
+  function filterCards() {
+    var visible = 0;
+    cards.forEach(function(card) {
+      var cat = card.dataset.category || '';
+      var title = (card.querySelector('.rbp-mkt-card-title') || {}).textContent || '';
+      var matchFilter = activeFilter === 'all' || cat.indexOf(activeFilter) !== -1;
+      var matchSearch = !searchQuery || title.toLowerCase().indexOf(searchQuery) !== -1 || cat.toLowerCase().indexOf(searchQuery) !== -1;
+      var show = matchFilter && matchSearch;
+      card.style.display = show ? '' : 'none';
+      if (show) visible++;
+    });
+    if (noResults) noResults.style.display = visible === 0 ? 'block' : 'none';
+  }
+
+  filterBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      filterBtns.forEach(function(b) { b.classList.remove('active'); });
+      this.classList.add('active');
+      activeFilter = this.dataset.filter;
+      filterCards();
+    });
+  });
+
+  if (searchInput) {
+    searchInput.addEventListener('input', function() {
+      searchQuery = this.value.trim().toLowerCase();
+      filterCards();
+    });
+  }
+
+  // ── G10 QA: IntersectionObserver scroll entrance animations
+  if ('IntersectionObserver' in window) {
+    var animEls = document.querySelectorAll('.rbp-mkt-anim');
+    var io = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        if (e.isIntersecting) {
+          e.target.classList.add('rbp-mkt-anim--in');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.07, rootMargin: '0px 0px -32px 0px' });
+    animEls.forEach(function(el) { io.observe(el); });
+  } else {
+    document.querySelectorAll('.rbp-mkt-anim').forEach(function(el) {
+      el.classList.add('rbp-mkt-anim--in');
+    });
+  }
+})();
+</script>
+
+{% schema %}
+{
+  "name": "RBP Marketplace Page",
+  "settings": [],
+  "presets": [
+    { "name": "RBP Marketplace Page" }
+  ]
+}
+{% endschema %}

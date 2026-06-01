@@ -1,0 +1,195 @@
+{{ 'property-service-booking.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'property-service-booking.js' | asset_url }}" defer="defer"></script>
+
+{%- liquid
+  assign service_label = 'Property Service'
+  assign service_type = ''
+  assign product_handle = ''
+  assign duration_minutes = 60
+  assign from_price = ''
+  assign service_note = 'Complete the booking details below. Your selected appointment slot will be held temporarily while payment is completed. The booking is only confirmed once payment is completed through Shopify checkout.'
+
+  case page.handle
+    when 'book-property-condition-report'
+      assign service_label = 'Property Condition Report'
+      assign service_type = 'property_condition_report'
+      assign product_handle = 'property-condition-report'
+      assign duration_minutes = 90
+      assign from_price = 'From $200.00'
+    when 'book-routine-inspection'
+      assign service_label = 'Routine Inspection'
+      assign service_type = 'routine_inspection'
+      assign product_handle = 'routine-inspection'
+      assign duration_minutes = 30
+      assign from_price = 'From $100.00'
+    when 'book-exit-inspection'
+      assign service_label = 'Exit Inspection'
+      assign service_type = 'exit_inspection'
+      assign product_handle = 'exit-inspection'
+      assign duration_minutes = 60
+      assign from_price = 'From $150.00'
+    when 'book-open-for-inspection-support'
+      assign service_label = 'Open For Inspection Support'
+      assign service_type = 'open_for_inspection'
+      assign product_handle = 'open-for-inspection-support'
+      assign duration_minutes = 60
+      assign from_price = 'From $80.00'
+      assign service_note = 'Submit the OFI details for review. Open For Inspection requests may require route and scheduling review before a final appointment time is confirmed. Payment is required before the booking is treated as confirmed.'
+    when 'book-maintenance-request-support'
+      assign service_label = 'Maintenance Request Support'
+      assign service_type = 'maintenance_requests'
+      assign product_handle = 'maintenance-request-support'
+      assign duration_minutes = 60
+      assign from_price = 'From $80.00'
+      assign service_note = 'Submit maintenance request details for review. Urgent, safety-related, access-restricted or complex matters may require review before final scheduling.'
+    when 'book-insurance-claims-management'
+      assign service_label = 'Insurance Claims Management'
+      assign service_type = 'insurance_claims_management'
+      assign product_handle = 'insurance-claims-management'
+      assign duration_minutes = 60
+      assign from_price = 'From $100.00'
+      assign service_note = 'Submit insurance claim support details for review. Claim scope, safety, access and evidence requirements may need to be reviewed before final scheduling.'
+    when 'book-key-installation'
+      assign service_label = 'Key Installation'
+      assign service_type = 'key_installation'
+      assign product_handle = 'key-installation'
+      assign duration_minutes = 60
+      assign from_price = 'From $150.00'
+  endcase
+
+  assign product_ref = all_products[product_handle]
+-%}
+
+<div class="service-booking color-{{ section.settings.color_scheme }} gradient" data-service-booking-root>
+  <div class="service-booking__hero">
+    <p class="service-booking__eyebrow">Property field service booking</p>
+    <h1>Book {{ service_label }}</h1>
+    <div class="service-booking__intro">
+      <p><strong>{{ from_price }}.</strong> Final price depends on the selected booking time. The exact price is shown before Shopify checkout.</p>
+      <p>{{ service_note }}</p>
+    </div>
+  </div>
+
+  <div class="service-booking__layout">
+    <div class="service-booking__panel">
+      <ol class="service-booking__steps" aria-label="Booking steps">
+        <li class="service-booking__step-pill" data-step-pill>Contact</li>
+        <li class="service-booking__step-pill" data-step-pill>Property</li>
+        <li class="service-booking__step-pill" data-step-pill>Access</li>
+        <li class="service-booking__step-pill" data-step-pill>Appointment</li>
+        <li class="service-booking__step-pill" data-step-pill>Review</li>
+      </ol>
+
+      <fieldset class="service-booking__fieldset" data-booking-step>
+        <h2>Contact details</h2>
+        <div class="service-booking__grid">
+          <div class="service-booking__field"><label for="customer_name">Full name</label><input id="customer_name" name="customer_name" data-booking-field required></div>
+          <div class="service-booking__field"><label for="customer_email">Email</label><input id="customer_email" name="customer_email" type="email" data-booking-field required></div>
+          <div class="service-booking__field"><label for="customer_phone">Phone</label><input id="customer_phone" name="customer_phone" type="tel" data-booking-field required></div>
+          <div class="service-booking__field"><label for="company_name">Agency/company, if applicable</label><input id="company_name" name="company_name" data-booking-field></div>
+        </div>
+        <div class="service-booking__actions"><button type="button" class="button" data-next-step>Next</button></div>
+      </fieldset>
+
+      <fieldset class="service-booking__fieldset" data-booking-step hidden>
+        <h2>Property details</h2>
+        <div class="service-booking__grid">
+          <div class="service-booking__field full"><label for="property_address">Property address</label><input id="property_address" name="property_address" placeholder="Start typing the property address" data-booking-field required></div>
+          <div class="service-booking__field"><label for="property_type">Property type</label><select id="property_type" name="property_type" data-booking-field><option>House</option><option>Apartment</option><option>Townhouse</option><option>Villa</option><option>Other</option></select></div>
+          <div class="service-booking__field"><label for="occupancy_status">Occupancy status</label><select id="occupancy_status" name="occupancy_status" data-booking-field><option>Vacant</option><option>Tenanted</option><option>Owner occupied</option><option>Unknown/review required</option></select></div>
+          <div class="service-booking__field"><label for="furnished_status">Furnished status</label><select id="furnished_status" name="furnished_status" data-booking-field><option>Unfurnished</option><option>Furnished</option><option>Partly furnished</option><option>Not applicable</option></select></div>
+          <div class="service-booking__field"><label for="bedrooms">Bedrooms</label><input id="bedrooms" name="bedrooms" type="number" min="0" data-booking-field></div>
+          <div class="service-booking__field"><label for="bathrooms">Bathrooms</label><input id="bathrooms" name="bathrooms" type="number" min="0" data-booking-field></div>
+        </div>
+        <div data-address-output></div>
+        <div class="service-booking__actions"><button type="button" class="button button--secondary" data-prev-step>Back</button><button type="button" class="button" data-next-step>Next</button></div>
+      </fieldset>
+
+      <fieldset class="service-booking__fieldset" data-booking-step hidden>
+        <h2>Access details</h2>
+        <div class="service-booking__grid">
+          <div class="service-booking__field"><label for="access_method">Access method</label><select id="access_method" name="access_method" data-booking-field><option>Keys</option><option>Lockbox/key safe</option><option>Tenant/occupant present</option><option>Agent access</option><option>Other</option></select></div>
+          <div class="service-booking__field"><label for="parking_access">Parking/building access</label><input id="parking_access" name="parking_access" data-booking-field></div>
+          <div class="service-booking__field full"><label for="access_notes">Access instructions</label><textarea id="access_notes" name="access_notes" data-booking-field></textarea></div>
+          <div class="service-booking__field full"><label for="service_notes">Service notes</label><textarea id="service_notes" name="service_notes" data-booking-field></textarea></div>
+          <div class="service-booking__field full"><label><input type="checkbox" name="authority_confirmed" data-booking-field> I confirm I have authority to request attendance at this property.</label></div>
+        </div>
+        <div class="service-booking__actions"><button type="button" class="button button--secondary" data-prev-step>Back</button><button type="button" class="button" data-next-step>Next</button></div>
+      </fieldset>
+
+      <fieldset class="service-booking__fieldset" data-booking-step hidden>
+        <h2>Select appointment</h2>
+        <p>Available slots will load from the booking API once connected. For review, placeholder slots are shown.</p>
+        <div data-slot-list></div>
+        <div data-price-preview></div>
+        <div class="service-booking__actions"><button type="button" class="button button--secondary" data-prev-step>Back</button><button type="button" class="button" data-next-step>Next</button></div>
+      </fieldset>
+
+      <fieldset class="service-booking__fieldset" data-booking-step hidden>
+        <h2>Review and payment</h2>
+        <p>Review the booking details below. When the backend API is connected, the final button will hold the calendar slot and continue to Shopify checkout.</p>
+        <div class="service-booking__note">The booking is not confirmed until payment is completed through Shopify checkout.</div>
+        <div data-booking-summary></div>
+        <div data-checkout-output></div>
+        <div class="service-booking__actions"><button type="button" class="button button--secondary" data-prev-step>Back</button><button type="button" class="button" data-hold-checkout>Hold Slot & Continue to Payment</button></div>
+      </fieldset>
+    </div>
+
+    <aside class="service-booking__summary">
+      <h2>Booking summary</h2>
+      <div data-booking-summary></div>
+      <div class="service-booking__note">
+        <p><strong>Payment rule:</strong> Booking is confirmed only after Shopify payment is completed.</p>
+        <p><strong>Fulfilment rule:</strong> The order is fulfilled after the agreed report, photos, attendance summary or service evidence is delivered.</p>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<script>
+  window.PropertyServiceBooking = {
+    serviceLabel: {{ service_label | json }},
+    serviceType: {{ service_type | json }},
+    productHandle: {{ product_handle | json }},
+    durationMinutes: {{ duration_minutes | json }},
+    timezone: 'Australia/Perth',
+    apiBaseUrl: {{ section.settings.api_base_url | json }},
+    variants: [
+      {%- if product_ref != blank -%}
+        {%- for variant in product_ref.variants -%}
+          {
+            id: {{ variant.id | json }},
+            title: {{ variant.title | json }},
+            price: {{ variant.price | money_without_currency | replace: ',', '' | json }},
+            timeCategory: {{ variant.metafields.booking.time_category.value | json }},
+            timeRule: {{ variant.metafields.booking.time_rule.value | json }}
+          }{%- unless forloop.last -%},{%- endunless -%}
+        {%- endfor -%}
+      {%- endif -%}
+    ]
+  };
+</script>
+
+{% schema %}
+{
+  "name": "Service booking form",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "url",
+      "id": "api_base_url",
+      "label": "Booking API base URL"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Service booking form"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,61 @@
+{%- liquid
+  assign show_onboarding = false
+  if product.metafields.custom.requires_onboarding_form.value == true
+    assign show_onboarding = true
+  endif
+  if product.tags contains 'Template' or product.tags contains 'Templates' or product.tags contains 'Template Pack' or product.product_type contains 'Template'
+    assign show_onboarding = true
+  endif
+  assign onboarding_url = product.metafields.custom.onboarding_form.value | default: '/pages/template-customisation-onboarding'
+  assign onboarding_category = product.metafields.custom.onboarding_question_set.value | default: product.metafields.custom.product_family.value | default: ''
+-%}
+
+{%- if show_onboarding -%}
+  <section class="page-width rbp-product-onboarding color-{{ section.settings.color_scheme }} gradient">
+    <div class="rbp-product-onboarding__card">
+      <div>
+        <p class="rbp-product-onboarding__eyebrow">Customised for your business</p>
+        <h2>{{ section.settings.heading }}</h2>
+        <p>{{ section.settings.text }}</p>
+      </div>
+      <ol class="rbp-product-onboarding__steps">
+        <li>Purchase this product</li>
+        <li>Complete the onboarding form</li>
+        <li>We customise the product using your details</li>
+        <li>Your completed files are delivered after the brief is submitted</li>
+      </ol>
+      <div class="rbp-product-onboarding__actions">
+        <a class="button" href="{{ onboarding_url }}?product={{ product.handle | url_encode }}&title={{ product.title | url_encode }}&sku={{ product.selected_or_first_available_variant.sku | url_encode }}&category={{ onboarding_category | url_encode }}">Complete onboarding form after purchase</a>
+        <span>{{ section.settings.delivery_text }}</span>
+      </div>
+    </div>
+  </section>
+
+  <style>
+    .rbp-product-onboarding { padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px; }
+    .rbp-product-onboarding__card { border: 1px solid rgba(var(--color-foreground), .12); border-radius: 18px; padding: 24px; display: grid; gap: 18px; background: rgb(var(--color-background)); }
+    .rbp-product-onboarding__eyebrow { text-transform: uppercase; letter-spacing: .08em; font-size: 12px; margin: 0 0 6px; opacity: .72; }
+    .rbp-product-onboarding h2 { margin: 0 0 8px; }
+    .rbp-product-onboarding p { margin: 0; }
+    .rbp-product-onboarding__steps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; padding: 0; margin: 0; list-style-position: inside; }
+    .rbp-product-onboarding__steps li { border: 1px solid rgba(var(--color-foreground), .1); border-radius: 12px; padding: 12px; background: rgba(var(--color-foreground), .03); }
+    .rbp-product-onboarding__actions { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+    .rbp-product-onboarding__actions span { opacity: .75; }
+    @media screen and (max-width: 749px) { .rbp-product-onboarding__steps { grid-template-columns: 1fr; } }
+  </style>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "RBP onboarding CTA",
+  "settings": [
+    { "type": "color_scheme", "id": "color_scheme", "label": "Colour scheme", "default": "scheme-1" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "This product is customised after checkout" },
+    { "type": "textarea", "id": "text", "label": "Text", "default": "After purchase, complete a short onboarding form so we can tailor this product to your business, use case and preferred style." },
+    { "type": "text", "id": "delivery_text", "label": "Delivery text", "default": "Delivery begins after the onboarding form is submitted." },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 100, "step": 4, "unit": "px", "label": "Padding top", "default": 24 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 100, "step": 4, "unit": "px", "label": "Padding bottom", "default": 24 }
+  ],
+  "presets": [ { "name": "RBP onboarding CTA" } ]
+}
+{% endschema %}

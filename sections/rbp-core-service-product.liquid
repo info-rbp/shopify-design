@@ -1,0 +1,42 @@
+{% assign outcome = product.metafields.core.short_outcome.value | default: product.description | strip_html %}
+{% assign service_type = product.metafields.core.service_type.value %}
+{% assign delivery = product.metafields.core.delivery_timeframe.value %}
+{% assign intake = product.metafields.core.intake_blueprint.value %}
+<section class="rbp-core-product">
+  <div class="rbp-core-product__hero page-width">
+    <div class="rbp-core-product__eyebrow">Remote Business Partner Core Service{% if service_type != blank %} · {{ service_type }}{% endif %}</div>
+    <h1>{{ product.title }}</h1>
+    {% if outcome != blank %}<p class="rbp-core-product__lead">{{ outcome }}</p>{% endif %}
+    <div class="rbp-core-product__price">{{ product.selected_or_first_available_variant.price | money }}</div>
+    <div class="rbp-core-product__actions">
+      {% form 'product', product %}
+        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+        <button type="submit" class="button button--primary">{% if product.price == 0 %}Start quote intake{% else %}Buy service{% endif %}</button>
+      {% endform %}
+      <a class="button button--secondary" href="/pages/core-services">Compare Core Services</a>
+    </div>
+  </div>
+  <div class="page-width rbp-core-product__grid">
+    <article class="rbp-card rbp-card--wide">
+      <h2>What this service helps with</h2>
+      <div class="rte">{{ product.description }}</div>
+    </article>
+    <article class="rbp-card">
+      <h2>After checkout</h2>
+      <p>Complete the service-specific intake form on the Shopify site. Delivery starts once the intake is submitted.</p>
+      {% if intake != blank %}<p class="rbp-muted">Intake blueprint: {{ intake.title | default: 'Configured' }}</p>{% endif %}
+    </article>
+    <article class="rbp-card">
+      <h2>Delivery</h2>
+      <p>{{ delivery | default: 'Confirmed after intake is submitted.' }}</p>
+    </article>
+    <article class="rbp-card">
+      <h2>Member access</h2>
+      <p>Customers tagged as members are intended to receive 100% automatic discount access for Core Services once the member discount rule is active.</p>
+    </article>
+  </div>
+</section>
+<style>
+.rbp-core-product{background:rgb(var(--color-background));padding:48px 0 64px}.rbp-core-product__hero{padding:44px 32px;border-radius:28px;background:linear-gradient(135deg,rgba(var(--color-foreground),.06),rgba(var(--color-button),.08));border:1px solid rgba(var(--color-foreground),.08)}.rbp-core-product__eyebrow{text-transform:uppercase;letter-spacing:.12em;font-size:1.2rem;color:rgba(var(--color-foreground),.7);margin-bottom:14px}.rbp-core-product h1{margin:0;font-size:clamp(3rem,5vw,6rem);line-height:1.02}.rbp-core-product__lead{max-width:780px;font-size:1.8rem;margin:18px 0;color:rgba(var(--color-foreground),.78)}.rbp-core-product__price{font-size:2.4rem;font-weight:700;margin:20px 0}.rbp-core-product__actions{display:flex;gap:14px;flex-wrap:wrap}.rbp-core-product__grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-top:24px}.rbp-card{padding:26px;border:1px solid rgba(var(--color-foreground),.1);border-radius:24px;background:rgb(var(--color-background));box-shadow:0 10px 30px rgba(0,0,0,.04)}.rbp-card--wide{grid-column:span 3}.rbp-card h2{margin-top:0}.rbp-muted{font-size:1.3rem;color:rgba(var(--color-foreground),.65)}@media(max-width:749px){.rbp-core-product__grid{grid-template-columns:1fr}.rbp-card--wide{grid-column:auto}.rbp-core-product__hero{padding:28px 20px}}
+</style>
+{% schema %}{"name":"RBP Core Service Product","settings":[],"presets":[{"name":"RBP Core Service Product"}]}{% endschema %}

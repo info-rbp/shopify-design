@@ -1,0 +1,36 @@
+{%- liquid
+  assign is_member = false
+  assign member_level = 'Visitor'
+  if customer
+    if customer.tags contains 'Premium Member'
+      assign is_member = true
+      assign member_level = 'Premium Member'
+    endif
+  endif
+-%}
+<section class="rbp-account-dash customer" aria-label="RBP account guidance">
+  <div class="rbp-account-dash__hero">
+    <div>
+      <div class="rbp-account-dash__eyebrow">Customer account</div>
+      <h2>Your Remote Business Partner account</h2>
+      <p>Use this area to review orders, access support pathways, understand document order next steps and manage membership-related guidance.</p>
+    </div>
+    <div class="rbp-account-dash__status">
+      <span>Account status</span>
+      <strong>{{ member_level }}</strong>
+      {%- if is_member -%}<p>Premium Member guidance and member-only pathways are available below.</p>{%- else -%}<p>Premium Member access is applied through the customer tag <strong>Premium Member</strong>.</p>{%- endif -%}
+    </div>
+  </div>
+  <div class="rbp-account-dash__grid">
+    <a class="rbp-account-dash__card" href="/pages/member-benefits"><span>MB</span><h3>Member benefits</h3><p>Review Premium Member benefits, support pathways and access expectations.</p></a>
+    <a class="rbp-account-dash__card" href="/pages/order-support"><span>OS</span><h3>Order support</h3><p>Get help with current orders, document products, revisions and delivery questions.</p></a>
+    <a class="rbp-account-dash__card" href="/pages/document-order-status"><span>DS</span><h3>Document order status</h3><p>Understand what happens after purchase, onboarding, preparation and review.</p></a>
+    <a class="rbp-account-dash__card" href="/pages/payment-plan-support"><span>PP</span><h3>Payment plans</h3><p>Payment plan management is facilitated through Shopify Subscriptions and actioned independently.</p></a>
+    <a class="rbp-account-dash__card" href="/pages/member-resources"><span>MR</span><h3>Member resources</h3><p>Premium-only resource area scaffolded for future content.</p></a>
+    <a class="rbp-account-dash__card" href="/pages/help-center"><span>HC</span><h3>Help Center</h3><p>Find FAQs, support routing, Business NBN help and product guidance.</p></a>
+  </div>
+</section>
+<style>
+.rbp-account-dash{padding:36px 0 12px}.rbp-account-dash__hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(260px,.35fr);gap:20px;border-radius:30px;background:radial-gradient(circle at top right,rgba(59,130,246,.2),transparent 36%),linear-gradient(135deg,#0f172a,#172554);padding:clamp(24px,4vw,44px);color:#fff}.rbp-account-dash__eyebrow{display:inline-flex;border-radius:999px;background:rgba(59,130,246,.18);color:#93c5fd;border:1px solid rgba(147,197,253,.28);padding:7px 12px;font-size:12px;font-weight:900;letter-spacing:.08em;text-transform:uppercase}.rbp-account-dash h2{margin:14px 0 0;color:#fff;font-size:clamp(30px,4vw,52px);line-height:1.05;letter-spacing:-.04em;font-weight:900}.rbp-account-dash p{margin:12px 0 0;color:#cbd5e1;line-height:1.7}.rbp-account-dash__status{border:1px solid rgba(255,255,255,.16);border-radius:24px;background:rgba(255,255,255,.08);padding:20px}.rbp-account-dash__status span{display:block;color:#bfdbfe;font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.08em}.rbp-account-dash__status strong{display:block;margin-top:8px;color:#fff;font-size:22px;font-weight:900}.rbp-account-dash__grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:18px}.rbp-account-dash__card{display:block;border:1px solid rgba(15,23,42,.1);border-radius:22px;background:#fff;padding:22px;text-decoration:none;color:inherit;box-shadow:0 1px 2px rgba(15,23,42,.05)}.rbp-account-dash__card span{width:42px;height:42px;border-radius:15px;background:#dbeafe;color:#1d4ed8;display:grid;place-items:center;font-weight:900;margin-bottom:14px}.rbp-account-dash__card h3{margin:0 0 8px;color:#0f172a;font-size:18px;font-weight:900}.rbp-account-dash__card p{margin:0;color:#64748b;font-size:14px;line-height:1.6}@media(max-width:989px){.rbp-account-dash__hero,.rbp-account-dash__grid{grid-template-columns:1fr}}@media(max-width:749px){.rbp-account-dash{padding-top:24px}}
+</style>
+{% schema %}{"name":"RBP account guidance","settings":[],"presets":[{"name":"RBP account guidance"}]}{% endschema %}

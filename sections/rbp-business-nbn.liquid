@@ -1,0 +1,818 @@
+<style>
+/* ─── RBP NBN Design Tokens ─────────────────────────────────────── */
+.rbp-nbn {
+  --nbn-navy:      #0f172a;
+  --nbn-teal:      #0d9488;
+  --nbn-teal-mid:  #0f766e;
+  --nbn-teal-pale: #ccfbf1;
+  --nbn-cyan:      #06b6d4;
+  --nbn-cyan-pale: #cffafe;
+  --nbn-blue:      #1d4ed8;
+  --nbn-blue-pale: #dbeafe;
+  --nbn-amber:     #d97706;
+  --nbn-amber-pale:#fef3c7;
+  --nbn-green:     #059669;
+  --nbn-green-pale:#d1fae5;
+  --nbn-red:       #dc2626;
+  --nbn-red-pale:  #fee2e2;
+  --nbn-slate-9:   #0f172a;
+  --nbn-slate-7:   #334155;
+  --nbn-slate-6:   #475569;
+  --nbn-slate-4:   #94a3b8;
+  --nbn-slate-2:   #e2e8f0;
+  --nbn-slate-1:   #f1f5f9;
+  --nbn-slate-0:   #f8fafc;
+  --nbn-white:     #ffffff;
+  --nbn-radius:    16px;
+  --nbn-radius-lg: 24px;
+  --nbn-shadow:    0 4px 24px rgba(15,23,42,.10);
+  --nbn-shadow-lg: 0 16px 56px rgba(15,23,42,.14);
+  background: var(--nbn-white); color: var(--nbn-slate-9);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+.rbp-nbn *, .rbp-nbn *::before, .rbp-nbn *::after { box-sizing: border-box; margin: 0; }
+.rbp-nbn a { text-decoration: none; color: inherit; }
+.rbp-nbn ul { list-style: none; padding: 0; }
+.rbp-nbn-c { width: min(100% - 2.5rem, 1260px); margin-inline: auto; }
+.rbp-nbn-sec { padding: 88px 0; }
+.rbp-nbn-sec-sm { padding: 56px 0; }
+.rbp-nbn-muted { background: var(--nbn-slate-0); }
+.rbp-nbn-teal-bg {
+  background: radial-gradient(ellipse 80% 60% at 80% 30%, rgba(13,148,136,.2), transparent 60%),
+              radial-gradient(ellipse 50% 70% at 10% 80%, rgba(6,182,212,.14), transparent 55%),
+              linear-gradient(145deg, #0f172a 0%, #134e4a 50%, #0f172a 100%);
+  color: var(--nbn-white);
+}
+
+/* ─── Eyebrow ────────────────────────────────────────────────────── */
+.rbp-nbn-eye {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 6px 14px; border-radius: 999px;
+  font-size: 11px; font-weight: 800; letter-spacing: .10em; text-transform: uppercase;
+  background: var(--nbn-teal-pale); color: var(--nbn-teal);
+}
+.rbp-nbn-eye--white { background: rgba(255,255,255,.14); color: rgba(255,255,255,.9); border: 1px solid rgba(255,255,255,.22); }
+.rbp-nbn-eye--amber { background: var(--nbn-amber-pale); color: var(--nbn-amber); }
+.rbp-nbn-eye--green { background: var(--nbn-green-pale); color: var(--nbn-green); }
+.rbp-nbn-eye-dot { width: 6px; height: 6px; border-radius: 999px; background: currentColor; animation: nbn-pulse 2s infinite; }
+@keyframes nbn-pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+
+/* ─── Headings ───────────────────────────────────────────────────── */
+.rbp-nbn-h1 { font-size: clamp(40px,6vw,76px); font-weight: 900; line-height: 1.0; letter-spacing: -.045em; color: var(--nbn-white); }
+.rbp-nbn-h2 { font-size: clamp(28px,4vw,50px); font-weight: 900; line-height: 1.05; letter-spacing: -.035em; }
+.rbp-nbn-h3 { font-size: 20px; font-weight: 800; line-height: 1.2; letter-spacing: -.02em; }
+.rbp-nbn-p  { font-size: 16px; line-height: 1.75; color: var(--nbn-slate-6); }
+.rbp-nbn-head { text-align: center; max-width: 760px; margin: 0 auto 56px; }
+.rbp-nbn-head .rbp-nbn-eye { margin-bottom: 16px; }
+.rbp-nbn-head .rbp-nbn-h2 { margin: 12px 0 16px; }
+
+/* ─── Hero ───────────────────────────────────────────────────────── */
+.rbp-nbn-hero { position: relative; overflow: hidden; }
+.rbp-nbn-hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%2306b6d4' fill-opacity='0.04'%3E%3Ccircle cx='40' cy='40' r='3'/%3E%3C/g%3E%3C/svg%3E");
+  pointer-events: none;
+}
+.rbp-nbn-hero-in {
+  display: grid;
+  grid-template-columns: minmax(0,1fr) minmax(360px,.85fr);
+  gap: 60px; align-items: center;
+  padding: 96px 0 80px; min-height: 580px;
+}
+.rbp-nbn-hero-text .rbp-nbn-eye { margin-bottom: 20px; }
+.rbp-nbn-hero-text .rbp-nbn-h1 { margin-bottom: 18px; }
+.rbp-nbn-hero-text .rbp-nbn-p { color: #94a3b8; font-size: 18px; max-width: 560px; margin-bottom: 32px; }
+
+/* ─── Hero speed card ────────────────────────────────────────────── */
+.rbp-nbn-speed-card {
+  background: rgba(255,255,255,.05);
+  border: 1px solid rgba(255,255,255,.14);
+  backdrop-filter: blur(24px);
+  border-radius: var(--nbn-radius-lg);
+  padding: 36px 32px; position: relative; overflow: hidden;
+}
+.rbp-nbn-speed-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 4px;
+  background: linear-gradient(90deg, var(--nbn-cyan), var(--nbn-teal));
+}
+.rbp-nbn-speed-label { font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: #94a3b8; margin-bottom: 8px; }
+.rbp-nbn-speed-num { font-size: 56px; font-weight: 900; color: var(--nbn-white); letter-spacing: -.05em; line-height: 1; }
+.rbp-nbn-speed-unit { font-size: 18px; font-weight: 700; color: #94a3b8; margin-left: 4px; }
+.rbp-nbn-speed-row { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin: 24px 0; padding: 24px 0; border-top: 1px solid rgba(255,255,255,.08); border-bottom: 1px solid rgba(255,255,255,.08); }
+.rbp-nbn-speed-stat { text-align: center; }
+.rbp-nbn-speed-stat-num { font-size: 24px; font-weight: 900; color: var(--nbn-white); }
+.rbp-nbn-speed-stat-label { font-size: 12px; color: #64748b; margin-top: 2px; }
+.rbp-nbn-tech-badges { display: flex; flex-wrap: wrap; gap: 8px; }
+.rbp-nbn-tech-badge {
+  padding: 5px 12px; border-radius: 999px;
+  font-size: 11px; font-weight: 800; letter-spacing: .06em;
+  background: rgba(255,255,255,.08); color: #94a3b8; border: 1px solid rgba(255,255,255,.12);
+}
+.rbp-nbn-tech-badge--active { background: rgba(13,148,136,.2); color: #5eead4; border-color: rgba(13,148,136,.3); }
+
+/* ─── Buttons ────────────────────────────────────────────────────── */
+.rbp-nbn-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 14px 24px; border-radius: 12px; border: none;
+  font-size: 14px; font-weight: 800; cursor: pointer; line-height: 1;
+  transition: all .2s ease; white-space: nowrap; text-decoration: none;
+}
+.rbp-nbn-btn--teal   { background: var(--nbn-teal); color: var(--nbn-white); box-shadow: 0 8px 24px rgba(13,148,136,.3); }
+.rbp-nbn-btn--teal:hover { background: var(--nbn-teal-mid); transform: translateY(-1px); }
+.rbp-nbn-btn--ghost  { background: transparent; color: var(--nbn-slate-7); border: 1.5px solid var(--nbn-slate-2); }
+.rbp-nbn-btn--ghost:hover { background: var(--nbn-slate-1); }
+.rbp-nbn-btn--white  { background: var(--nbn-white); color: var(--nbn-teal); }
+.rbp-nbn-btn--white:hover { background: var(--nbn-teal-pale); }
+.rbp-nbn-btn--sm { padding: 10px 18px; font-size: 13px; }
+.rbp-nbn-actions { display: flex; flex-wrap: wrap; gap: 12px; }
+
+/* ─── Address Checker ────────────────────────────────────────────── */
+.rbp-nbn-checker {
+  background: linear-gradient(135deg, var(--nbn-navy) 0%, #134e4a 60%, var(--nbn-navy) 100%);
+  border-radius: var(--nbn-radius-lg);
+  padding: 56px 48px;
+  position: relative; overflow: hidden;
+}
+.rbp-nbn-checker::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 70% 50% at 50% 0%, rgba(6,182,212,.14), transparent);
+  pointer-events: none;
+}
+.rbp-nbn-checker-inner { position: relative; z-index: 1; max-width: 680px; margin: 0 auto; text-align: center; }
+.rbp-nbn-checker h2 { color: var(--nbn-white); font-size: clamp(26px,3.5vw,40px); font-weight: 900; letter-spacing: -.03em; margin: 16px 0 12px; }
+.rbp-nbn-checker p  { color: #94a3b8; font-size: 16px; line-height: 1.65; margin-bottom: 36px; }
+.rbp-nbn-checker-form { display: flex; gap: 12px; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.14); border-radius: 16px; padding: 8px; }
+.rbp-nbn-checker-form input {
+  flex: 1; background: transparent; border: none; outline: none;
+  padding: 14px 16px; font-size: 15px; color: var(--nbn-white);
+  font-family: inherit;
+}
+.rbp-nbn-checker-form input::placeholder { color: #64748b; }
+.rbp-nbn-checker-form button {
+  padding: 14px 28px; background: var(--nbn-teal); color: var(--nbn-white);
+  border: none; border-radius: 10px; font-size: 14px; font-weight: 800;
+  cursor: pointer; white-space: nowrap; transition: background .2s;
+  font-family: inherit;
+}
+.rbp-nbn-checker-form button:hover { background: var(--nbn-teal-mid); }
+.rbp-nbn-checker-result {
+  margin-top: 20px; padding: 16px 20px;
+  border-radius: 12px; font-size: 14px; font-weight: 600;
+  display: none;
+}
+.rbp-nbn-checker-result--checking { display: block; background: rgba(255,255,255,.06); color: #94a3b8; }
+.rbp-nbn-checker-result--success  { display: block; background: rgba(5,150,105,.15); color: #6ee7b7; border: 1px solid rgba(5,150,105,.3); }
+.rbp-nbn-checker-result--pending  { display: block; background: rgba(245,158,11,.12); color: #fcd34d; border: 1px solid rgba(245,158,11,.3); }
+.rbp-nbn-checker-tags { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 24px; }
+.rbp-nbn-checker-tag { font-size: 11px; color: #64748b; font-weight: 600; display: flex; align-items: center; gap: 6px; }
+.rbp-nbn-checker-tag::before { content: '•'; color: #334155; }
+
+/* ─── Plan cards ─────────────────────────────────────────────────── */
+.rbp-nbn-plans { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.rbp-nbn-plan {
+  background: var(--nbn-white); border: 1.5px solid var(--nbn-slate-2);
+  border-radius: var(--nbn-radius-lg); overflow: hidden;
+  display: flex; flex-direction: column;
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+.rbp-nbn-plan:hover { transform: translateY(-4px); box-shadow: var(--nbn-shadow-lg); }
+.rbp-nbn-plan--featured { border-color: var(--nbn-teal); box-shadow: 0 0 0 3px rgba(13,148,136,.12), var(--nbn-shadow-lg); transform: scale(1.02); }
+.rbp-nbn-plan--featured:hover { transform: scale(1.02) translateY(-4px); }
+.rbp-nbn-plan-head {
+  padding: 28px 28px 24px;
+  position: relative;
+}
+.rbp-nbn-plan--featured .rbp-nbn-plan-head { background: linear-gradient(135deg, #0f172a, #134e4a); color: var(--nbn-white); }
+.rbp-nbn-plan-badge {
+  position: absolute; top: 16px; right: 16px;
+  background: var(--nbn-teal); color: var(--nbn-white);
+  font-size: 10px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase;
+  padding: 4px 12px; border-radius: 999px;
+}
+.rbp-nbn-plan-name { font-size: 12px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--nbn-slate-4); margin-bottom: 6px; }
+.rbp-nbn-plan--featured .rbp-nbn-plan-name { color: rgba(255,255,255,.5); }
+.rbp-nbn-plan-speed { font-size: 48px; font-weight: 900; letter-spacing: -.04em; line-height: 1; color: var(--nbn-slate-9); }
+.rbp-nbn-plan--featured .rbp-nbn-plan-speed { color: var(--nbn-white); }
+.rbp-nbn-plan-speed-unit { font-size: 16px; font-weight: 700; color: var(--nbn-slate-4); margin-left: 4px; }
+.rbp-nbn-plan--featured .rbp-nbn-plan-speed-unit { color: rgba(255,255,255,.5); }
+.rbp-nbn-plan-speed-label { font-size: 13px; color: var(--nbn-slate-6); margin-top: 2px; }
+.rbp-nbn-plan--featured .rbp-nbn-plan-speed-label { color: rgba(255,255,255,.6); }
+.rbp-nbn-plan-body { padding: 24px 28px; flex: 1; display: flex; flex-direction: column; }
+.rbp-nbn-plan-price { font-size: 32px; font-weight: 900; color: var(--nbn-slate-9); letter-spacing: -.03em; }
+.rbp-nbn-plan-price-tbc { font-size: 20px; font-weight: 900; color: var(--nbn-slate-7); }
+.rbp-nbn-plan-price sup { font-size: 16px; vertical-align: super; }
+.rbp-nbn-plan-price-period { font-size: 14px; color: var(--nbn-slate-4); font-weight: 600; }
+.rbp-nbn-plan-tech {
+  display: flex; flex-wrap: wrap; gap: 6px; margin: 16px 0;
+}
+.rbp-nbn-plan-tech-badge {
+  padding: 4px 10px; border-radius: 999px;
+  font-size: 11px; font-weight: 800;
+  background: var(--nbn-teal-pale); color: var(--nbn-teal);
+}
+.rbp-nbn-plan-features { flex: 1; }
+.rbp-nbn-plan-feature {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 8px 0; border-bottom: 1px solid var(--nbn-slate-1);
+  font-size: 14px; color: var(--nbn-slate-7); line-height: 1.4;
+}
+.rbp-nbn-plan-feature:last-child { border-bottom: none; }
+.rbp-nbn-plan-feature-icon {
+  width: 18px; height: 18px; flex-shrink: 0;
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  font-size: 10px; margin-top: 2px;
+}
+.rbp-nbn-plan-feature-icon--yes { background: var(--nbn-green-pale); color: var(--nbn-green); }
+.rbp-nbn-plan-feature-icon--no  { background: var(--nbn-slate-1);    color: var(--nbn-slate-4); }
+.rbp-nbn-plan-cta { padding: 0 28px 28px; }
+.rbp-nbn-plan-cta .rbp-nbn-btn { width: 100%; justify-content: center; }
+
+/* ─── Technology explainer ───────────────────────────────────────── */
+.rbp-nbn-tech-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.rbp-nbn-tech-card {
+  background: var(--nbn-white); border: 1.5px solid var(--nbn-slate-2);
+  border-radius: var(--nbn-radius-lg); padding: 32px 28px;
+  position: relative; overflow: hidden;
+  transition: transform .2s, box-shadow .2s;
+}
+.rbp-nbn-tech-card:hover { transform: translateY(-3px); box-shadow: var(--nbn-shadow); }
+.rbp-nbn-tech-card::after {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+  background: var(--nbn-accent, var(--nbn-teal));
+}
+.rbp-nbn-tech-icon {
+  width: 56px; height: 56px; border-radius: 16px;
+  background: var(--nbn-icon-bg, var(--nbn-teal-pale));
+  color: var(--nbn-icon-color, var(--nbn-teal));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 24px; margin-bottom: 20px;
+}
+.rbp-nbn-tech-card h3 { font-size: 18px; font-weight: 800; margin-bottom: 10px; }
+.rbp-nbn-tech-card p { font-size: 14px; color: var(--nbn-slate-6); line-height: 1.65; }
+.rbp-nbn-tech-availability {
+  margin-top: 16px; display: flex; align-items: center; gap: 8px;
+  font-size: 12px; font-weight: 700;
+}
+.rbp-nbn-avail-dot { width: 8px; height: 8px; border-radius: 50%; }
+
+/* ─── Status panels ──────────────────────────────────────────────── */
+.rbp-nbn-status-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.rbp-nbn-status-panel {
+  border-radius: var(--nbn-radius-lg); padding: 32px 28px;
+  border: 1.5px solid var(--nbn-slate-2);
+  background: var(--nbn-white);
+}
+.rbp-nbn-status-panel--pending { border-color: rgba(245,158,11,.3); background: rgba(254,243,199,.3); }
+.rbp-nbn-status-panel--active  { border-color: rgba(5,150,105,.3);  background: rgba(209,250,229,.3); }
+.rbp-nbn-status-panel--review  { border-color: rgba(29,78,216,.3);  background: rgba(219,234,254,.3); }
+.rbp-nbn-status-icon { font-size: 36px; margin-bottom: 16px; display: block; }
+.rbp-nbn-status-panel h3 { font-size: 18px; font-weight: 800; margin-bottom: 8px; }
+.rbp-nbn-status-panel p { font-size: 14px; color: var(--nbn-slate-6); line-height: 1.65; }
+.rbp-nbn-status-steps { margin-top: 16px; }
+.rbp-nbn-status-step { display: flex; align-items: flex-start; gap: 10px; padding: 8px 0; font-size: 13px; color: var(--nbn-slate-7); }
+.rbp-nbn-status-step-num { width: 22px; height: 22px; border-radius: 50%; background: var(--nbn-slate-2); color: var(--nbn-slate-6); font-size: 11px; font-weight: 800; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+
+/* ─── How connection works ───────────────────────────────────────── */
+.rbp-nbn-connect-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; position: relative; }
+.rbp-nbn-connect-steps::before {
+  content: ''; position: absolute; top: 28px; left: 12.5%; right: 12.5%;
+  height: 2px; background: linear-gradient(90deg, var(--nbn-teal-pale), var(--nbn-teal), var(--nbn-teal-pale));
+}
+.rbp-nbn-connect-step { position: relative; z-index: 1; text-align: center; padding: 0 16px; }
+.rbp-nbn-connect-step-num {
+  width: 56px; height: 56px; border-radius: 50%;
+  background: var(--nbn-teal); color: var(--nbn-white);
+  font-size: 20px; font-weight: 900;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 20px;
+  box-shadow: 0 0 0 6px white, 0 0 0 8px var(--nbn-teal-pale);
+}
+.rbp-nbn-connect-step h3 { font-size: 15px; font-weight: 800; margin-bottom: 8px; }
+.rbp-nbn-connect-step p { font-size: 13px; color: var(--nbn-slate-6); line-height: 1.6; }
+
+/* ─── FAQ ────────────────────────────────────────────────────────── */
+.rbp-nbn-faq { border-radius: var(--nbn-radius-lg); overflow: hidden; border: 1px solid var(--nbn-slate-2); }
+.rbp-nbn-faq details { border-bottom: 1px solid var(--nbn-slate-2); background: var(--nbn-white); }
+.rbp-nbn-faq details:last-child { border-bottom: none; }
+.rbp-nbn-faq summary { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 20px 28px; cursor: pointer; list-style: none; font-size: 15px; font-weight: 700; color: var(--nbn-slate-9); transition: background .15s; }
+.rbp-nbn-faq summary:hover { background: var(--nbn-slate-0); }
+.rbp-nbn-faq summary::-webkit-details-marker { display: none; }
+.rbp-nbn-faq summary::after { content: '+'; font-size: 20px; font-weight: 300; color: var(--nbn-slate-4); transition: transform .2s; }
+.rbp-nbn-faq details[open] summary::after { transform: rotate(45deg); }
+.rbp-nbn-faq details[open] summary { background: var(--nbn-slate-0); color: var(--nbn-teal); }
+.rbp-nbn-faq-body { padding: 0 28px 22px; font-size: 15px; color: var(--nbn-slate-6); line-height: 1.75; }
+
+/* ─── Legal disclaimer ───────────────────────────────────────────── */
+.rbp-nbn-legal {
+  background: var(--nbn-slate-0); border-top: 1px solid var(--nbn-slate-2);
+  padding: 32px 0;
+}
+.rbp-nbn-legal p { font-size: 12px; color: var(--nbn-slate-4); line-height: 1.7; }
+
+/* ─── CTA Band ───────────────────────────────────────────────────── */
+.rbp-nbn-cta-band {
+  background: linear-gradient(135deg, #134e4a 0%, #0f766e 50%, #0f172a 100%);
+  border-radius: var(--nbn-radius-lg); padding: 60px 52px;
+  display: flex; align-items: center; justify-content: space-between; gap: 40px;
+  position: relative; overflow: hidden;
+}
+.rbp-nbn-cta-band::before {
+  content: '';
+  position: absolute; top: -40%; right: -8%; width: 400px; height: 400px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,255,255,.07), transparent 70%);
+}
+.rbp-nbn-cta-band h2 { color: var(--nbn-white); font-size: clamp(24px,3.5vw,38px); font-weight: 900; letter-spacing: -.03em; margin-bottom: 10px; }
+.rbp-nbn-cta-band p { color: rgba(255,255,255,.68); font-size: 16px; line-height: 1.65; }
+.rbp-nbn-cta-actions { display: flex; flex-wrap: wrap; gap: 12px; flex-shrink: 0; }
+
+/* ─── Responsive ─────────────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .rbp-nbn-plans { grid-template-columns: 1fr; max-width: 500px; margin-inline: auto; }
+  .rbp-nbn-plan--featured { transform: none; }
+  .rbp-nbn-tech-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 900px) {
+  .rbp-nbn-hero-in { grid-template-columns: 1fr; gap: 40px; padding: 72px 0 56px; min-height: unset; }
+  .rbp-nbn-status-grid { grid-template-columns: 1fr; }
+  .rbp-nbn-connect-steps { grid-template-columns: repeat(2, 1fr); gap: 40px; }
+  .rbp-nbn-connect-steps::before { display: none; }
+  .rbp-nbn-cta-band { flex-direction: column; padding: 48px 36px; }
+  .rbp-nbn-checker { padding: 40px 28px; }
+  .rbp-nbn-checker-form { flex-direction: column; }
+}
+@media (max-width: 640px) {
+  .rbp-nbn-sec { padding: 60px 0; }
+  .rbp-nbn-tech-grid { grid-template-columns: 1fr; }
+  .rbp-nbn-connect-steps { grid-template-columns: 1fr; }
+}
+</style>
+
+<div class="rbp-nbn" data-rbp-section="business-nbn">
+
+  {%- comment -%} ── HERO ── {%- endcomment -%}
+  <section class="rbp-nbn-hero rbp-nbn-teal-bg" aria-label="Business NBN hero">
+    <div class="rbp-nbn-c">
+      <div class="rbp-nbn-hero-in">
+        <div class="rbp-nbn-hero-text">
+          <div class="rbp-nbn-eye rbp-nbn-eye--white">
+            <span class="rbp-nbn-eye-dot"></span>
+            Business NBN
+          </div>
+          <h1 class="rbp-nbn-h1">Fast, reliable internet<br>for your business.</h1>
+          <p class="rbp-nbn-p">Business NBN plans designed for Australian SMEs — with professional support through every step of the connection process. Check availability at your address and start the connection pathway.</p>
+          <div class="rbp-nbn-actions">
+            <a class="rbp-nbn-btn rbp-nbn-btn--teal" href="#rbp-nbn-checker"
+               data-rbp-flow="nbn-check-address">
+              Check your address
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+            <a class="rbp-nbn-btn rbp-nbn-btn--white" href="#rbp-nbn-plans">View plans</a>
+          </div>
+        </div>
+
+        <aside class="rbp-nbn-speed-card" aria-label="NBN plan overview">
+          <div class="rbp-nbn-speed-label">Top available speed</div>
+          <div>
+            <span class="rbp-nbn-speed-num">1000</span>
+            <span class="rbp-nbn-speed-unit">Mbps</span>
+          </div>
+          <p style="font-size:13px;color:#64748b;margin-top:4px">where technology permits · subject to address check</p>
+          <div class="rbp-nbn-speed-row">
+            <div class="rbp-nbn-speed-stat">
+              <div class="rbp-nbn-speed-stat-num">3</div>
+              <div class="rbp-nbn-speed-stat-label">Available plans</div>
+            </div>
+            <div class="rbp-nbn-speed-stat">
+              <div class="rbp-nbn-speed-stat-num">24/7</div>
+              <div class="rbp-nbn-speed-stat-label">Support pathways</div>
+            </div>
+          </div>
+          <div class="rbp-nbn-speed-label" style="margin-bottom:10px">Connection technologies</div>
+          <div class="rbp-nbn-tech-badges">
+            <span class="rbp-nbn-tech-badge rbp-nbn-tech-badge--active">FTTP</span>
+            <span class="rbp-nbn-tech-badge rbp-nbn-tech-badge--active">FTTN</span>
+            <span class="rbp-nbn-tech-badge rbp-nbn-tech-badge--active">FTTC</span>
+            <span class="rbp-nbn-tech-badge rbp-nbn-tech-badge--active">HFC</span>
+            <span class="rbp-nbn-tech-badge">FTTB</span>
+            <span class="rbp-nbn-tech-badge">Fixed Wireless</span>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} ── ADDRESS CHECKER ── {%- endcomment -%}
+  <section class="rbp-nbn-sec-sm rbp-nbn-muted" id="rbp-nbn-checker" aria-label="NBN address availability checker">
+    <div class="rbp-nbn-c">
+      <div class="rbp-nbn-checker">
+        <div class="rbp-nbn-checker-inner">
+          <div class="rbp-nbn-eye rbp-nbn-eye--white">
+            <span class="rbp-nbn-eye-dot"></span>
+            Availability checker
+          </div>
+          <h2>Is Business NBN available at your address?</h2>
+          <p>Enter your business address below to start the availability check. Our team will confirm your connection type and available plans.</p>
+          <form class="rbp-nbn-checker-form" data-rbp-flow="nbn-address-check" id="rbp-nbn-form">
+            <input
+              type="text"
+              id="rbp-nbn-address"
+              name="address"
+              placeholder="Enter your full business address..."
+              autocomplete="street-address"
+              aria-label="Business address for NBN availability check"
+            >
+            <button type="submit" aria-label="Check NBN availability">Check availability</button>
+          </form>
+          <div class="rbp-nbn-checker-result" id="rbp-nbn-result" role="status" aria-live="polite"></div>
+          <div class="rbp-nbn-checker-tags">
+            <span class="rbp-nbn-checker-tag">All Australian states</span>
+            <span class="rbp-nbn-checker-tag">Business addresses only</span>
+            <span class="rbp-nbn-checker-tag">No personal commitment to check</span>
+            <span class="rbp-nbn-checker-tag">Codex backend connects via /apps/rbp-bridge/api/check-address</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} ── PLAN CARDS ── {%- endcomment -%}
+  <section class="rbp-nbn-sec" id="rbp-nbn-plans" aria-label="Business NBN plans">
+    <div class="rbp-nbn-c">
+      <div class="rbp-nbn-head">
+        <div class="rbp-nbn-eye rbp-nbn-eye--amber">Choose your plan</div>
+        <h2 class="rbp-nbn-h2">Business NBN plans</h2>
+        <p class="rbp-nbn-p">Three plan tiers for Australian business connectivity. Pricing and speeds to be confirmed — check availability first to understand which technologies and tiers apply to your address.</p>
+      </div>
+
+      <div class="rbp-nbn-plans">
+
+        {%- comment -%} ESSENTIAL {%- endcomment -%}
+        <div class="rbp-nbn-plan" data-rbp-plan="nbn-essential">
+          <div class="rbp-nbn-plan-head">
+            <div class="rbp-nbn-plan-name">Essential</div>
+            <div class="rbp-nbn-plan-speed">25<span class="rbp-nbn-plan-speed-unit">Mbps</span></div>
+            <div class="rbp-nbn-plan-speed-label">typical evening download</div>
+          </div>
+          <div class="rbp-nbn-plan-body">
+            <div class="rbp-nbn-plan-price-tbc">TBC</div>
+            <div class="rbp-nbn-plan-price-period">per month · pricing to be confirmed</div>
+            <div class="rbp-nbn-plan-tech">
+              <span class="rbp-nbn-plan-tech-badge">FTTN</span>
+              <span class="rbp-nbn-plan-tech-badge">FTTC</span>
+              <span class="rbp-nbn-plan-tech-badge">HFC</span>
+            </div>
+            <ul class="rbp-nbn-plan-features">
+              <li class="rbp-nbn-plan-feature"><span class="rbp-nbn-plan-feature-icon rbp-nbn-plan-feature-icon--yes">✓</span><span>25/5 Mbps typical speeds</span></li>
+              <li class="rbp-nbn-plan-feature"><span class="rbp-nbn-plan-feature-icon rbp-nbn-plan-feature-icon--yes">✓</span><span>Unlimited data</span></li>
+              <li class="rbp-nbn-plan-feature"><span class="rbp-nbn-plan-feature-icon rbp-nbn-plan-feature-icon--yes">✓</span><span>Business support pathway</span></li>
+              <li class="rbp-nbn-plan-feature"><span class="rbp-nbn-plan-feature-icon rbp-nbn-plan-feature-icon--yes">✓</span><span>Static IP (TBC)</span></li>
+              <li class="rbp-nbn-plan-feature"><span class="rbp-nbn-plan-feature-icon rbp-nbn-plan-feature-icon--no">—</span><span style="color:var(--nbn-slate-4)">Priority tech support</span></li>
+            </ul>
+          </div>
+          <div class="rbp-nbn-plan-cta">
+            <a class="rbp-nbn-btn rbp-nbn-btn--ghost" href="#rbp-nbn-checker" data-rbp-flow="nbn-enquiry" data-nbn-plan="essential">
+              Check availability first
+            </a>
+          </div>
+        </div>
+
+        {%- comment -%} BUSINESS — featured {%- endcomment -%}
+        <div class="rbp-nbn-plan rbp-nbn-plan--featured" data-rbp-plan="nbn-business">
+          <div class="rbp-nbn-plan-head">
+            <div class="rbp-nbn-plan-badge">Most popular</div>
+            <div class="rbp-nbn-plan-name" style="color:rgba(255,255,255,.5)">Business</div>
+            <div class="rbp-nbn-plan-speed" style="color:#fff">100<span class="rbp-nbn-plan-speed-unit">Mbps</span></div>
+            <div class="rbp-nbn-plan-speed-label" style="color:rgba(255,255,255,.6)">typical evening download</div>
+          </div>
+          <div class="rbp-nbn-plan-body">
+            <div class="rbp-nbn-plan-price-tbc">TBC</div>
+            <div class="rbp-nbn-plan-price-period">per month · pricing to be confirmed</div>
+            <div class="rbp-nbn-plan-tech">
+              <span class="rbp-nbn-plan-tech-badge">FTTP</span>
+              <span class="rbp-nbn-plan-tech-badge">HFC</span>
+              <span class="rbp-nbn-plan-tech-badge">FTTC</span>
+            </div>
+            <ul class="rbp-nbn-plan-features">
+              <li class="rbp-nbn-plan-feature"><span class="rbp-nbn-plan-feature-icon rbp-nbn-plan-feature-icon--yes">✓</span><span>100/20 Mbps typical speeds</span></li>
+              <li class="rbp-nbn-plan-feature"><span class="rbp-nbn-plan-feature-icon rbp-nbn-plan-feature-icon--yes">✓</span><span>Unlimited data</span></li>
+              <li class="rbp-nbn-plan-feature"><span class="rbp-nbn-plan-feature-icon rbp-nbn-plan-feature-icon--yes">✓</span><span>Business support pathway</span></li>
+              <li class="rbp-nbn-plan-feature"><span class="rbp-nbn-plan-feature-icon rbp-nbn-plan-feature-icon--yes">✓</span><span>Static IP (TBC)</span></li>
+              <li class="rbp-nbn-plan-feature"><span class="rbp-nbn-plan-feature-icon rbp-nbn-plan-feature-icon--yes">✓</span><span>Priority tech support pathway</span></li>
+            </ul>
+          </div>
+          <div class="rbp-nbn-plan-cta">
+            <a class="rbp-nbn-btn rbp-nbn-btn--teal" href="#rbp-nbn-checker" data-rbp-flow="nbn-enquiry" data-nbn-plan="business">
+              Check availability →
+            </a>
+          </div>
+        </div>
+
+        {%- comment -%} ENTERPRISE {%- endcomment -%}
+        <div class="rbp-nbn-plan" data-rbp-plan="nbn-enterprise">
+          <div class="rbp-nbn-plan-head">
+            <div class="rbp-nbn-plan-name">Enterprise</div>
+            <div class="rbp-nbn-plan-speed">1000<span class="rbp-nbn-plan-speed-unit">Mbps</span></div>
+            <div class="rbp-nbn-plan-speed-label">where FTTP/HFC technology permits</div>
+          </div>
+          <div class="rbp-nbn-plan-body">
+            <div class="rbp-nbn-plan-price-tbc">TBC</div>
+            <div class="rbp-nbn-plan-price-period">per month · pricing to be confirmed</div>
+            <div class="rbp-nbn-plan-tech">
+              <span class="rbp-nbn-plan-tech-badge">FTTP</span>
+              <span class="rbp-nbn-plan-tech-badge">HFC</span>
+            </div>
+            <ul class="rbp-nbn-plan-features">
+              <li class="rbp-nbn-plan-feature"><span class="rbp-nbn-plan-feature-icon rbp-nbn-plan-feature-icon--yes">✓</span><span>1000/50 Mbps where available</span></li>
+              <li class="rbp-nbn-plan-feature"><span class="rbp-nbn-plan-feature-icon rbp-nbn-plan-feature-icon--yes">✓</span><span>Unlimited data</span></li>
+              <li class="rbp-nbn-plan-feature"><span class="rbp-nbn-plan-feature-icon rbp-nbn-plan-feature-icon--yes">✓</span><span>Business support pathway</span></li>
+              <li class="rbp-nbn-plan-feature"><span class="rbp-nbn-plan-feature-icon rbp-nbn-plan-feature-icon--yes">✓</span><span>Static IP included (TBC)</span></li>
+              <li class="rbp-nbn-plan-feature"><span class="rbp-nbn-plan-feature-icon rbp-nbn-plan-feature-icon--yes">✓</span><span>Priority enterprise support</span></li>
+            </ul>
+          </div>
+          <div class="rbp-nbn-plan-cta">
+            <a class="rbp-nbn-btn rbp-nbn-btn--ghost" href="#rbp-nbn-checker" data-rbp-flow="nbn-enquiry" data-nbn-plan="enterprise">
+              Check availability first
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+      <p style="text-align:center;margin-top:32px;font-size:14px;color:var(--nbn-slate-4)">
+        All pricing, speeds and plan names are placeholder. Final details subject to address availability and provider confirmation.
+        &nbsp;·&nbsp;<a href="/pages/contact" style="color:var(--nbn-teal);font-weight:700">Contact us →</a>
+      </p>
+    </div>
+  </section>
+
+  {%- comment -%} ── CONNECTION STATUS PANELS ── {%- endcomment -%}
+  <section class="rbp-nbn-sec rbp-nbn-muted" aria-label="Connection status guides">
+    <div class="rbp-nbn-c">
+      <div class="rbp-nbn-head">
+        <div class="rbp-nbn-eye">What to expect</div>
+        <h2 class="rbp-nbn-h2">Understanding your connection status</h2>
+        <p class="rbp-nbn-p">After checking availability, your connection will move through one of these status pathways.</p>
+      </div>
+      <div class="rbp-nbn-status-grid">
+        <div class="rbp-nbn-status-panel rbp-nbn-status-panel--active">
+          <span class="rbp-nbn-status-icon">✅</span>
+          <h3>Available — ready to connect</h3>
+          <p>NBN infrastructure is confirmed at your address and the connection process can begin immediately.</p>
+          <div class="rbp-nbn-status-steps">
+            <div class="rbp-nbn-status-step"><span class="rbp-nbn-status-step-num">1</span><span>Select your preferred plan tier</span></div>
+            <div class="rbp-nbn-status-step"><span class="rbp-nbn-status-step-num">2</span><span>Confirm service details with RBP team</span></div>
+            <div class="rbp-nbn-status-step"><span class="rbp-nbn-status-step-num">3</span><span>Schedule installation (if required)</span></div>
+            <div class="rbp-nbn-status-step"><span class="rbp-nbn-status-step-num">4</span><span>Connection goes live</span></div>
+          </div>
+        </div>
+        <div class="rbp-nbn-status-panel rbp-nbn-status-panel--pending">
+          <span class="rbp-nbn-status-icon">⏳</span>
+          <h3>Pending — manual review required</h3>
+          <p>Your address requires further investigation before availability can be confirmed. Our team will follow up directly.</p>
+          <div class="rbp-nbn-status-steps">
+            <div class="rbp-nbn-status-step"><span class="rbp-nbn-status-step-num">1</span><span>Address submitted for manual check</span></div>
+            <div class="rbp-nbn-status-step"><span class="rbp-nbn-status-step-num">2</span><span>RBP team investigates infrastructure</span></div>
+            <div class="rbp-nbn-status-step"><span class="rbp-nbn-status-step-num">3</span><span>Confirmation provided within 2–3 business days</span></div>
+            <div class="rbp-nbn-status-step"><span class="rbp-nbn-status-step-num">4</span><span>Next steps communicated directly</span></div>
+          </div>
+        </div>
+        <div class="rbp-nbn-status-panel rbp-nbn-status-panel--review">
+          <span class="rbp-nbn-status-icon">🔍</span>
+          <h3>Not yet ready — build in progress</h3>
+          <p>NBN infrastructure is scheduled or planned for your area but is not yet active. We'll notify you when it's ready.</p>
+          <div class="rbp-nbn-status-steps">
+            <div class="rbp-nbn-status-step"><span class="rbp-nbn-status-step-num">1</span><span>Register your interest with RBP</span></div>
+            <div class="rbp-nbn-status-step"><span class="rbp-nbn-status-step-num">2</span><span>NBN Co scheduled build date confirmed</span></div>
+            <div class="rbp-nbn-status-step"><span class="rbp-nbn-status-step-num">3</span><span>Notification sent when ready</span></div>
+          </div>
+        </div>
+        <div class="rbp-nbn-status-panel">
+          <span class="rbp-nbn-status-icon">📞</span>
+          <h3>Not sure? Talk to us first</h3>
+          <p>If you're uncertain about your connection type, current provider situation or NBN eligibility, contact our team directly before proceeding.</p>
+          <div style="margin-top:20px">
+            <a class="rbp-nbn-btn rbp-nbn-btn--teal rbp-nbn-btn--sm" href="/pages/contact" data-rbp-flow="nbn-contact">Contact our team →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} ── CONNECTION TECHNOLOGY EXPLAINER ── {%- endcomment -%}
+  <section class="rbp-nbn-sec" aria-label="NBN connection technologies">
+    <div class="rbp-nbn-c">
+      <div class="rbp-nbn-head">
+        <div class="rbp-nbn-eye">Connection types</div>
+        <h2 class="rbp-nbn-h2">Understanding NBN technology types</h2>
+        <p class="rbp-nbn-p">The type of NBN connection at your address affects available speeds. Your address check will confirm which technology applies.</p>
+      </div>
+      <div class="rbp-nbn-tech-grid">
+        <div class="rbp-nbn-tech-card" style="--nbn-accent:#0d9488;--nbn-icon-bg:#ccfbf1;--nbn-icon-color:#0d9488">
+          <div class="rbp-nbn-tech-icon">🌐</div>
+          <h3>FTTP</h3>
+          <p>Fibre to the Premises — the highest quality connection type. Fibre runs directly to your building, enabling the fastest available speeds including Gigabit options.</p>
+          <div class="rbp-nbn-tech-availability">
+            <span class="rbp-nbn-avail-dot" style="background:#22c55e"></span>
+            <span style="color:#059669;font-size:12px;font-weight:700">Best performance</span>
+          </div>
+        </div>
+        <div class="rbp-nbn-tech-card" style="--nbn-accent:#06b6d4;--nbn-icon-bg:#cffafe;--nbn-icon-color:#0891b2">
+          <div class="rbp-nbn-tech-icon">🔌</div>
+          <h3>HFC</h3>
+          <p>Hybrid Fibre Coaxial — fibre to the node, then existing cable to the premises. Supports strong speeds suitable for most business applications.</p>
+          <div class="rbp-nbn-tech-availability">
+            <span class="rbp-nbn-avail-dot" style="background:#3b82f6"></span>
+            <span style="color:#1d4ed8;font-size:12px;font-weight:700">Strong performance</span>
+          </div>
+        </div>
+        <div class="rbp-nbn-tech-card" style="--nbn-accent:#7c3aed;--nbn-icon-bg:#ede9fe;--nbn-icon-color:#7c3aed">
+          <div class="rbp-nbn-tech-icon">📡</div>
+          <h3>FTTN / FTTC</h3>
+          <p>Fibre to the Node / Fibre to the Curb — fibre runs close to your premises with copper for the final connection. Speed varies by distance from node.</p>
+          <div class="rbp-nbn-tech-availability">
+            <span class="rbp-nbn-avail-dot" style="background:#f59e0b"></span>
+            <span style="color:#d97706;font-size:12px;font-weight:700">Variable — address dependent</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} ── HOW CONNECTION WORKS ── {%- endcomment -%}
+  <section class="rbp-nbn-sec rbp-nbn-muted" aria-label="How Business NBN connection works">
+    <div class="rbp-nbn-c">
+      <div class="rbp-nbn-head">
+        <div class="rbp-nbn-eye">Simple process</div>
+        <h2 class="rbp-nbn-h2">How Business NBN connection works</h2>
+      </div>
+      <div class="rbp-nbn-connect-steps">
+        <div class="rbp-nbn-connect-step"><div class="rbp-nbn-connect-step-num">01</div><h3>Check availability</h3><p>Enter your address to find out what connection types and speeds are available.</p></div>
+        <div class="rbp-nbn-connect-step"><div class="rbp-nbn-connect-step-num">02</div><h3>Choose your plan</h3><p>Select the speed tier that fits your business needs and confirm pricing.</p></div>
+        <div class="rbp-nbn-connect-step"><div class="rbp-nbn-connect-step-num">03</div><h3>Application &amp; install</h3><p>Complete your application and schedule any required installation visit.</p></div>
+        <div class="rbp-nbn-connect-step"><div class="rbp-nbn-connect-step-num">04</div><h3>Connected</h3><p>Your Business NBN service goes live and your team can get to work.</p></div>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} ── FAQ ── {%- endcomment -%}
+  <section class="rbp-nbn-sec" aria-label="Business NBN FAQ">
+    <div class="rbp-nbn-c" style="max-width:900px">
+      <div class="rbp-nbn-head">
+        <div class="rbp-nbn-eye">Answers</div>
+        <h2 class="rbp-nbn-h2">Business NBN questions</h2>
+      </div>
+      <div class="rbp-nbn-faq" role="list">
+        <details open>
+          <summary>What is Business NBN?</summary>
+          <div class="rbp-nbn-faq-body">Business NBN is a broadband internet service delivered over the National Broadband Network (NBN) infrastructure. It is designed for business premises and typically includes higher upload speeds, static IP options, and priority support pathways compared to residential plans.</div>
+        </details>
+        <details>
+          <summary>How do I know which NBN technology is at my address?</summary>
+          <div class="rbp-nbn-faq-body">Use the address availability checker above to find out. Your result will indicate the connection technology (FTTP, HFC, FTTN, FTTC) available at your premises, which determines the speed tiers you can access.</div>
+        </details>
+        <details>
+          <summary>What are typical evening speeds?</summary>
+          <div class="rbp-nbn-faq-body">Typical evening download speeds refer to the speeds most customers will experience between 7pm and 11pm on weekday evenings — the busiest time on the network. Actual speeds may vary based on connection technology, hardware, and network conditions.</div>
+        </details>
+        <details>
+          <summary>Do I need to be an RBP member to access Business NBN?</summary>
+          <div class="rbp-nbn-faq-body">No. Business NBN is available to all business customers. However, RBP members receive structured support pathways and assistance with the connection process as part of their membership inclusions.</div>
+        </details>
+        <details>
+          <summary>How long does the connection process take?</summary>
+          <div class="rbp-nbn-faq-body">The timeframe varies by address and connection type. After availability is confirmed, connection typically takes between 1–4 weeks depending on whether a technician installation visit is required. Your RBP support team will confirm expected timeframes.</div>
+        </details>
+        <details>
+          <summary>Can I keep my existing phone number?</summary>
+          <div class="rbp-nbn-faq-body">In most cases, yes. Number portability is available for most existing business numbers. Confirm this during the application process with the RBP team.</div>
+        </details>
+        <details>
+          <summary>What happens if my NBN has an outage?</summary>
+          <div class="rbp-nbn-faq-body">Business NBN plans include support pathways for fault reporting and resolution. Priority support is available on Business and Enterprise plan tiers (subject to final plan confirmation). Use the Help Center or contact support directly for outage assistance.</div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  {%- comment -%} ── LEGAL DISCLAIMER ── {%- endcomment -%}
+  <div class="rbp-nbn-legal">
+    <div class="rbp-nbn-c">
+      <p>* All speeds, pricing, plan names and inclusions shown on this page are indicative placeholders only. Final speeds depend on your NBN connection technology and distance from the node. Pricing is subject to confirmation before publication. Typical evening speeds are based on provider estimates and are not guaranteed. NBN availability is subject to address check and infrastructure confirmation. Remote Business Partner acts as a reseller/service provider for Business NBN and is not affiliated with or endorsed by NBN Co Limited. All information should be confirmed before a purchasing decision is made.</p>
+    </div>
+  </div>
+
+  {%- comment -%} ── CTA BAND ── {%- endcomment -%}
+  <section class="rbp-nbn-sec-sm" aria-label="Business NBN call to action">
+    <div class="rbp-nbn-c">
+      <div class="rbp-nbn-cta-band">
+        <div>
+          <h2>Ready to connect your business?</h2>
+          <p>Check availability at your address, choose a plan and let the RBP team guide your connection through every step.</p>
+        </div>
+        <div class="rbp-nbn-cta-actions">
+          <a class="rbp-nbn-btn rbp-nbn-btn--teal" href="#rbp-nbn-checker" data-rbp-flow="nbn-check-address">Check your address →</a>
+          <a class="rbp-nbn-btn rbp-nbn-btn--white" href="/pages/contact">Talk to our team</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+(function() {
+  var form   = document.getElementById('rbp-nbn-form');
+  var input  = document.getElementById('rbp-nbn-address');
+  var result = document.getElementById('rbp-nbn-result');
+  if (!form) return;
+
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    var addr = (input.value || '').trim();
+    if (!addr) { input.focus(); return; }
+
+    result.className = 'rbp-nbn-checker-result rbp-nbn-checker-result--checking';
+    result.innerHTML = '<svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="vertical-align:middle;margin-right:8px;animation:spin 1s linear infinite"><path d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/><path d="M9 12a3 3 0 1 0 6 0 3 3 0 0 0-6 0" stroke-opacity=".3"/></svg> Checking availability for: <strong>' + addr.replace(/</g,'&lt;') + '</strong>...';
+
+    // Placeholder — Codex connects /apps/rbp-bridge/api/check-address
+    // data-rbp-flow="nbn-address-check" | data-address attribute set below
+    form.setAttribute('data-address', addr);
+    form.setAttribute('data-rbp-flow', 'nbn-address-check');
+
+    setTimeout(function() {
+      result.className = 'rbp-nbn-checker-result rbp-nbn-checker-result--pending';
+      result.innerHTML = '📬 <strong>Address submitted.</strong> Your availability check is being processed. Our team will confirm your connection type and available plans. Typically 1–2 business days for manual review addresses.';
+    }, 1400);
+  });
+})();
+</script>
+
+<style>
+@keyframes spin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+/* ─── G10 QA: Focus-visible accessibility ──────────────────────── */
+.rbp-nbn a:focus-visible,
+.rbp-nbn button:focus-visible,
+.rbp-nbn input:focus-visible {
+  outline: 3px solid #0d9488;
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+/* ─── G10 QA: Scroll entrance animations ───────────────────────── */
+.rbp-nbn-anim {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity .5s cubic-bezier(.16,1,.3,1), transform .5s cubic-bezier(.16,1,.3,1);
+}
+.rbp-nbn-anim.rbp-nbn-anim--in { opacity: 1; transform: translateY(0); }
+.rbp-nbn-anim--d1 { transition-delay: .08s; }
+.rbp-nbn-anim--d2 { transition-delay: .16s; }
+.rbp-nbn-anim--d3 { transition-delay: .24s; }
+</style>
+
+<script>
+(function() {
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        if (e.isIntersecting) {
+          e.target.classList.add('rbp-nbn-anim--in');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.07, rootMargin: '0px 0px -32px 0px' });
+    document.querySelectorAll('.rbp-nbn-anim').forEach(function(el) { io.observe(el); });
+  } else {
+    document.querySelectorAll('.rbp-nbn-anim').forEach(function(el) {
+      el.classList.add('rbp-nbn-anim--in');
+    });
+  }
+})();
+</script>
+
+{% schema %}
+{
+  "name": "RBP Business NBN",
+  "settings": [
+    {
+      "type": "text",
+      "id": "hero_heading",
+      "label": "Hero heading",
+      "default": "Fast, reliable internet for your business."
+    },
+    {
+      "type": "textarea",
+      "id": "hero_subtext",
+      "label": "Hero subtext",
+      "default": "Business NBN plans designed for Australian SMEs — with professional support through every step of the connection process."
+    }
+  ],
+  "presets": [
+    {
+      "name": "RBP Business NBN"
+    }
+  ]
+}
+{% endschema %}

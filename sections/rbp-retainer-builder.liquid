@@ -1,0 +1,91 @@
+{% assign services_collection = collections['on-demand-services'] %}
+<section class="page-width rbp-builder" data-rbp-builder>
+<style>
+.rbp-builder{padding:4rem 0}.rbp-builder h1{font-size:clamp(3.2rem,6vw,6rem);line-height:1}.rbp-builder .lead{max-width:76rem;font-size:1.8rem}.rbp-builder .layout{display:grid;grid-template-columns:1fr 34rem;gap:2rem}.rbp-builder .panel{border:1px solid rgba(var(--color-foreground),.12);border-radius:2rem;padding:2rem;margin:1.5rem 0;background:rgba(var(--color-foreground),.025)}.rbp-builder .areas,.rbp-builder .services{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}.rbp-builder button.area{border:1px solid rgba(var(--color-foreground),.2);border-radius:999px;padding:1rem;background:transparent;text-align:left;cursor:pointer}.rbp-builder button.area.on{background:rgb(var(--color-button));color:rgb(var(--color-button-text))}.rbp-builder .service[hidden]{display:none}.rbp-builder .summary{position:sticky;top:2rem}.rbp-builder .muted{opacity:.72}.rbp-builder .status{padding:1rem;border-radius:1rem;background:rgba(var(--color-foreground),.06)}.rbp-builder .status.ready{background:rgba(0,130,80,.12)}.rbp-builder .status.review{background:rgba(190,120,0,.14)}.rbp-builder .cta{display:flex;gap:1rem;flex-wrap:wrap;margin-top:1.5rem}.rbp-builder .button[disabled]{opacity:.45;cursor:not-allowed}@media(max-width:900px){.rbp-builder .layout,.rbp-builder .areas,.rbp-builder .services{grid-template-columns:1fr}.rbp-builder .summary{position:relative;top:auto}}
+</style>
+<p class="muted"><strong>Custom Solutions Retainer Builder</strong></p>
+<h1>Build your ongoing support retainer.</h1>
+<p class="lead">Select support areas, add eligible On-Demand Services, review the recommended support level, then add the approved retainer to cart.</p>
+<div class="layout">
+<div>
+<div class="panel">
+<h2>1. Select support areas</h2>
+<p>These choices filter the service options. The final build will use service metadata as the source of truth.</p>
+<div class="areas" data-areas>
+{% assign areas = "HR Support|Finance Support|Operations Support|Growth Support|Digital Support|AI Support|Change Support|Business Advisory" | split: "|" %}
+{% for area in areas %}<button type="button" class="area" data-area="{{ area }}">{{ area }}</button>{% endfor %}
+</div>
+</div>
+<div class="panel">
+<h2>2. Add On-Demand Services</h2>
+<p>Active products in the On-Demand Services collection appear here automatically. Draft products will not show on the storefront.</p>
+{% if services_collection != blank and services_collection.products_count > 0 %}
+<div class="services" data-services>
+{% for product in services_collection.products limit: 100 %}
+{% liquid
+assign area = product.metafields.retainer.support_area.value | default: ""
+if area == blank
+ if product.tags contains "HR Support" or product.tags contains "HR"
+  assign area = "HR Support"
+ elsif product.tags contains "Finance Support" or product.tags contains "Finance"
+  assign area = "Finance Support"
+ elsif product.tags contains "Operations Support" or product.tags contains "Operations"
+  assign area = "Operations Support"
+ elsif product.tags contains "Growth Support" or product.tags contains "Growth"
+  assign area = "Growth Support"
+ elsif product.tags contains "Digital Support" or product.tags contains "Digital"
+  assign area = "Digital Support"
+ elsif product.tags contains "AI Support" or product.tags contains "AI"
+  assign area = "AI Support"
+ elsif product.tags contains "Change Support" or product.tags contains "Change"
+  assign area = "Change Support"
+ else
+  assign area = "Business Advisory"
+ endif
+endif
+assign cap = product.metafields.retainer.capacity_units.value | default: 1
+assign review = product.metafields.retainer.requires_review.value
+if review == blank
+ if product.tags contains "Requires Review" or product.tags contains "Premium-Based"
+  assign review = true
+ else
+  assign review = false
+ endif
+endif
+assign eligible = product.metafields.retainer.eligible.value
+if eligible == blank
+ if product.tags contains "On-Demand Service" or product.tags contains "Retainer Eligible"
+  assign eligible = true
+ else
+  assign eligible = false
+ endif
+endif
+%}
+<label class="panel service" data-card data-area="{{ area }}" data-cap="{{ cap }}" data-review="{{ review }}"><input type="checkbox" data-service data-title="{{ product.title | escape }}" data-area="{{ area }}" data-cap="{{ cap }}" data-review="{{ review }}" {% unless eligible %}disabled{% endunless %}> <strong>{{ product.title }}</strong><br><span class="muted">{{ area }} · capacity {{ cap }}{% if review %} · review required{% endif %}</span></label>
+{% endfor %}
+</div>
+{% else %}
+<p class="status">No active On-Demand Services are available yet. The shell is ready; services will appear here automatically as they are published.</p>
+{% endif %}
+</div>
+<div class="panel">
+<h2>3. Review routing</h2>
+<p><strong>Checkout-ready:</strong> selected services are eligible, no review trigger applies, and the retainer variant is configured.</p>
+<p><strong>Review required:</strong> selected services are complex, high-risk, too broad, or checkout product settings are missing.</p>
+</div>
+</div>
+<aside class="panel summary">
+<h2>Retainer summary</h2>
+<p><strong>Areas:</strong> <span data-sum-areas>None</span></p>
+<p><strong>Services:</strong> <span data-sum-count>0</span></p>
+<p><strong>Capacity:</strong> <span data-sum-cap>0</span></p>
+<p><strong>Level:</strong> <span data-sum-level>Not selected</span></p>
+<ul data-sum-list></ul>
+<p class="status" data-sum-status>Select support areas and services.</p>
+<div class="cta"><button type="button" class="button button--primary" data-add disabled>Add Retainer to Cart</button><a class="button button--secondary" href="/pages/custom-solutions-retainer">Submit for Review</a></div>
+</aside>
+</div>
+<script>
+(()=>{const r=document.currentScript.closest('[data-rbp-builder]'),variant='53536021741882';if(!r)return;const areas=new Set,btns=[...r.querySelectorAll('[data-area]')].filter(x=>x.tagName==='BUTTON'),cards=[...r.querySelectorAll('[data-card]')],cbs=[...r.querySelectorAll('[data-service]')],q=s=>r.querySelector(s);function lvl(c,rev){if(rev||c>10)return'Custom Review';if(c===0)return'Not selected';if(c<=2)return'Focused Support';if(c<=6)return'Ongoing Support';return'Full Support'}function show(){cards.forEach(c=>c.hidden=areas.size&&!areas.has(c.dataset.area))}function upd(){let sel=cbs.filter(x=>x.checked),cap=sel.reduce((a,x)=>a+(+x.dataset.cap||1),0),rev=sel.some(x=>x.dataset.review==='true')||cap>10,ready=sel.length&&areas.size&&!rev&&variant;q('[data-sum-areas]').textContent=areas.size?[...areas].join(', '):'None';q('[data-sum-count]').textContent=sel.length;q('[data-sum-cap]').textContent=cap;q('[data-sum-level]').textContent=lvl(cap,rev);q('[data-sum-list]').innerHTML=sel.map(x=>'<li>'+x.dataset.title+'</li>').join('');let st=q('[data-sum-status]');st.className='status '+(ready?'ready':(rev||sel.length?'review':''));st.textContent=!sel.length?'Select support areas and services.':rev?'Submit this configuration for review before checkout.':'Ready for checkout.';q('[data-add]').disabled=!ready}btns.forEach(b=>b.onclick=()=>{areas.has(b.dataset.area)?areas.delete(b.dataset.area):areas.add(b.dataset.area);b.classList.toggle('on',areas.has(b.dataset.area));show();upd()});cbs.forEach(c=>c.onchange=upd);q('[data-add]').onclick=async()=>{let sel=cbs.filter(x=>x.checked);let props={'_retainer_scope':sel.map(x=>x.dataset.title).join(', '),'_support_areas':[...areas].join(', '),'_capacity_units':q('[data-sum-cap]').textContent,'_support_level':q('[data-sum-level]').textContent};let res=await fetch('/cart/add.js',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:Number(variant),quantity:1,properties:props})});if(res.ok)location.href='/cart';else alert('The retainer could not be added to cart. Check the retainer variant setup.');};show();upd();})();
+</script>
+</section>

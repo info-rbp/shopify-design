@@ -1,0 +1,33 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "booking-service-product",
+      "settings": {
+        "color_scheme": "scheme-1",
+        "heading_size": "h1"
+      }
+    },
+    "rbp_product_state": {
+      "type": "rbp-product-state",
+      "settings": {}
+    },
+    "rbp_product_state_guard": {
+      "type": "rbp-product-state-guard",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main",
+    "rbp_product_state",
+    "rbp_product_state_guard"
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "sections": {
+    "rbp_home": {
+      "type": "rbp-home",
+      "settings": {
+        "hero_heading": "Your business, connected and supported.",
+        "hero_subtext": "Remote Business Partner connects Australian SMEs with professional services, business resources, document support and partner offers — through one structured, accessible platform."
+      }
+    }
+  },
+  "order": ["rbp_home"]
+}

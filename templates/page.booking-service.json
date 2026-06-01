@@ -1,0 +1,14 @@
+{
+  "sections": {
+    "main": {
+      "type": "property-service-booking-form",
+      "settings": {
+        "color_scheme": "scheme-1",
+        "api_base_url": "/apps/rbp-bridge/api"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

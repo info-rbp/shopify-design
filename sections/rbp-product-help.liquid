@@ -1,0 +1,73 @@
+{{ 'rbp-product.css' | asset_url | stylesheet_tag }}
+{%- liquid
+  assign support_category = product.metafields.custom.support_category.value
+  assign help_articles = product.metafields.custom.related_help_articles.value
+  assign help_questions = product.metafields.custom.related_questions.value
+  assign support_pathway = product.metafields.custom.support_pathway.value
+  assign related_process = product.metafields.custom.related_process.value
+-%}
+{%- if support_category != blank or help_articles != blank or help_questions != blank or support_pathway != blank or related_process != blank -%}
+<section class="rbp-product-section rbp-product-section--muted">
+  <div class="rbp-product-container">
+    <div class="rbp-product-head">
+      <div class="rbp-product-eyebrow">Product help</div>
+      <h2 class="rbp-product-heading">Support and guidance for this product</h2>
+      <p class="rbp-product-copy">Helpful articles, questions and support pathways connected to this product.</p>
+    </div>
+    <div class="rbp-product-grid rbp-product-grid--3">
+      {%- if support_category != blank -%}
+        <div class="rbp-product-card">
+          <h3 class="rbp-product-card-title">{{ support_category.fields.title.value }}</h3>
+          <p class="rbp-product-card-text">{{ support_category.fields.short_description.value }}</p>
+          {%- assign landing_page = support_category.fields.landing_page.value -%}
+          {%- if landing_page != blank -%}<a class="rbp-product-button" href="{{ landing_page.url }}" style="margin-top:18px;">{{ support_category.fields.cta_label.value | default: 'View help' }} -&gt;</a>{%- endif -%}
+        </div>
+      {%- endif -%}
+      {%- if support_pathway != blank -%}
+        <div class="rbp-product-card rbp-product-card--blue">
+          <h3 class="rbp-product-card-title">{{ support_pathway.fields.title.value }}</h3>
+          <p class="rbp-product-card-text">{{ support_pathway.fields.description.value }}</p>
+          {%- assign destination_page = support_pathway.fields.destination_page.value -%}
+          {%- if destination_page != blank -%}<a class="rbp-product-button" href="{{ destination_page.url }}" style="margin-top:18px;background:#fff;color:#1e3a8a;">{{ support_pathway.fields.cta_label.value | default: 'Get support' }} -&gt;</a>{%- endif -%}
+        </div>
+      {%- endif -%}
+      {%- if related_process != blank -%}
+        <div class="rbp-product-card">
+          <h3 class="rbp-product-card-title">{{ related_process.fields.title.value }}</h3>
+          <p class="rbp-product-card-text">{{ related_process.fields.description.value }}</p>
+          {%- assign process_steps = related_process.fields.steps.value -%}
+          {%- if process_steps != blank -%}
+            <ul class="rbp-product-list" style="margin-top:16px;">
+              {%- for step in process_steps limit: 4 -%}<li><span class="rbp-product-check">{{ forloop.index }}</span><span>{{ step.fields.step_title.value }}</span></li>{%- endfor -%}
+            </ul>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    </div>
+    {%- if help_articles != blank -%}
+      <div class="rbp-product-head" style="margin-top:40px;"><div class="rbp-product-eyebrow">Related articles</div><h2 class="rbp-product-heading" style="font-size:clamp(26px,3vw,38px);">Helpful reading</h2></div>
+      <div class="rbp-product-grid rbp-product-grid--3">
+        {%- for article in help_articles limit: 6 -%}
+          <div class="rbp-product-card">
+            <h3 class="rbp-product-card-title">{{ article.fields.title.value }}</h3>
+            <p class="rbp-product-card-text">{{ article.fields.summary.value }}</p>
+            {%- if article.fields.primary_cta_link.value != blank -%}<a class="rbp-product-button" href="{{ article.fields.primary_cta_link.value }}" style="margin-top:18px;">{{ article.fields.primary_cta_label.value | default: 'Read more' }} -&gt;</a>{%- endif -%}
+          </div>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+    {%- if help_questions != blank -%}
+      <div class="rbp-product-head" style="margin-top:40px;"><div class="rbp-product-eyebrow">Product questions</div><h2 class="rbp-product-heading" style="font-size:clamp(26px,3vw,38px);">Common questions</h2></div>
+      <div class="rbp-product-faq">
+        {%- for q in help_questions limit: 8 -%}
+          <details {% if forloop.first %}open{% endif %}>
+            <summary>{{ q.fields.question.value }}</summary>
+            <div class="rbp-product-faq-answer">{{ q.fields.answer | metafield_tag }}</div>
+          </details>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+{%- endif -%}
+{% schema %}{"name":"RBP product help","settings":[],"presets":[{"name":"RBP product help"}]}{% endschema %}

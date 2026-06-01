@@ -1,0 +1,72 @@
+<script>
+  (() => {
+    const initialiseRbpHeaderMenus = () => {
+      const header = document.querySelector('[data-rbp-header]');
+      if (!header || header.dataset.rbpMenuControllerReady === 'true') return;
+
+      header.dataset.rbpMenuControllerReady = 'true';
+
+      const megaMenus = Array.from(header.querySelectorAll('details.rbp-mega'));
+      const mobileDrawer = header.querySelector('#rbp-mobile-drawer');
+      const mobileToggle = header.querySelector('[data-rbp-mobile-toggle]');
+
+      const closeMegaMenus = (exceptMenu = null) => {
+        megaMenus.forEach((menu) => {
+          if (menu !== exceptMenu) menu.removeAttribute('open');
+        });
+      };
+
+      const closeMobileDrawer = () => {
+        if (!mobileDrawer || !mobileToggle) return;
+        mobileDrawer.setAttribute('aria-hidden', 'true');
+        mobileToggle.setAttribute('aria-expanded', 'false');
+      };
+
+      megaMenus.forEach((menu) => {
+        menu.addEventListener('toggle', () => {
+          if (menu.open) closeMegaMenus(menu);
+        });
+
+        const summary = menu.querySelector('summary');
+        if (summary) {
+          summary.addEventListener('click', () => {
+            requestAnimationFrame(() => {
+              if (menu.open) closeMegaMenus(menu);
+            });
+          });
+        }
+      });
+
+      header.querySelectorAll('.rbp-nav-link, .rbp-mega-link, .rbp-mega-overview, .rbp-mega-button').forEach((link) => {
+        link.addEventListener('click', () => {
+          closeMegaMenus();
+          closeMobileDrawer();
+        });
+      });
+
+      document.addEventListener('click', (event) => {
+        if (!header.contains(event.target)) closeMegaMenus();
+      });
+
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+          closeMegaMenus();
+          closeMobileDrawer();
+        }
+      });
+    };
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initialiseRbpHeaderMenus, { once: true });
+    } else {
+      initialiseRbpHeaderMenus();
+    }
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "RBP header controller",
+  "settings": []
+}
+{% endschema %}

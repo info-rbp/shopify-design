@@ -1,0 +1,156 @@
+{% assign service_name = page.metafields.core.service_name.value | default: page.title %}
+{% assign service_code = page.metafields.core.service_code.value %}
+{% assign service_handle = page.handle | remove: '-intake' %}
+{% assign endpoint_path = page.metafields.core.intake_endpoint_path.value | default: '/apps/rbp-bridge/api/core-service-intake' %}
+{% assign intake_destination = page.metafields.core.intake_destination.value | default: 'rbp_bridge' %}
+{% assign google_sheet_tab = page.metafields.core.google_sheet_tab.value | default: service_name %}
+<section class="rbp-intake" data-rbp-intake-section>
+  <div class="page-width rbp-intake__hero">
+    <p class="rbp-intake__eyebrow">Core Service Intake</p>
+    <h1>{{ service_name }}</h1>
+    <p>Complete this intake after checkout so Remote Business Partner can review your request and begin the correct Core Service workflow.</p>
+  </div>
+  <div class="page-width rbp-intake__layout">
+    <div class="rbp-intake__panel">
+      <form id="RbpCoreIntakeForm" class="rbp-intake__form" method="post" action="{{ endpoint_path }}" data-endpoint="{{ endpoint_path }}">
+        <div class="rbp-intake__notice" data-rbp-form-message hidden></div>
+        <input type="hidden" name="service_name" value="{{ service_name | escape }}">
+        <input type="hidden" name="service_code" value="{{ service_code | escape }}">
+        <input type="hidden" name="service_handle" value="{{ service_handle | escape }}">
+        <input type="hidden" name="source" value="shopify_core_services">
+        <input type="hidden" name="intake_destination" value="{{ intake_destination | escape }}">
+        <input type="hidden" name="google_sheet_tab" value="{{ google_sheet_tab | escape }}">
+        <input type="hidden" name="page_handle" value="{{ page.handle | escape }}">
+        <input type="hidden" name="shop_domain" value="{{ shop.permanent_domain | escape }}">
+        <label for="ContactName">Full name</label>
+        <input id="ContactName" type="text" name="full_name" required autocomplete="name">
+        <label for="ContactEmail">Email used at checkout</label>
+        <input id="ContactEmail" type="email" name="email" required autocomplete="email">
+        <label for="ContactPhone">Phone</label>
+        <input id="ContactPhone" type="tel" name="phone" autocomplete="tel">
+        <label for="BusinessName">Business name</label>
+        <input id="BusinessName" type="text" name="business_name" required>
+        <label for="BusinessWebsite">Business website</label>
+        <input id="BusinessWebsite" type="text" name="business_website">
+        <label for="OrderNumber">Shopify order number</label>
+        <input id="OrderNumber" type="text" name="order_number" placeholder="#1001" required>
+        <label for="Industry">Industry</label>
+        <input id="Industry" type="text" name="industry">
+        <label for="BusinessStage">Business stage</label>
+        <select id="BusinessStage" name="business_stage" required>
+          <option value="">Select one</option>
+          <option>Startup</option>
+          <option>Growing</option>
+          <option>Established</option>
+          <option>Changing or restructuring</option>
+          <option>Under pressure</option>
+        </select>
+        <label for="Urgency">Urgency</label>
+        <select id="Urgency" name="urgency" required>
+          <option value="">Select one</option>
+          <option>Low</option>
+          <option>Medium</option>
+          <option>High</option>
+          <option>Time sensitive</option>
+        </select>
+        <label for="DesiredOutcome">Desired outcome</label>
+        <textarea id="DesiredOutcome" name="desired_outcome" rows="4" required></textarea>
+        {% case service_handle %}
+          {% when 'business-health-check' %}
+            <label for="Q1">What prompted you to request a Business Health Check?</label>
+            <textarea id="Q1" name="health_check_prompt" rows="4" required></textarea>
+            <label for="Q2">What are your top three business priorities right now?</label>
+            <textarea id="Q2" name="top_priorities" rows="4" required></textarea>
+            <label for="Q3">Which areas feel most unclear or inefficient?</label>
+            <textarea id="Q3" name="unclear_areas" rows="4"></textarea>
+          {% when 'business-advisor' %}
+            <label for="Q1">What do you need advice about?</label>
+            <textarea id="Q1" name="advice_topic" rows="4" required></textarea>
+            <label for="Q2">What would make this advice useful?</label>
+            <textarea id="Q2" name="useful_outcome" rows="4" required></textarea>
+            <label for="Q3">What have you already considered or tried?</label>
+            <textarea id="Q3" name="already_considered" rows="4"></textarea>
+          {% when 'decision-desk' %}
+            <label for="Q1">What decision do you need to make?</label>
+            <textarea id="Q1" name="decision_required" rows="4" required></textarea>
+            <label for="Q2">What options are you considering?</label>
+            <textarea id="Q2" name="options_considered" rows="4" required></textarea>
+            <label for="Q3">What matters most: cost, speed, risk, effort, confidence or something else?</label>
+            <textarea id="Q3" name="decision_criteria" rows="4"></textarea>
+          {% when 'risk-advisor' %}
+            <label for="Q1">What business exposure or concern do you want reviewed?</label>
+            <textarea id="Q1" name="exposure_concern" rows="4" required></textarea>
+            <label for="Q2">What controls, documents or processes already exist?</label>
+            <textarea id="Q2" name="existing_controls" rows="4" required></textarea>
+            <label for="Q3">What outcome do you want from the review?</label>
+            <textarea id="Q3" name="review_outcome" rows="4"></textarea>
+          {% when 'the-fixer' %}
+            <label for="Q1">What specific business problem needs review?</label>
+            <textarea id="Q1" name="problem_for_review" rows="4" required></textarea>
+            <label for="Q2">What would a successful fix look like?</label>
+            <textarea id="Q2" name="successful_fix" rows="4" required></textarea>
+            <label for="Q3">What have you already tried?</label>
+            <textarea id="Q3" name="already_tried" rows="4"></textarea>
+        {% endcase %}
+        <div class="rbp-intake__checks">
+          <label><input type="checkbox" name="consent_to_contact" value="Yes" required> I consent to Remote Business Partner contacting me about this Core Service.</label>
+          <label><input type="checkbox" name="privacy_acknowledgement" value="Yes" required> I acknowledge the Privacy Policy applies to the information submitted.</label>
+          <label><input type="checkbox" name="scope_acknowledgement" value="Yes" required> I understand this is practical business guidance and not legal, tax, financial product, insurance or other regulated professional advice.</label>
+        </div>
+        <button type="submit" class="button button--primary" data-rbp-submit-button>Submit intake</button>
+      </form>
+    </div>
+    <aside class="rbp-intake__aside">
+      <h2>Before you submit</h2>
+      <p>Have your order number ready. It appears in your Shopify order confirmation email.</p>
+      <p>Use the same email address used at checkout so the submission can be matched to the purchase.</p>
+      <p>Your submission is sent through the RBP bridge and stored in the configured Google Sheet for this service.</p>
+    </aside>
+  </div>
+</section>
+<script>
+(function(){
+  var section=document.querySelector('[data-rbp-intake-section]');
+  if(!section)return;
+  var form=section.querySelector('#RbpCoreIntakeForm');
+  var message=section.querySelector('[data-rbp-form-message]');
+  var button=section.querySelector('[data-rbp-submit-button]');
+  if(!form)return;
+  form.addEventListener('submit',function(event){
+    event.preventDefault();
+    if(!form.checkValidity()){form.reportValidity();return;}
+    var endpoint=form.getAttribute('data-endpoint')||form.getAttribute('action');
+    var formData=new FormData(form);
+    var payload={responses:{}};
+    formData.forEach(function(value,key){
+      if(key.indexOf('[')>-1){payload.responses[key]=value;return;}
+      payload[key]=value;
+    });
+    payload.submitted_at=new Date().toISOString();
+    payload.user_agent=window.navigator.userAgent;
+    payload.page_url=window.location.href;
+    message.hidden=false;
+    message.className='rbp-intake__notice rbp-intake__notice--pending';
+    message.textContent='Submitting your intake...';
+    button.disabled=true;
+    button.textContent='Submitting...';
+    fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(payload),credentials:'same-origin'})
+      .then(function(response){return response.text().then(function(text){var data=null;try{data=text?JSON.parse(text):null;}catch(e){}return {ok:response.ok,status:response.status,data:data,text:text};});})
+      .then(function(result){
+        if(!result.ok){throw new Error((result.data&&result.data.message)||result.text||'Submission failed');}
+        message.className='rbp-intake__notice rbp-intake__notice--success';
+        message.textContent=(result.data&&result.data.message)||'Thanks. Your intake has been submitted to Remote Business Partner.';
+        form.reset();
+      })
+      .catch(function(error){
+        message.className='rbp-intake__notice rbp-intake__notice--error';
+        message.textContent='The intake could not be submitted. Please check your details and try again. '+(error&&error.message?error.message:'');
+      })
+      .finally(function(){button.disabled=false;button.textContent='Submit intake';});
+  });
+})();
+</script>
+<style>
+.rbp-intake{padding:48px 0 72px}.rbp-intake__hero{padding:40px 30px;border-radius:28px;background:linear-gradient(135deg,rgba(var(--color-foreground),.06),rgba(var(--color-button),.08));border:1px solid rgba(var(--color-foreground),.08)}.rbp-intake__eyebrow{text-transform:uppercase;letter-spacing:.13em;font-size:1.2rem;color:rgba(var(--color-foreground),.7);margin:0 0 12px}.rbp-intake h1{margin:0;font-size:clamp(3rem,5vw,5.6rem);line-height:1.02}.rbp-intake__hero p{max-width:780px;font-size:1.7rem;color:rgba(var(--color-foreground),.76)}.rbp-intake__layout{display:grid;grid-template-columns:minmax(0,2fr) minmax(260px,1fr);gap:24px;margin-top:24px}.rbp-intake__panel,.rbp-intake__aside{border:1px solid rgba(var(--color-foreground),.1);border-radius:24px;background:rgb(var(--color-background));box-shadow:0 10px 28px rgba(0,0,0,.04);padding:26px}.rbp-intake label{display:block;margin:16px 0 7px;font-weight:600}.rbp-intake input[type=text],.rbp-intake input[type=email],.rbp-intake input[type=tel],.rbp-intake select,.rbp-intake textarea{width:100%;border:1px solid rgba(var(--color-foreground),.18);border-radius:14px;padding:13px 14px;background:rgb(var(--color-background));color:rgb(var(--color-foreground))}.rbp-intake__checks{margin:20px 0}.rbp-intake__checks label{font-weight:400;display:flex;gap:10px;align-items:flex-start}.rbp-intake__notice{padding:14px 16px;border-radius:14px;margin-bottom:16px}.rbp-intake__notice--pending{background:rgba(var(--color-foreground),.06)}.rbp-intake__notice--success{background:#edf8ef}.rbp-intake__notice--error{background:#fff1f1}.rbp-intake button[disabled]{opacity:.7;cursor:not-allowed}@media(max-width:849px){.rbp-intake__layout{grid-template-columns:1fr}.rbp-intake__hero{padding:28px 20px}}
+</style>
+{% schema %}{"name":"RBP Core Intake Form","settings":[],"presets":[{"name":"RBP Core Intake Form"}]}{% endschema %}

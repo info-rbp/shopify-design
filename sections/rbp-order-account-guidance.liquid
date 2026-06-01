@@ -1,0 +1,50 @@
+{%- liquid
+  assign has_onboarding_item = false
+  assign has_nbn_item = false
+  assign has_membership_item = false
+  for line_item in order.line_items
+    assign product_type_down = line_item.product.type | downcase
+    assign title_down = line_item.product.title | downcase
+    if line_item.product.metafields.custom.requires_onboarding_form.value == true or line_item.product.tags contains 'Template' or line_item.product.tags contains 'Templates' or line_item.product.tags contains 'Documentation Suite' or line_item.product.tags contains 'Toolkit' or product_type_down contains 'template' or product_type_down contains 'document' or product_type_down contains 'toolkit'
+      assign has_onboarding_item = true
+    endif
+    if title_down contains 'nbn' or product_type_down contains 'nbn' or line_item.product.tags contains 'NBN' or line_item.product.tags contains 'Business NBN'
+      assign has_nbn_item = true
+    endif
+    if title_down contains 'membership' or product_type_down contains 'membership' or line_item.product.tags contains 'Membership'
+      assign has_membership_item = true
+    endif
+  endfor
+-%}
+<section class="rbp-order-guide customer" aria-label="Order guidance">
+  <div class="rbp-order-guide__card">
+    <div>
+      <div class="rbp-order-guide__eyebrow">Order next steps</div>
+      <h2>What happens after this order?</h2>
+      <p>Use this guidance to understand document onboarding, Business NBN serviceability, Premium Member setup and Shopify Subscriptions payment-plan support for this order.</p>
+    </div>
+    <div class="rbp-order-guide__actions"><a href="/pages/order-support">Order support</a><a href="/pages/contact">Contact support</a></div>
+  </div>
+  {%- if has_onboarding_item -%}
+    <div class="rbp-order-guide__items">
+      {%- for line_item in order.line_items -%}
+        {%- assign product_type_down = line_item.product.type | downcase -%}
+        {%- if line_item.product.metafields.custom.requires_onboarding_form.value == true or line_item.product.tags contains 'Template' or line_item.product.tags contains 'Templates' or product_type_down contains 'template' or product_type_down contains 'document' or product_type_down contains 'toolkit' -%}
+          {%- assign onboarding_url = line_item.product.metafields.custom.onboarding_form.value | default: '/pages/template-customisation-onboarding' -%}
+          {%- assign onboarding_category = line_item.product.metafields.custom.onboarding_question_set.value | default: line_item.product.metafields.custom.product_family.value | default: '' -%}
+          <div class="rbp-order-guide__item"><div><strong>{{ line_item.title | escape }}</strong><p>Complete onboarding so preparation can begin. Delivery timing starts after required information is submitted.</p></div><a href="{{ onboarding_url }}?order={{ order.name | url_encode }}&product={{ line_item.product.handle | url_encode }}&title={{ line_item.product.title | url_encode }}&sku={{ line_item.sku | url_encode }}&category={{ onboarding_category | url_encode }}">Complete onboarding</a></div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+  <div class="rbp-order-guide__grid">
+    {%- if has_nbn_item -%}<a class="rbp-order-guide__mini" href="/pages/business-nbn-status"><span>NB</span><strong>Business NBN status</strong><small>Check provisioning and bridge-backed support guidance.</small></a>{%- endif -%}
+    {%- if has_membership_item -%}<a class="rbp-order-guide__mini" href="/pages/member-benefits"><span>PM</span><strong>Premium Member setup</strong><small>Membership billing runs through Shopify Subscriptions and access uses the Premium Member customer tag.</small></a>{%- endif -%}
+    <a class="rbp-order-guide__mini" href="/pages/document-order-status"><span>DS</span><strong>Document status</strong><small>Review preparation and revision stages.</small></a>
+    <a class="rbp-order-guide__mini" href="/pages/payment-plan-support"><span>PP</span><strong>Payment support</strong><small>Payment plan management is facilitated through Shopify Subscriptions and actioned independently.</small></a>
+  </div>
+</section>
+<style>
+.rbp-order-guide{padding:24px 0 0}.rbp-order-guide__card{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:18px;align-items:end;border-radius:28px;background:linear-gradient(135deg,#0f172a,#172554);color:#fff;padding:clamp(22px,4vw,38px)}.rbp-order-guide__eyebrow{display:inline-flex;border-radius:999px;background:rgba(59,130,246,.18);color:#93c5fd;border:1px solid rgba(147,197,253,.28);padding:7px 12px;font-size:12px;font-weight:900;letter-spacing:.08em;text-transform:uppercase}.rbp-order-guide h2{margin:12px 0 0;color:#fff;font-size:clamp(26px,3vw,42px);font-weight:900;letter-spacing:-.035em}.rbp-order-guide p{margin:10px 0 0;color:#cbd5e1;line-height:1.65}.rbp-order-guide__actions{display:flex;gap:10px;flex-wrap:wrap}.rbp-order-guide__actions a,.rbp-order-guide__item a{display:inline-flex;align-items:center;justify-content:center;border-radius:14px;background:#1d4ed8;color:#fff;padding:12px 14px;font-size:13px;font-weight:900;text-decoration:none}.rbp-order-guide__items{display:grid;gap:12px;margin-top:16px}.rbp-order-guide__item{display:flex;justify-content:space-between;align-items:center;gap:14px;border:1px solid rgba(15,23,42,.1);border-radius:20px;background:#fff;padding:18px}.rbp-order-guide__item strong{display:block;color:#0f172a;font-weight:900}.rbp-order-guide__item p{color:#64748b;font-size:13px}.rbp-order-guide__grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:16px}.rbp-order-guide__mini{display:block;border:1px solid rgba(15,23,42,.1);border-radius:18px;background:#fff;padding:16px;text-decoration:none;color:inherit}.rbp-order-guide__mini span{width:36px;height:36px;border-radius:13px;background:#dbeafe;color:#1d4ed8;display:grid;place-items:center;font-weight:900;margin-bottom:10px}.rbp-order-guide__mini strong{display:block;color:#0f172a;font-weight:900}.rbp-order-guide__mini small{display:block;color:#64748b;line-height:1.45;margin-top:5px}@media(max-width:989px){.rbp-order-guide__card,.rbp-order-guide__grid{grid-template-columns:1fr}.rbp-order-guide__item{display:grid}}
+</style>
+{% schema %}{"name":"RBP order guidance","settings":[],"presets":[{"name":"RBP order guidance"}]}{% endschema %}

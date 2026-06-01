@@ -1,0 +1,248 @@
+{% comment %}
+  RBP Collection Hero — G4 Collection UX Upgrade
+  Version: 1.0 | Replaces generic main-collection-banner for all RBP collections
+  Supports: category hero, buying guide link, collection stats, smart CTAs
+{% endcomment %}
+
+<style>
+.rbp-col-hero {
+  --rbp-blue: #1d4ed8;
+  --rbp-indigo: #4f46e5;
+  --rbp-slate-900: #0f172a;
+  --rbp-slate-700: #334155;
+  --rbp-slate-600: #475569;
+  --rbp-slate-500: #64748b;
+  --rbp-slate-400: #94a3b8;
+  --rbp-slate-100: #f1f5f9;
+  --rbp-slate-50: #f8fafc;
+  --rbp-border: rgba(15,23,42,.09);
+  font-family: var(--font-body-family, system-ui, sans-serif);
+}
+.rbp-col-hero *, .rbp-col-hero *::before, .rbp-col-hero *::after { box-sizing: border-box; }
+
+/* ── Hero band ─────────────────────────────────────────── */
+.rbp-col-hero-band {
+  background: linear-gradient(135deg, #0f172a 0%, #1a2340 60%, #0f172a 100%);
+  padding: 52px 0 48px; position: relative; overflow: hidden;
+}
+.rbp-col-hero-band::before {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background: var(--rbp-col-hero-accent, radial-gradient(ellipse at 20% 60%, rgba(29,78,216,.22) 0%, transparent 55%));
+}
+.rbp-col-hero-inner {
+  width: min(100% - 2.5rem, 1200px); margin-inline: auto;
+  display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 40px;
+  position: relative;
+}
+.rbp-col-hero-breadcrumb {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 12px; color: #64748b; font-weight: 600; margin-bottom: 14px;
+}
+.rbp-col-hero-breadcrumb a { color: #93c5fd; text-decoration: none; }
+.rbp-col-hero-breadcrumb a:hover { text-decoration: underline; }
+.rbp-col-hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 7px;
+  background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12);
+  border-radius: 999px; padding: 5px 13px;
+  color: #94a3b8; font-size: 11px; font-weight: 800;
+  letter-spacing: .1em; text-transform: uppercase; margin-bottom: 14px;
+}
+.rbp-col-hero h1 {
+  font-size: clamp(24px, 4vw, 40px); font-weight: 900;
+  letter-spacing: -.03em; color: #fff; margin: 0 0 12px; line-height: 1.1;
+}
+.rbp-col-hero-desc {
+  font-size: 15px; color: #94a3b8; line-height: 1.65; font-weight: 500;
+  max-width: 580px;
+}
+.rbp-col-hero-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 24px; }
+.rbp-col-hero-btn {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 10px 18px; border-radius: 11px;
+  font-size: 13px; font-weight: 800; text-decoration: none;
+  transition: all .15s ease;
+}
+.rbp-col-hero-btn-primary { background: var(--rbp-blue); color: #fff; box-shadow: 0 4px 14px rgba(29,78,216,.25); }
+.rbp-col-hero-btn-primary:hover { background: #2563eb; transform: translateY(-1px); }
+.rbp-col-hero-btn-ghost { background: rgba(255,255,255,.08); color: #cbd5e1; border: 1px solid rgba(255,255,255,.14); }
+.rbp-col-hero-btn-ghost:hover { background: rgba(255,255,255,.14); color: #fff; }
+
+/* Stats panel */
+.rbp-col-hero-stats {
+  display: flex; flex-direction: column; gap: 10px; flex-shrink: 0;
+}
+.rbp-col-hero-stat {
+  background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.1);
+  border-radius: 14px; padding: 14px 20px; text-align: center;
+  min-width: 120px;
+}
+.rbp-col-hero-stat-val { font-size: 24px; font-weight: 900; color: #fff; letter-spacing: -.03em; line-height: 1; }
+.rbp-col-hero-stat-label { font-size: 11px; color: #64748b; font-weight: 700; margin-top: 4px; }
+
+/* ── Buying guide strip ──────────────────────────────────── */
+.rbp-col-guide-strip {
+  background: #fff; border-bottom: 1px solid var(--rbp-border);
+  padding: 0;
+}
+.rbp-col-guide-inner {
+  width: min(100% - 2.5rem, 1200px); margin-inline: auto;
+  display: flex; align-items: center; gap: 0;
+  overflow-x: auto; scrollbar-width: none;
+}
+.rbp-col-guide-inner::-webkit-scrollbar { display: none; }
+.rbp-col-guide-item {
+  display: flex; align-items: center; gap: 8px;
+  padding: 14px 20px; white-space: nowrap; flex-shrink: 0;
+  color: var(--rbp-slate-600); text-decoration: none;
+  font-size: 13px; font-weight: 700; border-right: 1px solid var(--rbp-border);
+  transition: color .12s, background .12s;
+}
+.rbp-col-guide-item:hover { color: var(--rbp-blue); background: #eff6ff; }
+.rbp-col-guide-item:last-child { border-right: none; }
+.rbp-col-guide-item svg { flex-shrink: 0; }
+
+/* ── Responsive ─────────────────────────────────────────── */
+@media (max-width: 1023px) {
+  .rbp-col-hero-inner { grid-template-columns: 1fr; }
+  .rbp-col-hero-stats { flex-direction: row; }
+}
+@media (max-width: 640px) {
+  .rbp-col-hero-stats { display: none; }
+  .rbp-col-hero-band { padding: 36px 0 32px; }
+}
+</style>
+
+{%- liquid
+  assign col = collection
+  assign col_count = col.products_count
+  assign col_title = col.title | default: 'Products'
+  assign col_desc = col.description | default: ''
+  # Category accent colour by collection type
+  assign col_handle = col.handle | downcase
+-%}
+
+<div class="rbp-col-hero">
+  <section class="rbp-col-hero-band" aria-labelledby="rbp-col-hero-h1">
+    <div class="rbp-col-hero-inner">
+      <div>
+        <nav class="rbp-col-hero-breadcrumb" aria-label="Breadcrumb">
+          <a href="/">Home</a>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+          <a href="/collections">All Collections</a>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+          <span aria-current="page">{{ col_title }}</span>
+        </nav>
+        <div class="rbp-col-hero-eyebrow" aria-hidden="true">
+          {%- if col_handle contains 'template' -%}📄 Template Library
+          {%- elsif col_handle contains 'toolkit' -%}🧰 Toolkits
+          {%- elsif col_handle contains 'documentation' -%}📑 Documentation Suites
+          {%- elsif col_handle contains 'on-demand' -%}⚡ On-Demand Services
+          {%- elsif col_handle contains 'marketplace' or col_handle contains 'business-in-a-box' -%}🏪 Marketplace
+          {%- elsif col_handle contains 'asset' -%}🏷️ Asset Sales
+          {%- else -%}📦 Collection
+          {%- endif -%}
+        </div>
+        <h1 id="rbp-col-hero-h1">{{ col_title }}</h1>
+        {%- if col_desc != blank -%}
+          <p class="rbp-col-hero-desc">{{ col_desc | strip_html | truncate: 200 }}</p>
+        {%- else -%}
+          <p class="rbp-col-hero-desc">Browse our {{ col_title | downcase }} — ready-to-use resources designed for Australian businesses of all sizes.</p>
+        {%- endif -%}
+        <div class="rbp-col-hero-actions">
+          {%- if col_handle contains 'on-demand' -%}
+            <a href="/pages/applications" class="rbp-col-hero-btn rbp-col-hero-btn-primary">Apply for a service</a>
+            <a href="/pages/help-center" class="rbp-col-hero-btn rbp-col-hero-btn-ghost">How it works</a>
+          {%- elsif col_handle contains 'template' or col_handle contains 'toolkit' or col_handle contains 'documentation' -%}
+            <a href="/pages/contact" class="rbp-col-hero-btn rbp-col-hero-btn-ghost">Need help choosing?</a>
+          {%- elsif col_handle contains 'business-in-a-box' or col_handle contains 'asset' -%}
+            <a href="/pages/marketplace-enquiry" class="rbp-col-hero-btn rbp-col-hero-btn-primary">Enquire about a listing</a>
+            <a href="/pages/marketplace-faq" class="rbp-col-hero-btn rbp-col-hero-btn-ghost">Marketplace FAQ</a>
+          {%- else -%}
+            <a href="/pages/contact" class="rbp-col-hero-btn rbp-col-hero-btn-ghost">Speak to our team</a>
+          {%- endif -%}
+        </div>
+      </div>
+      <div class="rbp-col-hero-stats" aria-label="Collection statistics">
+        <div class="rbp-col-hero-stat">
+          <div class="rbp-col-hero-stat-val">{{ col_count }}</div>
+          <div class="rbp-col-hero-stat-label">Products</div>
+        </div>
+        {%- if col_handle contains 'template' or col_handle contains 'toolkit' -%}
+          <div class="rbp-col-hero-stat">
+            <div class="rbp-col-hero-stat-val">⚡</div>
+            <div class="rbp-col-hero-stat-label">Instant download</div>
+          </div>
+        {%- elsif col_handle contains 'on-demand' -%}
+          <div class="rbp-col-hero-stat">
+            <div class="rbp-col-hero-stat-val">48h</div>
+            <div class="rbp-col-hero-stat-label">Avg delivery</div>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </section>
+
+  {%- comment %} ── Guide strip ── {% endcomment %}
+  <nav class="rbp-col-guide-strip" aria-label="Collection navigation">
+    <div class="rbp-col-guide-inner">
+      {%- if col_handle contains 'template' or col_handle contains 'toolkit' or col_handle contains 'documentation' -%}
+        <a href="#product-grid" class="rbp-col-guide-item">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+          Browse all
+        </a>
+        <a href="/collections/free-resources" class="rbp-col-guide-item">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M20 12V22H4V12"/><path d="M22 7H2v5h20V7z"/><path d="M12 22V7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
+          Free resources
+        </a>
+        <a href="/pages/help-center" class="rbp-col-guide-item">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Help Center
+        </a>
+        <a href="/pages/contact" class="rbp-col-guide-item">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          Ask a question
+        </a>
+      {%- elsif col_handle contains 'on-demand' -%}
+        <a href="#product-grid" class="rbp-col-guide-item">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+          All services
+        </a>
+        <a href="/pages/applications" class="rbp-col-guide-item">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6M9 12h6M9 15h4"/></svg>
+          Apply for a service
+        </a>
+        <a href="/pages/operations" class="rbp-col-guide-item">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>
+          Operations Hub
+        </a>
+        <a href="/pages/help-center" class="rbp-col-guide-item">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          How it works
+        </a>
+      {%- else -%}
+        <a href="#product-grid" class="rbp-col-guide-item">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+          Browse
+        </a>
+        <a href="/pages/help-center" class="rbp-col-guide-item">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/></svg>
+          Help
+        </a>
+        <a href="/pages/contact" class="rbp-col-guide-item">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          Contact
+        </a>
+      {%- endif -%}
+    </div>
+  </nav>
+</div>
+
+{% schema %}
+{
+  "name": "RBP Collection Hero",
+  "tag": "div",
+  "class": "rbp-collection-hero-section",
+  "settings": [],
+  "presets": [{ "name": "RBP Collection Hero" }]
+}
+{% endschema %}

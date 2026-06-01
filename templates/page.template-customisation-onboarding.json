@@ -1,0 +1,14 @@
+{
+  "sections": {
+    "main": {
+      "type": "rbp-template-onboarding-form",
+      "settings": {
+        "color_scheme": "scheme-1",
+        "eyebrow": "Customisation brief",
+        "heading": "Complete your product onboarding form",
+        "intro": "<p>Complete this form after checkout so we can customise your purchased template, documentation suite or toolkit for your business. Your delivery timeframe begins once this completed form is submitted.</p>"
+      }
+    }
+  },
+  "order": ["main"]
+}

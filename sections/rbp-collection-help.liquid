@@ -1,0 +1,63 @@
+{{ 'rbp-product.css' | asset_url | stylesheet_tag }}
+{%- liquid
+  assign support_category = collection.metafields.custom.hc_category.value
+  assign help_articles = collection.metafields.custom.hc_articles.value
+  assign help_questions = collection.metafields.custom.hc_questions.value
+  assign support_pathway = collection.metafields.custom.hc_pathway.value
+  assign buying_guide = collection.metafields.custom.buying_guide_article.value
+-%}
+{%- if support_category != blank or help_articles != blank or help_questions != blank or support_pathway != blank or buying_guide != blank -%}
+<section class="rbp-product-section rbp-product-section--muted">
+  <div class="rbp-product-container">
+    <div class="rbp-product-head">
+      <div class="rbp-product-eyebrow">Collection help</div>
+      <h2 class="rbp-product-heading">Guidance for this collection</h2>
+      <p class="rbp-product-copy">Use these help articles and support pathways to choose the right product or get assistance.</p>
+    </div>
+    <div class="rbp-product-grid rbp-product-grid--3">
+      {%- if buying_guide != blank -%}
+        <div class="rbp-product-card rbp-product-card--blue">
+          <h3 class="rbp-product-card-title">{{ buying_guide.fields.title.value }}</h3>
+          <p class="rbp-product-card-text">{{ buying_guide.fields.summary.value }}</p>
+          {%- if buying_guide.fields.primary_cta_link.value != blank -%}<a class="rbp-product-button" href="{{ buying_guide.fields.primary_cta_link.value }}" style="margin-top:18px;background:#fff;color:#1e3a8a;">{{ buying_guide.fields.primary_cta_label.value | default: 'Read guide' }} -&gt;</a>{%- endif -%}
+        </div>
+      {%- endif -%}
+      {%- if support_category != blank -%}
+        <div class="rbp-product-card">
+          <h3 class="rbp-product-card-title">{{ support_category.fields.title.value }}</h3>
+          <p class="rbp-product-card-text">{{ support_category.fields.short_description.value }}</p>
+          {%- assign landing_page = support_category.fields.landing_page.value -%}
+          {%- if landing_page != blank -%}<a class="rbp-product-button" href="{{ landing_page.url }}" style="margin-top:18px;">{{ support_category.fields.cta_label.value | default: 'View help' }} -&gt;</a>{%- endif -%}
+        </div>
+      {%- endif -%}
+      {%- if support_pathway != blank -%}
+        <div class="rbp-product-card">
+          <h3 class="rbp-product-card-title">{{ support_pathway.fields.title.value }}</h3>
+          <p class="rbp-product-card-text">{{ support_pathway.fields.description.value }}</p>
+          {%- assign destination_page = support_pathway.fields.destination_page.value -%}
+          {%- if destination_page != blank -%}<a class="rbp-product-button" href="{{ destination_page.url }}" style="margin-top:18px;">{{ support_pathway.fields.cta_label.value | default: 'Get support' }} -&gt;</a>{%- endif -%}
+        </div>
+      {%- endif -%}
+    </div>
+    {%- if help_articles != blank -%}
+      <div class="rbp-product-grid rbp-product-grid--3" style="margin-top:20px;">
+        {%- for article in help_articles limit: 6 -%}
+          <div class="rbp-product-card">
+            <h3 class="rbp-product-card-title">{{ article.fields.title.value }}</h3>
+            <p class="rbp-product-card-text">{{ article.fields.summary.value }}</p>
+            {%- if article.fields.primary_cta_link.value != blank -%}<a class="rbp-product-button" href="{{ article.fields.primary_cta_link.value }}" style="margin-top:18px;">{{ article.fields.primary_cta_label.value | default: 'Read more' }} -&gt;</a>{%- endif -%}
+          </div>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+    {%- if help_questions != blank -%}
+      <div class="rbp-product-faq" style="margin-top:28px;">
+        {%- for q in help_questions limit: 8 -%}
+          <details {% if forloop.first %}open{% endif %}><summary>{{ q.fields.question.value }}</summary><div class="rbp-product-faq-answer">{{ q.fields.answer | metafield_tag }}</div></details>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+{%- endif -%}
+{% schema %}{"name":"RBP collection help","settings":[],"presets":[{"name":"RBP collection help"}]}{% endschema %}

@@ -1,0 +1,97 @@
+{%- style -%}
+  .rbp-support-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+  @media screen and (min-width: 750px) {
+    .rbp-support-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+  .rbp-support-card {
+    border: 1px solid rgba(var(--color-foreground), .14);
+    border-radius: var(--text-boxes-radius);
+    background: rgb(var(--color-background));
+    padding: clamp(2rem, 4vw, 4rem);
+  }
+  .rbp-support-grid {
+    display: grid;
+    gap: 1.2rem;
+    margin-top: 2rem;
+  }
+  @media screen and (min-width: 750px) {
+    .rbp-support-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+  .rbp-support-link {
+    display: block;
+    padding: 1.5rem;
+    border: 1px solid rgba(var(--color-foreground), .12);
+    border-radius: var(--text-boxes-radius);
+    text-decoration: none;
+    color: rgb(var(--color-foreground));
+    background: rgba(var(--color-foreground), .03);
+  }
+  .rbp-support-link:hover {
+    background: rgba(var(--color-foreground), .07);
+  }
+  .rbp-support-kicker {
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    font-size: 1.2rem;
+    opacity: .75;
+    margin: 0 0 1rem;
+  }
+  .rbp-support-link strong {
+    display: block;
+    margin-bottom: .4rem;
+  }
+  .rbp-support-link span {
+    font-size: 1.3rem;
+    opacity: .8;
+  }
+{%- endstyle -%}
+
+<section class="color-{{ section.settings.color_scheme }} gradient">
+  <div class="page-width rbp-support-{{ section.id }}">
+    <div class="rbp-support-card">
+      <p class="rbp-support-kicker">{{ section.settings.kicker }}</p>
+      <h2 class="h2">{{ section.settings.heading }}</h2>
+      <div class="rte">{{ section.settings.text }}</div>
+      <div class="rbp-support-grid">
+        {% for block in section.blocks %}
+          <a class="rbp-support-link" href="{{ block.settings.link }}" {{ block.shopify_attributes }}>
+            <strong>{{ block.settings.title }}</strong>
+            <span>{{ block.settings.description }}</span>
+          </a>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "RBP support links",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" },
+    { "type": "text", "id": "kicker", "label": "Kicker", "default": "Useful links" },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Understand the process before you enquire" },
+    { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Review the relevant marketplace process, buyer and seller guidance, confidentiality approach, and terms before taking the next step.</p>" },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 100, "step": 4, "unit": "px", "label": "Top padding", "default": 20 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 100, "step": 4, "unit": "px", "label": "Bottom padding", "default": 40 }
+  ],
+  "blocks": [
+    { "type": "link", "name": "Support link", "settings": [
+      { "type": "text", "id": "title", "label": "Title", "default": "Buyer Guide" },
+      { "type": "text", "id": "description", "label": "Description", "default": "Understand the buyer pathway." },
+      { "type": "url", "id": "link", "label": "Link" }
+    ]}
+  ],
+  "presets": [{ "name": "RBP support links" }]
+}
+{% endschema %}

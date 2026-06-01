@@ -1,0 +1,511 @@
+{% comment %}
+  RBP Applications Hub — G2 Missing Hub UX
+  Version: 1.0 | New section — not in previous theme
+  Purpose: Central entry point for service applications, onboarding, and engagement requests
+{% endcomment %}
+
+<style>
+.rbp-apps-hub {
+  --rbp-blue: #1d4ed8;
+  --rbp-blue-mid: #2563eb;
+  --rbp-blue-dark: #1e3a8a;
+  --rbp-indigo: #4f46e5;
+  --rbp-emerald: #059669;
+  --rbp-amber: #d97706;
+  --rbp-violet: #7c3aed;
+  --rbp-rose: #e11d48;
+  --rbp-slate-950: #020617;
+  --rbp-slate-900: #0f172a;
+  --rbp-slate-800: #1e293b;
+  --rbp-slate-700: #334155;
+  --rbp-slate-600: #475569;
+  --rbp-slate-500: #64748b;
+  --rbp-slate-400: #94a3b8;
+  --rbp-slate-200: #e2e8f0;
+  --rbp-slate-100: #f1f5f9;
+  --rbp-slate-50: #f8fafc;
+  --rbp-border: rgba(15,23,42,.09);
+  font-family: var(--font-body-family, system-ui, sans-serif);
+}
+.rbp-apps-hub *, .rbp-apps-hub *::before, .rbp-apps-hub *::after { box-sizing: border-box; }
+
+/* ── Page hero ─────────────────────────────────────────── */
+.rbp-apps-hero {
+  background: linear-gradient(135deg, #0f172a 0%, #1a2744 55%, #0f172a 100%);
+  position: relative; overflow: hidden; padding: 80px 0 72px;
+}
+.rbp-apps-hero::before {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(ellipse at 25% 60%, rgba(29,78,216,.25) 0%, transparent 55%),
+              radial-gradient(ellipse at 80% 30%, rgba(79,70,229,.15) 0%, transparent 50%);
+}
+.rbp-apps-hero-inner {
+  width: min(100% - 2.5rem, 1200px); margin-inline: auto;
+  display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 48px;
+  position: relative;
+}
+.rbp-apps-eyebrow {
+  display: inline-flex; align-items: center; gap: 7px;
+  background: rgba(29,78,216,.2); border: 1px solid rgba(29,78,216,.3);
+  border-radius: 999px; padding: 6px 14px;
+  color: #93c5fd; font-size: 11.5px; font-weight: 800;
+  letter-spacing: .1em; text-transform: uppercase; margin-bottom: 18px;
+}
+.rbp-apps-hero h1 {
+  font-size: clamp(34px, 5vw, 58px); font-weight: 900;
+  letter-spacing: -.035em; line-height: 1.06; color: #fff; margin: 0 0 18px;
+}
+.rbp-apps-hero h1 span { color: #60a5fa; }
+.rbp-apps-hero-sub { font-size: 17px; color: #94a3b8; line-height: 1.7; font-weight: 500; max-width: 520px; margin-bottom: 32px; }
+.rbp-apps-hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+.rbp-apps-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 13px 22px; border-radius: 13px;
+  font-size: 14px; font-weight: 800; text-decoration: none;
+  transition: all .18s ease;
+}
+.rbp-apps-btn-primary { background: var(--rbp-blue); color: #fff; box-shadow: 0 6px 22px rgba(29,78,216,.3); }
+.rbp-apps-btn-primary:hover { background: var(--rbp-blue-mid); transform: translateY(-2px); }
+.rbp-apps-btn-ghost { background: rgba(255,255,255,.08); color: #cbd5e1; border: 1px solid rgba(255,255,255,.14); }
+.rbp-apps-btn-ghost:hover { background: rgba(255,255,255,.14); color: #fff; }
+
+/* Status card */
+.rbp-apps-hero-card {
+  background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1);
+  border-radius: 20px; padding: 24px; min-width: 220px;
+  backdrop-filter: blur(8px);
+}
+.rbp-apps-hero-card-title { font-size: 11px; font-weight: 900; text-transform: uppercase; letter-spacing: .12em; color: #64748b; margin-bottom: 16px; }
+.rbp-apps-stat { display: flex; flex-direction: column; gap: 14px; }
+.rbp-apps-stat-item { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.rbp-apps-stat-label { font-size: 12.5px; color: #94a3b8; font-weight: 600; }
+.rbp-apps-stat-val {
+  font-size: 13px; font-weight: 800; padding: 3px 10px;
+  border-radius: 999px; background: rgba(34,197,94,.15); color: #86efac;
+}
+.rbp-apps-stat-val.amber { background: rgba(245,158,11,.15); color: #fcd34d; }
+.rbp-apps-stat-val.blue { background: rgba(59,130,246,.15); color: #93c5fd; }
+
+/* ── Breadcrumb ─────────────────────────────────────────── */
+.rbp-apps-breadcrumb {
+  background: #fff; border-bottom: 1px solid var(--rbp-border);
+  padding: 12px 0;
+}
+.rbp-apps-breadcrumb-inner {
+  width: min(100% - 2.5rem, 1200px); margin-inline: auto;
+  display: flex; align-items: center; gap: 6px;
+  font-size: 12.5px; color: var(--rbp-slate-500); font-weight: 600;
+}
+.rbp-apps-breadcrumb a { color: var(--rbp-blue); text-decoration: none; }
+.rbp-apps-breadcrumb a:hover { text-decoration: underline; }
+
+/* ── Section layout ─────────────────────────────────────── */
+.rbp-apps-body { background: var(--rbp-slate-50); padding: 64px 0 80px; }
+.rbp-apps-container { width: min(100% - 2.5rem, 1200px); margin-inline: auto; }
+
+.rbp-apps-section-head {
+  margin-bottom: 32px;
+}
+.rbp-apps-section-label {
+  font-size: 10.5px; font-weight: 900; text-transform: uppercase;
+  letter-spacing: .14em; color: var(--rbp-slate-400); margin-bottom: 8px;
+}
+.rbp-apps-section-title {
+  font-size: clamp(22px, 3vw, 30px); font-weight: 900;
+  letter-spacing: -.025em; color: var(--rbp-slate-900); margin: 0 0 6px;
+}
+.rbp-apps-section-sub { font-size: 14.5px; color: var(--rbp-slate-500); font-weight: 500; line-height: 1.6; }
+
+/* ── Primary application cards ──────────────────────────── */
+.rbp-apps-primary-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+  margin-bottom: 60px;
+}
+.rbp-apps-card {
+  background: #fff; border: 1px solid var(--rbp-border);
+  border-radius: 22px; padding: 28px; text-decoration: none;
+  color: inherit; display: flex; flex-direction: column;
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+  position: relative; overflow: hidden;
+}
+.rbp-apps-card::after {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--rbp-card-color, var(--rbp-blue)), var(--rbp-card-color2, var(--rbp-indigo)));
+  transform: scaleX(0); transform-origin: left; transition: transform .25s ease;
+}
+.rbp-apps-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(15,23,42,.1); border-color: rgba(15,23,42,.15); }
+.rbp-apps-card:hover::after { transform: scaleX(1); }
+.rbp-apps-card-icon {
+  width: 52px; height: 52px; border-radius: 16px;
+  background: var(--rbp-card-bg, #eff6ff);
+  display: grid; place-items: center; font-size: 22px;
+  margin-bottom: 20px; transition: transform .18s ease;
+}
+.rbp-apps-card:hover .rbp-apps-card-icon { transform: scale(1.08); }
+.rbp-apps-card-badge {
+  position: absolute; top: 20px; right: 20px;
+  padding: 4px 11px; border-radius: 999px;
+  font-size: 10.5px; font-weight: 800; letter-spacing: .04em;
+  text-transform: uppercase;
+}
+.rbp-apps-card-badge.member { background: #fef3c7; color: #92400e; }
+.rbp-apps-card-badge.open { background: #d1fae5; color: #065f46; }
+.rbp-apps-card-badge.new { background: #ede9fe; color: #4c1d95; }
+.rbp-apps-card-badge.pending { background: #fff7ed; color: #9a3412; }
+.rbp-apps-card-title {
+  font-size: 17px; font-weight: 900; letter-spacing: -.02em;
+  color: var(--rbp-slate-900); margin: 0 0 8px;
+}
+.rbp-apps-card-desc { font-size: 13.5px; color: var(--rbp-slate-500); line-height: 1.65; flex: 1; font-weight: 500; }
+.rbp-apps-card-footer {
+  margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--rbp-border);
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+}
+.rbp-apps-card-meta { font-size: 12px; color: var(--rbp-slate-400); font-weight: 600; }
+.rbp-apps-card-cta {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 13px; font-weight: 800; color: var(--rbp-blue); white-space: nowrap;
+}
+.rbp-apps-card-cta svg { transition: transform .18s; }
+.rbp-apps-card:hover .rbp-apps-card-cta svg { transform: translateX(3px); }
+
+/* ── Secondary grid (status/tracking cards) ─────────────── */
+.rbp-apps-secondary-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;
+  margin-bottom: 60px;
+}
+.rbp-apps-info-card {
+  background: #fff; border: 1px solid var(--rbp-border);
+  border-radius: 18px; padding: 24px; display: flex; gap: 18px;
+  text-decoration: none; color: inherit;
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.rbp-apps-info-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(15,23,42,.08); }
+.rbp-apps-info-icon {
+  width: 44px; height: 44px; border-radius: 13px;
+  background: var(--rbp-info-bg, var(--rbp-slate-100));
+  display: grid; place-items: center; font-size: 18px; flex-shrink: 0;
+}
+.rbp-apps-info-body { }
+.rbp-apps-info-title { font-size: 15px; font-weight: 900; color: var(--rbp-slate-900); margin: 0 0 5px; letter-spacing: -.01em; }
+.rbp-apps-info-desc { font-size: 13px; color: var(--rbp-slate-500); line-height: 1.55; font-weight: 500; }
+.rbp-apps-info-link {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 12.5px; font-weight: 800; color: var(--rbp-blue);
+  margin-top: 10px; text-decoration: none;
+}
+
+/* ── FAQ strip ──────────────────────────────────────────── */
+.rbp-apps-faq { background: #fff; border-radius: 20px; border: 1px solid var(--rbp-border); overflow: hidden; }
+.rbp-apps-faq-item { border-bottom: 1px solid var(--rbp-border); }
+.rbp-apps-faq-item:last-child { border-bottom: none; }
+.rbp-apps-faq-q {
+  display: flex; align-items: center; justify-content: space-between;
+  width: 100%; padding: 18px 24px; background: transparent; border: none;
+  text-align: left; cursor: pointer; gap: 16px;
+  color: var(--rbp-slate-800); font-size: 14.5px; font-weight: 800;
+  transition: background .12s;
+}
+.rbp-apps-faq-q:hover { background: var(--rbp-slate-50); }
+.rbp-apps-faq-icon {
+  width: 22px; height: 22px; border-radius: 6px;
+  background: var(--rbp-slate-100); display: grid; place-items: center;
+  flex-shrink: 0; color: var(--rbp-slate-500); font-size: 14px;
+  transition: background .15s, transform .2s;
+}
+details[open] .rbp-apps-faq-icon { background: #dbeafe; color: var(--rbp-blue); transform: rotate(45deg); }
+.rbp-apps-faq-a {
+  padding: 0 24px 20px 24px;
+  font-size: 14px; color: var(--rbp-slate-600); line-height: 1.7; font-weight: 500;
+}
+
+/* ── Responsive ─────────────────────────────────────────── */
+@media (max-width: 1023px) {
+  .rbp-apps-primary-grid { grid-template-columns: repeat(2, 1fr); }
+  .rbp-apps-hero-inner { grid-template-columns: 1fr; }
+  .rbp-apps-hero-card { display: none; }
+}
+@media (max-width: 640px) {
+  .rbp-apps-primary-grid, .rbp-apps-secondary-grid { grid-template-columns: 1fr; }
+}
+</style>
+
+{%- assign is_member = false -%}
+{%- comment %} Codex will populate: customer.tags contains "rbp-member" -%}
+{%- if customer and customer.tags contains 'rbp-member' -%}
+  {%- assign is_member = true -%}
+{%- endif -%}
+{% endcomment %}
+
+<div class="rbp-apps-hub">
+
+  {%- comment %} ── Hero ── {% endcomment %}
+  <section class="rbp-apps-hero" aria-labelledby="rbp-apps-h1">
+    <div class="rbp-apps-hero-inner">
+      <div>
+        <div class="rbp-apps-eyebrow" aria-hidden="true">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6M9 12h6M9 15h4"/></svg>
+          Applications Hub
+        </div>
+        <h1 id="rbp-apps-h1">Apply for a service,<br><span>start your journey.</span></h1>
+        <p class="rbp-apps-hero-sub">Browse available application pathways for Core Services, On-Demand engagements, Membership, Business NBN, Marketplace listings, and Custom Solutions.</p>
+        <div class="rbp-apps-hero-actions">
+          <a href="#applications" class="rbp-apps-btn rbp-apps-btn-primary">
+            Browse Applications
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+          </a>
+          <a href="/pages/contact" class="rbp-apps-btn rbp-apps-btn-ghost">Speak to our team</a>
+        </div>
+      </div>
+      <div class="rbp-apps-hero-card" aria-label="Application status summary">
+        <p class="rbp-apps-hero-card-title">Application Pathways</p>
+        <div class="rbp-apps-stat">
+          <div class="rbp-apps-stat-item">
+            <span class="rbp-apps-stat-label">Core Services</span>
+            <span class="rbp-apps-stat-val">Open</span>
+          </div>
+          <div class="rbp-apps-stat-item">
+            <span class="rbp-apps-stat-label">On-Demand</span>
+            <span class="rbp-apps-stat-val">Open</span>
+          </div>
+          <div class="rbp-apps-stat-item">
+            <span class="rbp-apps-stat-label">Membership</span>
+            <span class="rbp-apps-stat-val">Open</span>
+          </div>
+          <div class="rbp-apps-stat-item">
+            <span class="rbp-apps-stat-label">Business NBN</span>
+            <span class="rbp-apps-stat-val amber">Check avail.</span>
+          </div>
+          <div class="rbp-apps-stat-item">
+            <span class="rbp-apps-stat-label">Marketplace</span>
+            <span class="rbp-apps-stat-val blue">Review req.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {%- comment %} ── Breadcrumb ── {% endcomment %}
+  <nav class="rbp-apps-breadcrumb" aria-label="Breadcrumb">
+    <div class="rbp-apps-breadcrumb-inner">
+      <a href="/">Home</a>
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+      <span aria-current="page">Applications Hub</span>
+    </div>
+  </nav>
+
+  {%- comment %} ── Body ── {% endcomment %}
+  <div class="rbp-apps-body" id="applications">
+    <div class="rbp-apps-container">
+
+      {%- comment %} Primary applications {% endcomment %}
+      <div class="rbp-apps-section-head">
+        <p class="rbp-apps-section-label">Available pathways</p>
+        <h2 class="rbp-apps-section-title">How would you like to engage?</h2>
+        <p class="rbp-apps-section-sub">Each pathway below is a different way to work with Remote Business Partner. Select the one that best fits your need.</p>
+      </div>
+
+      <div class="rbp-apps-primary-grid">
+
+        {%- comment %} Core Service Application {% endcomment %}
+        <a href="/pages/core-intake" class="rbp-apps-card" style="--rbp-card-color:#1d4ed8;--rbp-card-color2:#4f46e5;--rbp-card-bg:#eff6ff;" aria-label="Apply for Core Services">
+          <div class="rbp-apps-card-icon">🎯</div>
+          <span class="rbp-apps-card-badge open">Open</span>
+          <h3 class="rbp-apps-card-title">Core Service Intake</h3>
+          <p class="rbp-apps-card-desc">Apply for a Business Health Check, Business Advisor, Decision Desk, Risk Advisor, or The Fixer engagement. Complete a brief intake form and we'll match you to the right service.</p>
+          <div class="rbp-apps-card-footer">
+            <span class="rbp-apps-card-meta">~5 min intake form</span>
+            <span class="rbp-apps-card-cta">
+              Apply now
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </span>
+          </div>
+        </a>
+
+        {%- comment %} On-Demand Engagement {% endcomment %}
+        <a href="/collections/on-demand-services" class="rbp-apps-card" style="--rbp-card-color:#059669;--rbp-card-color2:#0d9488;--rbp-card-bg:#ecfdf5;" aria-label="Browse On-Demand Services">
+          <div class="rbp-apps-card-icon">⚡</div>
+          <span class="rbp-apps-card-badge open">Open</span>
+          <h3 class="rbp-apps-card-title">On-Demand Services</h3>
+          <p class="rbp-apps-card-desc">Browse and purchase from 699 on-demand services across Accounting, HR, Operations, Growth, AI Advisory, Digital Support, and more. Engage only what you need, when you need it.</p>
+          <div class="rbp-apps-card-footer">
+            <span class="rbp-apps-card-meta">699+ services available</span>
+            <span class="rbp-apps-card-cta">
+              Browse services
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </span>
+          </div>
+        </a>
+
+        {%- comment %} Membership Application {% endcomment %}
+        <a href="/pages/membership#join" class="rbp-apps-card" style="--rbp-card-color:#7c3aed;--rbp-card-color2:#a855f7;--rbp-card-bg:#f5f3ff;" aria-label="Apply for Membership">
+          <div class="rbp-apps-card-icon">⭐</div>
+          <span class="rbp-apps-card-badge open">Open</span>
+          <h3 class="rbp-apps-card-title">Membership Application</h3>
+          <p class="rbp-apps-card-desc">Join as an RBP Member to unlock priority access, exclusive member rates, partner offers, and access to the member portal. Free to join — upgrade for premium benefits.</p>
+          <div class="rbp-apps-card-footer">
+            <span class="rbp-apps-card-meta">Free to join</span>
+            <span class="rbp-apps-card-cta">
+              Join now
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </span>
+          </div>
+        </a>
+
+        {%- comment %} Business NBN Application {% endcomment %}
+        <a href="/pages/business-nbn#check" class="rbp-apps-card" style="--rbp-card-color:#d97706;--rbp-card-color2:#f59e0b;--rbp-card-bg:#fffbeb;" aria-label="Apply for Business NBN">
+          <div class="rbp-apps-card-icon">🌐</div>
+          <span class="rbp-apps-card-badge pending">Check availability</span>
+          <h3 class="rbp-apps-card-title">Business NBN</h3>
+          <p class="rbp-apps-card-desc">Apply for Business NBN connectivity. Check your address availability, compare plans, and connect your business with reliable, fast internet. Manual review required for some locations.</p>
+          <div class="rbp-apps-card-footer">
+            <span class="rbp-apps-card-meta">Address check required</span>
+            <span class="rbp-apps-card-cta">
+              Check address
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </span>
+          </div>
+        </a>
+
+        {%- comment %} Marketplace Listing {% endcomment %}
+        <a href="/pages/sell-your-business" class="rbp-apps-card" style="--rbp-card-color:#e11d48;--rbp-card-color2:#f43f5e;--rbp-card-bg:#fff1f2;" aria-label="Submit a Marketplace Listing">
+          <div class="rbp-apps-card-icon">🏪</div>
+          <span class="rbp-apps-card-badge member">Member benefit</span>
+          <h3 class="rbp-apps-card-title">Marketplace Listing</h3>
+          <p class="rbp-apps-card-desc">Submit a business, asset, or Business-In-A-Box listing to the RBP Marketplace. Includes seller guide, due diligence process, and listing review. Members receive priority listing.</p>
+          <div class="rbp-apps-card-footer">
+            <span class="rbp-apps-card-meta">Manual review</span>
+            <span class="rbp-apps-card-cta">
+              Submit listing
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </span>
+          </div>
+        </a>
+
+        {%- comment %} Custom Solutions {% endcomment %}
+        <a href="/pages/custom-solutions" class="rbp-apps-card" style="--rbp-card-color:#0891b2;--rbp-card-color2:#0e7490;--rbp-card-bg:#ecfeff;" aria-label="Apply for Custom Solutions">
+          <div class="rbp-apps-card-icon">🛠️</div>
+          <span class="rbp-apps-card-badge new">Custom</span>
+          <h3 class="rbp-apps-card-title">Custom Solutions</h3>
+          <p class="rbp-apps-card-desc">Request a bespoke project build or ongoing retainer. Our team will scope a custom engagement tailored to your exact business needs. Includes retainer builder tool.</p>
+          <div class="rbp-apps-card-footer">
+            <span class="rbp-apps-card-meta">Quote required</span>
+            <span class="rbp-apps-card-cta">
+              Request quote
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </span>
+          </div>
+        </a>
+
+      </div>
+
+      {%- comment %} Tracking & support cards {% endcomment %}
+      <div class="rbp-apps-section-head">
+        <p class="rbp-apps-section-label">Track &amp; manage</p>
+        <h2 class="rbp-apps-section-title">Manage your applications</h2>
+        <p class="rbp-apps-section-sub">Track active applications, check statuses, and access your account.</p>
+      </div>
+
+      <div class="rbp-apps-secondary-grid">
+        <a href="/account" class="rbp-apps-info-card" style="--rbp-info-bg:#eff6ff;" aria-label="View your account">
+          <div class="rbp-apps-info-icon">🚪</div>
+          <div class="rbp-apps-info-body">
+            <h3 class="rbp-apps-info-title">Your Account &amp; Orders</h3>
+            <p class="rbp-apps-info-desc">View your order history, active service engagements, and purchased templates. Log in to access your full account dashboard.</p>
+            <span class="rbp-apps-info-link">
+              Go to account
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </span>
+          </div>
+        </a>
+        <a href="/pages/member-portal" class="rbp-apps-info-card" style="--rbp-info-bg:#f5f3ff;" aria-label="Access the member portal">
+          <div class="rbp-apps-info-icon">💎</div>
+          <div class="rbp-apps-info-body">
+            <h3 class="rbp-apps-info-title">Member Portal</h3>
+            <p class="rbp-apps-info-desc">Access your member dashboard, view active engagements, download documents, and manage your membership. Members only — requires login.</p>
+            <span class="rbp-apps-info-link">
+              Go to portal
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </span>
+          </div>
+        </a>
+        <a href="/pages/contact" class="rbp-apps-info-card" style="--rbp-info-bg:#ecfdf5;" aria-label="Contact our team">
+          <div class="rbp-apps-info-icon">💬</div>
+          <div class="rbp-apps-info-body">
+            <h3 class="rbp-apps-info-title">Speak to Our Team</h3>
+            <p class="rbp-apps-info-desc">Not sure which pathway is right for you? Book a discovery call or send a message and we'll help you get started in the right direction.</p>
+            <span class="rbp-apps-info-link">
+              Contact us
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </span>
+          </div>
+        </a>
+        <a href="/pages/help-center" class="rbp-apps-info-card" style="--rbp-info-bg:#fff7ed;" aria-label="Visit the Help Center">
+          <div class="rbp-apps-info-icon">🆘</div>
+          <div class="rbp-apps-info-body">
+            <h3 class="rbp-apps-info-title">Help Center</h3>
+            <p class="rbp-apps-info-desc">Browse step-by-step guides for every application type, fulfilment process, and service engagement. Answers to the most common questions.</p>
+            <span class="rbp-apps-info-link">
+              Browse help
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </span>
+          </div>
+        </a>
+      </div>
+
+      {%- comment %} FAQ {% endcomment %}
+      <div class="rbp-apps-section-head">
+        <p class="rbp-apps-section-label">Common questions</p>
+        <h2 class="rbp-apps-section-title">Applications FAQ</h2>
+      </div>
+      <div class="rbp-apps-faq" role="list">
+        <details class="rbp-apps-faq-item" role="listitem">
+          <summary class="rbp-apps-faq-q">
+            How long does an application take to be reviewed?
+            <span class="rbp-apps-faq-icon" aria-hidden="true">+</span>
+          </summary>
+          <p class="rbp-apps-faq-a">Most on-demand service purchases are processed immediately. Core Service intake forms are reviewed within 1 business day. Marketplace listings and Custom Solutions requests involve a manual review that typically takes 2–3 business days.</p>
+        </details>
+        <details class="rbp-apps-faq-item" role="listitem">
+          <summary class="rbp-apps-faq-q">
+            Do I need to be a member to apply?
+            <span class="rbp-apps-faq-icon" aria-hidden="true">+</span>
+          </summary>
+          <p class="rbp-apps-faq-a">Most services are available to all customers. Membership unlocks priority access, exclusive rates, partner offers, and accelerated review timelines. Marketplace listings have a member priority queue.</p>
+        </details>
+        <details class="rbp-apps-faq-item" role="listitem">
+          <summary class="rbp-apps-faq-q">
+            What happens after I submit a Core Service intake form?
+            <span class="rbp-apps-faq-icon" aria-hidden="true">+</span>
+          </summary>
+          <p class="rbp-apps-faq-a">Our team will review your intake form and match you to the appropriate service and consultant. You'll receive a confirmation email and a follow-up within 1 business day to confirm your engagement details and next steps.</p>
+        </details>
+        <details class="rbp-apps-faq-item" role="listitem">
+          <summary class="rbp-apps-faq-q">
+            Can I apply for multiple services at once?
+            <span class="rbp-apps-faq-icon" aria-hidden="true">+</span>
+          </summary>
+          <p class="rbp-apps-faq-a">Yes. You can purchase multiple on-demand services or submit applications for different pathways simultaneously. Our team coordinates delivery across engagements where needed.</p>
+        </details>
+        <details class="rbp-apps-faq-item" role="listitem">
+          <summary class="rbp-apps-faq-q">
+            How does Business NBN availability work?
+            <span class="rbp-apps-faq-icon" aria-hidden="true">+</span>
+          </summary>
+          <p class="rbp-apps-faq-a">Business NBN availability depends on your address and the infrastructure available in your area. Use the address checker on the Business NBN page to confirm availability. Some locations require a manual serviceability check by our team.</p>
+        </details>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "RBP Applications Hub",
+  "tag": "section",
+  "class": "rbp-applications-hub-section",
+  "settings": [],
+  "presets": [{ "name": "RBP Applications Hub" }]
+}
+{% endschema %}

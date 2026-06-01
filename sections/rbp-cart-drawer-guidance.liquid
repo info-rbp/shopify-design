@@ -1,0 +1,96 @@
+{%- liquid
+  assign has_onboarding_item = false
+  assign has_nbn_item = false
+  assign has_membership_item = false
+  for item in cart.items
+    assign product_type_down = item.product.type | downcase
+    assign title_down = item.product.title | downcase
+    assign vendor_down = item.product.vendor | downcase
+    if item.product.metafields.custom.requires_onboarding_form.value == true or item.product.tags contains 'Template' or item.product.tags contains 'Templates' or item.product.tags contains 'Documentation Suite' or item.product.tags contains 'Toolkit' or product_type_down contains 'template' or product_type_down contains 'document' or product_type_down contains 'toolkit'
+      assign has_onboarding_item = true
+    endif
+    if title_down contains 'nbn' or product_type_down contains 'nbn' or vendor_down contains 'nbn' or item.product.tags contains 'NBN' or item.product.tags contains 'Business NBN'
+      assign has_nbn_item = true
+    endif
+    if title_down contains 'membership' or product_type_down contains 'membership' or item.product.tags contains 'Membership'
+      assign has_membership_item = true
+    endif
+  endfor
+-%}
+
+<style>
+  .rbp-drawer-guide{border:1px solid rgba(15,23,42,.12);border-radius:16px;background:#f8fafc;padding:14px;margin:0 0 14px}.rbp-drawer-guide h3{margin:0 0 8px;color:#0f172a;font-size:14px;font-weight:900}.rbp-drawer-guide p{margin:0;color:#64748b;font-size:12.5px;line-height:1.55}.rbp-drawer-guide ul{display:grid;gap:7px;margin:10px 0 0;padding:0;list-style:none}.rbp-drawer-guide li{display:grid;grid-template-columns:18px minmax(0,1fr);gap:8px;color:#475569;font-size:12px;line-height:1.45}.rbp-drawer-guide span{width:18px;height:18px;border-radius:999px;background:#1d4ed8;color:#fff;display:grid;place-items:center;font-size:10px;font-weight:900}.rbp-drawer-guide a{display:inline-flex;margin-top:10px;color:#1d4ed8;font-size:12px;font-weight:900;text-decoration:none}.rbp-drawer-empty{border-radius:18px;background:linear-gradient(135deg,#0f172a,#172554);color:#fff;padding:18px;margin:12px 0}.rbp-drawer-empty h3{margin:0 0 8px;color:#fff;font-size:17px;font-weight:900}.rbp-drawer-empty p{margin:0;color:#cbd5e1;font-size:13px;line-height:1.55}.rbp-drawer-empty__links{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}.rbp-drawer-empty__links a{border-radius:12px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;padding:10px 11px;font-size:12px;font-weight:900;text-align:center;text-decoration:none}.cart-notification .rbp-cart-added-note{border:1px solid rgba(15,23,42,.12);border-radius:14px;background:#f8fafc;padding:12px;margin:10px 0;color:#475569;font-size:12.5px;line-height:1.5}.cart-notification .rbp-cart-added-note strong{display:block;color:#0f172a;margin-bottom:4px}.cart__checkout-button,.cart-drawer .cart__checkout-button{border-radius:14px}.cart__footer{border-top:1px solid rgba(15,23,42,.08)}
+</style>
+
+<template id="RbpCartDrawerGuideTemplate">
+  <div class="rbp-drawer-guide" data-rbp-drawer-guide>
+    <h3>Before checkout</h3>
+    <p>Review any onboarding, Shopify Subscriptions, delivery or serviceability steps tied to your cart items.</p>
+    <ul>
+      {%- if has_onboarding_item -%}<li><span>1</span><div>Document-style products may require onboarding after checkout. Delivery starts after required information is submitted.</div></li>{%- endif -%}
+      {%- if has_nbn_item -%}<li><span>N</span><div>Business NBN orders may require availability checks through the RBP bridge and provisioning confirmation.</div></li>{%- endif -%}
+      {%- if has_membership_item -%}<li><span>P</span><div>Premium Membership billing runs through Shopify Subscriptions. Access is recognised by the Premium Member customer tag.</div></li>{%- endif -%}
+      <li><span>?</span><div>Need help choosing or checking next steps before purchase?</div></li>
+    </ul>
+    <a href="/pages/help-center">Visit Help Center →</a>
+  </div>
+</template>
+
+<template id="RbpCartDrawerEmptyTemplate">
+  <div class="rbp-drawer-empty" data-rbp-drawer-empty>
+    <h3>Start with the right pathway</h3>
+    <p>Browse documents, Premium Membership, services or Business NBN before checkout.</p>
+    <div class="rbp-drawer-empty__links">
+      <a href="/pages/templates">Documents</a>
+      <a href="/pages/membership-options">Membership</a>
+      <a href="/pages/business-advisor">Services</a>
+      <a href="/pages/business-nbn">NBN</a>
+    </div>
+  </div>
+</template>
+
+<script>
+(() => {
+  const insertRbpCartGuidance = () => {
+    const guideTemplate = document.getElementById('RbpCartDrawerGuideTemplate');
+    const emptyTemplate = document.getElementById('RbpCartDrawerEmptyTemplate');
+    if (!guideTemplate || !emptyTemplate) return;
+
+    document.querySelectorAll('.cart-drawer').forEach((drawer) => {
+      const footer = drawer.querySelector('.drawer__footer');
+      const emptyArea = drawer.querySelector('.cart-drawer__empty-content');
+
+      if (footer && !footer.querySelector('[data-rbp-drawer-guide]')) {
+        footer.prepend(guideTemplate.content.firstElementChild.cloneNode(true));
+      }
+
+      if (emptyArea && !emptyArea.querySelector('[data-rbp-drawer-empty]')) {
+        emptyArea.append(emptyTemplate.content.firstElementChild.cloneNode(true));
+      }
+    });
+
+    document.querySelectorAll('.cart-notification').forEach((notification) => {
+      if (notification.querySelector('.rbp-cart-added-note')) return;
+      const links = notification.querySelector('.cart-notification__links');
+      if (!links) return;
+      const note = document.createElement('div');
+      note.className = 'rbp-cart-added-note';
+      note.innerHTML = '<strong>Before checkout</strong>Some products may require onboarding, delivery review, Business NBN checks, Shopify Subscriptions billing or Premium Member access setup after purchase.';
+      links.prepend(note);
+    });
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', insertRbpCartGuidance, { once: true });
+  } else {
+    insertRbpCartGuidance();
+  }
+  document.addEventListener('cart:updated', insertRbpCartGuidance);
+  document.addEventListener('shopify:section:load', insertRbpCartGuidance);
+  setInterval(insertRbpCartGuidance, 1200);
+})();
+</script>
+
+{% schema %}
+{"name":"RBP cart drawer guide","settings":[]}
+{% endschema %}

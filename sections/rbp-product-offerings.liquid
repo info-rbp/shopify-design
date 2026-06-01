@@ -1,0 +1,81 @@
+{{ 'rbp-product.css' | asset_url | stylesheet_tag }}
+
+<section class="rbp-product-section">
+  <div class="rbp-product-container">
+    <div class="rbp-product-head rbp-product-head--center">
+      <div class="rbp-product-eyebrow">Product offering</div>
+      <h2 class="rbp-product-heading">Explore the document product range</h2>
+      <p class="rbp-product-copy">Choose the level of support that fits what you are trying to complete: a single template, a broader documentation suite, or a practical toolkit with multiple resources bundled together.</p>
+    </div>
+
+    <div class="rbp-product-grid rbp-product-grid--3">
+      <article class="rbp-product-card rbp-offering-card">
+        <div class="rbp-offering-card__media">
+          {%- if section.settings.templates_image != blank -%}
+            <img class="rbp-offering-card__image" src="{{ section.settings.templates_image | image_url: width: 700 }}" alt="{{ section.settings.templates_title | escape }}" loading="lazy">
+          {%- else -%}
+            <svg viewBox="0 0 80 80" fill="none" aria-hidden="true"><rect x="18" y="10" width="44" height="60" rx="8" fill="rgba(255,255,255,.18)" stroke="white"/><path d="M28 28h24M28 40h24M28 52h16" stroke="white" stroke-width="4" stroke-linecap="round"/></svg>
+          {%- endif -%}
+        </div>
+        <div class="rbp-offering-card__body">
+          <h3 class="rbp-product-card-title">{{ section.settings.templates_title }}</h3>
+          <p class="rbp-product-card-text">{{ section.settings.templates_text }}</p>
+          <a class="rbp-product-button" href="{{ section.settings.templates_link }}">View templates -&gt;</a>
+        </div>
+      </article>
+
+      <article class="rbp-product-card rbp-offering-card">
+        <div class="rbp-offering-card__media">
+          {%- if section.settings.suites_image != blank -%}
+            <img class="rbp-offering-card__image" src="{{ section.settings.suites_image | image_url: width: 700 }}" alt="{{ section.settings.suites_title | escape }}" loading="lazy">
+          {%- else -%}
+            <svg viewBox="0 0 80 80" fill="none" aria-hidden="true"><rect x="14" y="18" width="38" height="48" rx="7" fill="rgba(255,255,255,.16)" stroke="white"/><rect x="26" y="10" width="40" height="50" rx="7" fill="rgba(255,255,255,.18)" stroke="white"/><path d="M36 28h20M36 40h20M36 52h12" stroke="white" stroke-width="4" stroke-linecap="round"/></svg>
+          {%- endif -%}
+        </div>
+        <div class="rbp-offering-card__body">
+          <h3 class="rbp-product-card-title">{{ section.settings.suites_title }}</h3>
+          <p class="rbp-product-card-text">{{ section.settings.suites_text }}</p>
+          <a class="rbp-product-button" href="{{ section.settings.suites_link }}">View suites -&gt;</a>
+        </div>
+      </article>
+
+      <article class="rbp-product-card rbp-offering-card">
+        <div class="rbp-offering-card__media">
+          {%- if section.settings.toolkits_image != blank -%}
+            <img class="rbp-offering-card__image" src="{{ section.settings.toolkits_image | image_url: width: 700 }}" alt="{{ section.settings.toolkits_title | escape }}" loading="lazy">
+          {%- else -%}
+            <svg viewBox="0 0 80 80" fill="none" aria-hidden="true"><rect x="12" y="24" width="56" height="38" rx="8" fill="rgba(255,255,255,.18)" stroke="white"/><path d="M26 24v-6a6 6 0 0 1 6-6h16a6 6 0 0 1 6 6v6" stroke="white" stroke-width="4"/><path d="M22 42h36" stroke="white" stroke-width="4" stroke-linecap="round"/></svg>
+          {%- endif -%}
+        </div>
+        <div class="rbp-offering-card__body">
+          <h3 class="rbp-product-card-title">{{ section.settings.toolkits_title }}</h3>
+          <p class="rbp-product-card-text">{{ section.settings.toolkits_text }}</p>
+          <a class="rbp-product-button" href="{{ section.settings.toolkits_link }}">View toolkits -&gt;</a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "RBP product offerings",
+  "settings": [
+    { "type": "text", "id": "templates_title", "label": "Templates title", "default": "Templates" },
+    { "type": "textarea", "id": "templates_text", "label": "Templates description", "default": "Individual business documents prepared for a specific need, task, process or decision." },
+    { "type": "url", "id": "templates_link", "label": "Templates link" },
+    { "type": "image_picker", "id": "templates_image", "label": "Templates image" },
+    { "type": "text", "id": "suites_title", "label": "Documentation suites title", "default": "Documentation Suites" },
+    { "type": "textarea", "id": "suites_text", "label": "Documentation suites description", "default": "Grouped document packs for businesses that need several connected documents prepared together." },
+    { "type": "url", "id": "suites_link", "label": "Documentation suites link" },
+    { "type": "image_picker", "id": "suites_image", "label": "Documentation suites image" },
+    { "type": "text", "id": "toolkits_title", "label": "Toolkits title", "default": "Toolkits" },
+    { "type": "textarea", "id": "toolkits_text", "label": "Toolkits description", "default": "Practical bundles that combine documents, guidance and resources to help you complete a broader business activity." },
+    { "type": "url", "id": "toolkits_link", "label": "Toolkits link" },
+    { "type": "image_picker", "id": "toolkits_image", "label": "Toolkits image" }
+  ],
+  "presets": [
+    { "name": "RBP product offerings" }
+  ]
+}
+{% endschema %}

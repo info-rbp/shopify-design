@@ -1,0 +1,118 @@
+{%- liquid
+  assign has_onboarding_item = false
+  assign has_document_item = false
+  assign has_nbn_item = false
+  assign has_membership_item = false
+
+  for item in cart.items
+    assign product_type_down = item.product.type | downcase
+    assign title_down = item.product.title | downcase
+    assign vendor_down = item.product.vendor | downcase
+
+    if item.product.metafields.custom.requires_onboarding_form.value == true or item.product.tags contains 'Template' or item.product.tags contains 'Templates' or item.product.tags contains 'Documentation Suite' or item.product.tags contains 'Toolkit' or product_type_down contains 'template' or product_type_down contains 'document' or product_type_down contains 'toolkit'
+      assign has_onboarding_item = true
+      assign has_document_item = true
+    endif
+
+    if title_down contains 'nbn' or product_type_down contains 'nbn' or vendor_down contains 'nbn' or item.product.tags contains 'NBN' or item.product.tags contains 'Business NBN'
+      assign has_nbn_item = true
+    endif
+
+    if title_down contains 'membership' or product_type_down contains 'membership' or item.product.tags contains 'Membership'
+      assign has_membership_item = true
+    endif
+  endfor
+-%}
+
+<section class="rbp-cart-guide{% if cart == empty %} rbp-cart-guide--empty{% endif %}" aria-label="Cart guidance">
+  <div class="rbp-cart-guide__inner page-width">
+    {%- if cart == empty -%}
+      <div class="rbp-cart-guide__empty">
+        <div class="rbp-cart-guide__eyebrow">Your cart is empty</div>
+        <h1>Start with the right business pathway</h1>
+        <p>Browse document products, Premium Membership, services, resources or Business NBN pathways before checkout. Thrillingly, this is more useful than staring at an empty cart.</p>
+        <div class="rbp-cart-guide__actions">
+          <a class="rbp-cart-guide__button rbp-cart-guide__button--primary" href="/pages/templates">Browse documents</a>
+          <a class="rbp-cart-guide__button" href="/pages/membership-options">View Premium Membership</a>
+          <a class="rbp-cart-guide__button" href="/pages/business-nbn">Business NBN</a>
+          <a class="rbp-cart-guide__button" href="/pages/contact">Contact support</a>
+        </div>
+      </div>
+      <div class="rbp-cart-guide__grid rbp-cart-guide__grid--4">
+        <a class="rbp-cart-guide__card" href="/pages/templates"><span>DN</span><h2>Documents</h2><p>Templates, documentation suites and toolkits prepared through onboarding and delivery workflows.</p></a>
+        <a class="rbp-cart-guide__card" href="/pages/business-advisor"><span>SV</span><h2>Services</h2><p>Business Advisor, Decision Desk, The Fixer and specialist support pathways.</p></a>
+        <a class="rbp-cart-guide__card" href="/pages/membership-options"><span>PM</span><h2>Premium Membership</h2><p>Premium Member access, Shopify Subscriptions billing, inclusions and account guidance.</p></a>
+        <a class="rbp-cart-guide__card" href="/pages/help-center"><span>HC</span><h2>Help Center</h2><p>Find FAQs, order support, product guidance and support routing.</p></a>
+      </div>
+    {%- else -%}
+      <div class="rbp-cart-guide__header">
+        <div>
+          <div class="rbp-cart-guide__eyebrow">Before checkout</div>
+          <h1>Review the next steps for your order</h1>
+          <p>Some products require onboarding, delivery review, Business NBN serviceability checks, Shopify Subscriptions billing, or Premium Member access setup after checkout.</p>
+        </div>
+        <a class="rbp-cart-guide__button rbp-cart-guide__button--primary" href="/pages/contact">Need help?</a>
+      </div>
+
+      <div class="rbp-cart-guide__grid">
+        {%- if has_document_item or has_onboarding_item -%}
+          <div class="rbp-cart-guide__card rbp-cart-guide__card--blue">
+            <span>01</span>
+            <h2>Onboarding required after checkout</h2>
+            <p>Your cart includes a document-style product. After checkout, complete the onboarding form so the document can be prepared around your business information.</p>
+            <a href="/pages/our-process">View document process →</a>
+          </div>
+          <div class="rbp-cart-guide__card">
+            <span>02</span>
+            <h2>Delivery starts after onboarding</h2>
+            <p>Delivery timing starts after the required onboarding information is submitted, not at the moment of checkout. Tiny but important detail, apparently.</p>
+            <a href="/pages/help-center">Get document help →</a>
+          </div>
+        {%- endif -%}
+
+        {%- if has_nbn_item -%}
+          <div class="rbp-cart-guide__card rbp-cart-guide__card--blue">
+            <span>NB</span>
+            <h2>Business NBN serviceability applies</h2>
+            <p>Business NBN orders may require address availability checks through the RBP bridge, technology confirmation and provisioning steps before service can be completed.</p>
+            <a href="/pages/business-nbn-support">View Business NBN support →</a>
+          </div>
+          <div class="rbp-cart-guide__card">
+            <span>ST</span>
+            <h2>Provisioning may follow checkout</h2>
+            <p>Activation, installation and provisioning timing depend on address serviceability, plan selection and carrier requirements.</p>
+            <a href="/pages/business-nbn-status">Check provisioning status →</a>
+          </div>
+        {%- endif -%}
+
+        {%- if has_membership_item -%}
+          <div class="rbp-cart-guide__card rbp-cart-guide__card--blue">
+            <span>PM</span>
+            <h2>Premium Member access setup</h2>
+            <p>Membership billing runs through Shopify Subscriptions. Premium access is recognised by the <strong>Premium Member</strong> customer tag.</p>
+            <a href="/pages/inclusions">Review inclusions →</a>
+          </div>
+        {%- endif -%}
+
+        <div class="rbp-cart-guide__card">
+          <span>?</span>
+          <h2>Questions before checkout?</h2>
+          <p>Use the Help Center or contact page if you are unsure about document delivery, onboarding, Premium Membership, Shopify Subscriptions, Business NBN, billing or support.</p>
+          <a href="/pages/help-center">Visit Help Center →</a>
+        </div>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+<style>
+  .rbp-cart-guide{background:#f8fafc;padding:40px 0 18px}.rbp-cart-guide--empty{padding:64px 0}.rbp-cart-guide__inner{display:grid;gap:24px}.rbp-cart-guide__header{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:24px;align-items:end}.rbp-cart-guide__eyebrow{display:inline-flex;align-items:center;border-radius:999px;background:#dbeafe;color:#1d4ed8;padding:7px 12px;font-size:12px;font-weight:900;letter-spacing:.08em;text-transform:uppercase}.rbp-cart-guide h1{margin:14px 0 0;color:#0f172a;font-size:clamp(32px,4vw,52px);line-height:1.05;letter-spacing:-.04em;font-weight:900}.rbp-cart-guide p{margin:12px 0 0;color:#64748b;line-height:1.7;font-size:15px}.rbp-cart-guide__empty{border-radius:30px;background:radial-gradient(circle at top right,rgba(59,130,246,.18),transparent 34%),linear-gradient(135deg,#0f172a,#172554);padding:clamp(28px,5vw,58px);color:#fff}.rbp-cart-guide__empty h1{color:#fff}.rbp-cart-guide__empty p{color:#cbd5e1;max-width:760px}.rbp-cart-guide__actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:24px}.rbp-cart-guide__button{display:inline-flex;align-items:center;justify-content:center;border-radius:14px;border:1px solid rgba(15,23,42,.16);padding:13px 16px;background:#fff;color:#334155;font-size:14px;font-weight:900;text-decoration:none}.rbp-cart-guide__button--primary{background:#1d4ed8;border-color:#1d4ed8;color:#fff;box-shadow:0 16px 32px rgba(29,78,216,.22)}.rbp-cart-guide__grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.rbp-cart-guide__grid--4{grid-template-columns:repeat(4,minmax(0,1fr))}.rbp-cart-guide__card{display:block;border:1px solid rgba(15,23,42,.1);border-radius:22px;background:#fff;padding:22px;text-decoration:none;color:inherit;box-shadow:0 1px 2px rgba(15,23,42,.05)}.rbp-cart-guide__card--blue{background:linear-gradient(135deg,#1d4ed8,#1e3a8a);border:0;color:#fff;box-shadow:0 20px 46px rgba(29,78,216,.22)}.rbp-cart-guide__card span{width:42px;height:42px;border-radius:15px;background:#dbeafe;color:#1d4ed8;display:grid;place-items:center;font-weight:900;margin-bottom:14px}.rbp-cart-guide__card--blue span{background:rgba(255,255,255,.16);color:#fff}.rbp-cart-guide__card h2{margin:0 0 8px;color:#0f172a;font-size:18px;font-weight:900}.rbp-cart-guide__card--blue h2{color:#fff}.rbp-cart-guide__card--blue p{color:#dbeafe}.rbp-cart-guide__card a{display:inline-flex;margin-top:14px;color:#1d4ed8;font-size:13px;font-weight:900;text-decoration:none}.rbp-cart-guide__card--blue a{color:#fff}.cart-items .rbp-cart-line-note{margin-top:10px;border-radius:12px;padding:10px 12px;background:#f1f5f9;color:#475569;font-size:12.5px;line-height:1.5}.cart-items .rbp-cart-line-note strong{color:#0f172a}.rbp-cart-guide--empty ~ cart-items .cart__warnings{display:none}@media(max-width:989px){.rbp-cart-guide__grid,.rbp-cart-guide__grid--4,.rbp-cart-guide__header{grid-template-columns:1fr}.rbp-cart-guide__header{align-items:start}}@media(max-width:749px){.rbp-cart-guide{padding:32px 0 12px}.rbp-cart-guide__button{width:100%}}
+</style>
+
+{% schema %}
+{
+  "name": "RBP cart guidance",
+  "settings": [],
+  "presets": [{ "name": "RBP cart guidance" }]
+}
+{% endschema %}

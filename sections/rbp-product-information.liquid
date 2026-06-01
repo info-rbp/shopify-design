@@ -1,0 +1,171 @@
+{{ 'rbp-product.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign product_family = product.metafields.custom.product_family.value | default: product.type
+  assign product_category = product.metafields.custom.product_category.value
+  assign product_subcategory = product.metafields.custom.product_subcategory.value
+  assign product_tier = product.metafields.custom.product_tier.value
+  assign target_buyers = product.metafields.custom.target_buyer.value
+  assign industry_focus = product.metafields.custom.industry_focus.value
+  assign business_stage = product.metafields.custom.business_stage.value
+  assign primary_use_case = product.metafields.custom.primary_use_case.value
+  assign asset_count = product.metafields.custom.asset_count.value
+  assign document_types = product.metafields.custom.document_types.value
+  assign file_formats = product.metafields.custom.file_formats.value
+  assign delivery_time = product.metafields.custom.delivery_time.value | default: section.settings.default_delivery_time
+  assign requires_onboarding = product.metafields.custom.requires_onboarding_form.value
+  assign onboarding_form = product.metafields.custom.onboarding_form.value
+  assign version = product.metafields.custom.version.value
+-%}
+
+<section class="rbp-product-section rbp-product-section--muted">
+  <div class="rbp-product-container">
+    <div class="rbp-product-head">
+      <div class="rbp-product-eyebrow">Product details</div>
+      <h2 class="rbp-product-heading">Is this the right document for your business?</h2>
+      <p class="rbp-product-copy">Review who this document is designed for, what it helps you complete, what is included, and how delivery works after purchase. The aim is simple: give you enough detail to buy confidently, not make you decode vague ecommerce fog.</p>
+    </div>
+
+    <div class="rbp-product-grid rbp-product-grid--3">
+      <div class="rbp-product-card">
+        <h3 class="rbp-product-card-title">Product classification</h3>
+        <div class="rbp-product-pill-row">
+          {%- if product_family != blank -%}<span class="rbp-product-pill rbp-product-pill--blue">{{ product_family }}</span>{%- endif -%}
+          {%- if product_category != blank -%}<span class="rbp-product-pill">{{ product_category }}</span>{%- endif -%}
+          {%- if product_subcategory != blank -%}<span class="rbp-product-pill">{{ product_subcategory }}</span>{%- endif -%}
+          {%- if product_tier != blank -%}<span class="rbp-product-pill">{{ product_tier }}</span>{%- endif -%}
+          {%- if product.tags.size > 0 -%}{%- for tag in product.tags limit: 4 -%}<span class="rbp-product-pill">{{ tag }}</span>{%- endfor -%}{%- endif -%}
+        </div>
+      </div>
+
+      <div class="rbp-product-card">
+        <h3 class="rbp-product-card-title">Who it is for</h3>
+        {%- if target_buyers != blank -%}
+          <ul class="rbp-product-list">
+            {%- for buyer in target_buyers -%}<li><span class="rbp-product-check">✓</span><span>{{ buyer }}</span></li>{%- endfor -%}
+          </ul>
+        {%- else -%}
+          <p class="rbp-product-card-text">Built for business owners, operators and teams who need a structured document prepared around their business information.</p>
+        {%- endif -%}
+      </div>
+
+      <div class="rbp-product-card rbp-product-card--blue">
+        <h3 class="rbp-product-card-title">Quick facts</h3>
+        <div class="rbp-product-facts">
+          <div class="rbp-product-fact"><span class="rbp-product-fact-label">Delivery</span><span class="rbp-product-fact-value">{{ delivery_time }}</span></div>
+          {%- if asset_count != blank -%}<div class="rbp-product-fact"><span class="rbp-product-fact-label">Included assets</span><span class="rbp-product-fact-value">{{ asset_count }}</span></div>{%- endif -%}
+          {%- if version != blank -%}<div class="rbp-product-fact"><span class="rbp-product-fact-label">Version</span><span class="rbp-product-fact-value">{{ version }}</span></div>{%- endif -%}
+          <div class="rbp-product-fact"><span class="rbp-product-fact-label">Onboarding</span><span class="rbp-product-fact-value">Required after purchase</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="rbp-product-grid rbp-product-grid--2" style="margin-top: 20px;">
+      <div class="rbp-product-card">
+        <h3 class="rbp-product-card-title">Primary use case</h3>
+        {%- if primary_use_case != blank -%}
+          <p class="rbp-product-card-text">{{ primary_use_case | newline_to_br }}</p>
+        {%- else -%}
+          <p class="rbp-product-card-text">Use this product when you need a structured document tailored around your business information, rather than a blank template that leaves you doing all the heavy lifting. Humanity really did invent forms and then make everyone fill them out forever.</p>
+        {%- endif -%}
+        {%- if business_stage != blank -%}
+          <div class="rbp-product-pill-row" style="margin-top: 16px;"><span class="rbp-product-pill rbp-product-pill--blue">{{ business_stage }}</span></div>
+        {%- endif -%}
+      </div>
+
+      <div class="rbp-product-card">
+        <h3 class="rbp-product-card-title">Industry focus</h3>
+        {%- if industry_focus != blank -%}
+          <div class="rbp-product-pill-row">
+            {%- for industry in industry_focus -%}<span class="rbp-product-pill">{{ industry }}</span>{%- endfor -%}
+          </div>
+        {%- elsif product_category != blank -%}
+          <div class="rbp-product-pill-row"><span class="rbp-product-pill">{{ product_category }}</span></div>
+        {%- else -%}
+          <p class="rbp-product-card-text">Suitable for small-business operators who need a clear, practical document prepared from their business information.</p>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="rbp-product-section">
+  <div class="rbp-product-container">
+    <div class="rbp-product-grid rbp-product-grid--2">
+      <div class="rbp-product-card">
+        <div class="rbp-product-eyebrow">What is included</div>
+        <h2 class="rbp-product-heading" style="font-size: clamp(28px, 3vw, 40px);">Included assets and deliverables</h2>
+        <div class="rbp-product-card-text" style="margin-top: 18px;">
+          {%- if product.metafields.custom.includes != blank -%}
+            {{ product.metafields.custom.includes | metafield_tag }}
+          {%- else -%}
+            <p>This product includes the document, supporting guidance, delivery process and any inclusions listed in the product description.</p>
+          {%- endif -%}
+        </div>
+      </div>
+
+      <div class="rbp-product-card">
+        <h3 class="rbp-product-card-title">Formats and delivery</h3>
+        <div class="rbp-product-facts">
+          <div class="rbp-product-fact"><span class="rbp-product-fact-label">Delivery time</span><span class="rbp-product-fact-value">{{ delivery_time }}</span></div>
+          <div class="rbp-product-fact"><span class="rbp-product-fact-label">File formats</span><span class="rbp-product-fact-value">{%- if file_formats != blank -%}{%- for format in file_formats -%}{{ format }}{%- unless forloop.last -%}, {% endunless -%}{%- endfor -%}{%- else -%}Listed in product description{%- endif -%}</span></div>
+          <div class="rbp-product-fact"><span class="rbp-product-fact-label">Document types</span><span class="rbp-product-fact-value">{%- if document_types != blank -%}{%- for doc_type in document_types -%}{{ doc_type }}{%- unless forloop.last -%}, {% endunless -%}{%- endfor -%}{%- else -%}Listed in product description{%- endif -%}</span></div>
+          <div class="rbp-product-fact"><span class="rbp-product-fact-label">Shipping</span><span class="rbp-product-fact-value">No physical shipping required</span></div>
+        </div>
+        {%- if onboarding_form != blank -%}
+          <a class="rbp-product-button" href="{{ onboarding_form }}" style="margin-top: 18px;">Open onboarding form -&gt;</a>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="rbp-product-section rbp-product-section--muted">
+  <div class="rbp-product-container">
+    <div class="rbp-product-grid rbp-product-grid--3">
+      <div class="rbp-product-card">
+        <h3 class="rbp-product-card-title">How to use it</h3>
+        <div class="rbp-product-process">
+          <div class="rbp-product-step"><h3>Customer buys the document</h3><p>Complete checkout and keep your order confirmation for your records.</p></div>
+          <div class="rbp-product-step"><h3>Customer completes the onboarding form</h3><p>After purchase, complete the onboarding form so we have the information needed to prepare the document.</p></div>
+          <div class="rbp-product-step"><h3>Customer waits for delivery</h3><p>We prepare the document using the information provided and deliver it according to the delivery timeframe shown on the product page or order process.</p></div>
+          <div class="rbp-product-step"><h3>Customer reviews the order</h3><p>Review the delivered document and check that the details align with your business information and intended use.</p></div>
+          <div class="rbp-product-step"><h3>Customer asks for revisions or uses it immediately</h3><p>If revisions are included or available, request the required changes. Otherwise, use the document immediately in your business.</p></div>
+        </div>
+      </div>
+
+      <div class="rbp-product-card">
+        <h3 class="rbp-product-card-title">Usage and licence</h3>
+        <ul class="rbp-product-list">
+          <li><span class="rbp-product-check">✓</span><span>{{ section.settings.licence_note }}</span></li>
+          <li><span class="rbp-product-check">✓</span><span>{{ section.settings.editing_note }}</span></li>
+          <li><span class="rbp-product-check">✓</span><span>{{ section.settings.review_note }}</span></li>
+        </ul>
+      </div>
+
+      <div class="rbp-product-card">
+        <h3 class="rbp-product-card-title">Buyer confidence</h3>
+        <ul class="rbp-product-list">
+          <li><span class="rbp-product-check">✓</span><span>Clear purchase, onboarding, delivery and review process.</span></li>
+          <li><span class="rbp-product-check">✓</span><span>Product category, buyer fit and use case are shown before checkout.</span></li>
+          <li><span class="rbp-product-check">✓</span><span>You can review the delivered document and request revisions where they are included or available.</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "RBP product information",
+  "settings": [
+    { "type": "text", "id": "default_delivery_time", "label": "Default delivery time", "default": "Delivered after onboarding is completed" },
+    { "type": "text", "id": "licence_note", "label": "Licence note", "default": "Single business use licence unless otherwise stated." },
+    { "type": "text", "id": "editing_note", "label": "Editing note", "default": "Delivered document may be used and adapted internally for your business where applicable." },
+    { "type": "text", "id": "review_note", "label": "Review note", "default": "Review the delivered document before relying on it for your specific business context." }
+  ],
+  "presets": [
+    { "name": "RBP product information" }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,473 @@
+{% comment %}
+  RBP Product State — G5 Product Template States
+  Version: 1.2 | G12 update — fixed 'business-internet' handleize gap, added marketplace-service → enquiry
+  data-rbp-flow, data-product-type, data-fulfilment-type, data-member-required
+  Product types handled:
+    - template_pack            → instant download
+    - toolkit / digital_toolkit → instant download
+    - documentation_suite      → instant download
+    - on_demand_service        → onboarding/service CTA
+    - core_service             → intake form CTA
+    - membership               → join/upgrade CTA
+    - business_nbn             → availability check CTA
+    - property_field_service   → booking required CTA (NEW)
+    - business_in_a_box        → enquiry CTA
+    - asset_sale               → enquiry CTA
+    - custom_solution          → quote request CTA
+  Tag overrides:
+    - instant-download         → instant
+    - onboarding-required      → onboarding
+    - enquiry-required         → enquiry
+    - availability-check       → check
+    - booking-required         → booking (NEW)
+    - member-only              → membership (FIXED — was setting member_required without fulfilment_type)
+{% endcomment %}
+
+<style>
+.rbp-product-state {
+  --rbp-blue: #1d4ed8;
+  --rbp-blue-mid: #2563eb;
+  --rbp-indigo: #4f46e5;
+  --rbp-emerald: #059669;
+  --rbp-amber: #d97706;
+  --rbp-violet: #7c3aed;
+  --rbp-slate-900: #0f172a;
+  --rbp-slate-800: #1e293b;
+  --rbp-slate-700: #334155;
+  --rbp-slate-600: #475569;
+  --rbp-slate-500: #64748b;
+  --rbp-slate-400: #94a3b8;
+  --rbp-slate-200: #e2e8f0;
+  --rbp-slate-100: #f1f5f9;
+  --rbp-slate-50: #f8fafc;
+  --rbp-border: rgba(15,23,42,.09);
+  font-family: var(--font-body-family, system-ui, sans-serif);
+}
+.rbp-product-state *, .rbp-product-state *::before, .rbp-product-state *::after { box-sizing: border-box; }
+
+/* ── Fulfilment badge ─────────────────────────────────── */
+.rbp-fulfilment-badge {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 6px 14px; border-radius: 999px;
+  font-size: 12px; font-weight: 800; letter-spacing: .03em;
+  margin-bottom: 16px;
+}
+.rbp-fulfilment-badge.instant { background: #d1fae5; color: #065f46; }
+.rbp-fulfilment-badge.service { background: #dbeafe; color: #1e40af; }
+.rbp-fulfilment-badge.onboarding { background: #ede9fe; color: #4c1d95; }
+.rbp-fulfilment-badge.enquiry { background: #fff7ed; color: #9a3412; }
+.rbp-fulfilment-badge.check { background: #fef9c3; color: #713f12; }
+.rbp-fulfilment-badge.member { background: #fae8ff; color: #701a75; }
+.rbp-fulfilment-badge.booking { background: #f0fdf4; color: #166534; }
+
+/* ── CTA blocks ───────────────────────────────────────── */
+.rbp-product-cta-block {
+  background: var(--rbp-slate-50);
+  border: 1px solid var(--rbp-border);
+  border-radius: 20px; padding: 28px;
+  margin-top: 24px;
+}
+.rbp-product-cta-title {
+  font-size: 16px; font-weight: 900; color: var(--rbp-slate-900);
+  margin: 0 0 8px; letter-spacing: -.02em;
+}
+.rbp-product-cta-desc {
+  font-size: 13.5px; color: var(--rbp-slate-500); line-height: 1.65; font-weight: 500; margin-bottom: 20px;
+}
+.rbp-product-cta-steps {
+  display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px;
+}
+.rbp-product-cta-step {
+  display: flex; align-items: flex-start; gap: 10px;
+  font-size: 13px; color: var(--rbp-slate-600); font-weight: 600;
+}
+.rbp-product-cta-step-num {
+  width: 22px; height: 22px; border-radius: 999px;
+  background: var(--rbp-blue); color: #fff;
+  display: grid; place-items: center; flex-shrink: 0;
+  font-size: 11px; font-weight: 900; margin-top: 1px;
+}
+.rbp-product-cta-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+.rbp-product-cta-btn {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 12px 20px; border-radius: 12px;
+  font-size: 13.5px; font-weight: 800; text-decoration: none;
+  transition: all .15s ease;
+}
+.rbp-product-cta-btn-primary { background: var(--rbp-blue); color: #fff; box-shadow: 0 4px 16px rgba(29,78,216,.25); }
+.rbp-product-cta-btn-primary:hover { background: var(--rbp-blue-mid); transform: translateY(-1px); }
+.rbp-product-cta-btn-outline { background: #fff; color: var(--rbp-slate-700); border: 1px solid var(--rbp-border); }
+.rbp-product-cta-btn-outline:hover { border-color: var(--rbp-blue); color: var(--rbp-blue); }
+
+/* Instant download block */
+.rbp-instant-block {
+  background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%);
+  border: 1px solid rgba(5,150,105,.2); border-radius: 20px; padding: 24px;
+  margin-top: 20px;
+}
+.rbp-instant-block-title { font-size: 14px; font-weight: 900; color: #065f46; margin: 0 0 12px; }
+.rbp-instant-include-list { list-style: none; padding: 0; margin: 0 0 18px; display: grid; gap: 7px; }
+.rbp-instant-include-list li {
+  display: flex; align-items: center; gap: 9px;
+  font-size: 13px; color: #047857; font-weight: 600;
+}
+.rbp-instant-include-list svg { flex-shrink: 0; color: #059669; }
+.rbp-instant-note {
+  font-size: 12px; color: #6b7280; font-weight: 500;
+  display: flex; align-items: center; gap: 6px;
+}
+
+/* Member lock state */
+.rbp-member-lock {
+  background: linear-gradient(135deg, #fdf4ff 0%, #f5f3ff 100%);
+  border: 1px solid rgba(124,58,237,.2);
+  border-radius: 20px; padding: 28px; margin-top: 20px;
+  text-align: center;
+}
+.rbp-member-lock-icon { font-size: 32px; margin-bottom: 12px; }
+.rbp-member-lock-title { font-size: 17px; font-weight: 900; color: #4c1d95; margin: 0 0 8px; }
+.rbp-member-lock-desc { font-size: 13.5px; color: #6d28d9; line-height: 1.6; font-weight: 500; margin-bottom: 20px; }
+.rbp-member-lock-actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+.rbp-member-lock-btn {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 11px 20px; border-radius: 12px;
+  font-size: 13.5px; font-weight: 800; text-decoration: none; transition: all .15s;
+}
+.rbp-member-lock-btn-primary { background: #7c3aed; color: #fff; box-shadow: 0 4px 14px rgba(124,58,237,.25); }
+.rbp-member-lock-btn-primary:hover { background: #6d28d9; transform: translateY(-1px); }
+.rbp-member-lock-btn-ghost { background: #fff; color: #7c3aed; border: 1px solid rgba(124,58,237,.25); }
+
+/* Availability check block */
+.rbp-avail-block {
+  background: linear-gradient(135deg, #fffbeb 0%, #fef9c3 100%);
+  border: 1px solid rgba(217,119,6,.2);
+  border-radius: 20px; padding: 24px; margin-top: 20px;
+}
+.rbp-avail-title { font-size: 14px; font-weight: 900; color: #92400e; margin: 0 0 8px; }
+.rbp-avail-desc { font-size: 13px; color: #b45309; line-height: 1.6; font-weight: 500; margin-bottom: 16px; }
+.rbp-avail-form { display: flex; gap: 10px; }
+.rbp-avail-input {
+  flex: 1; padding: 11px 14px; border: 1px solid rgba(217,119,6,.3);
+  border-radius: 11px; background: #fff; font-size: 13.5px; outline: none;
+  transition: border-color .15s;
+}
+.rbp-avail-input:focus { border-color: #d97706; }
+.rbp-avail-btn {
+  padding: 11px 18px; background: #d97706; color: #fff;
+  border: none; border-radius: 11px; font-size: 13px; font-weight: 800;
+  cursor: pointer; transition: background .15s; white-space: nowrap;
+}
+.rbp-avail-btn:hover { background: #b45309; }
+.rbp-avail-result { margin-top: 12px; font-size: 13px; font-weight: 700; display: none; }
+
+/* Enquiry block */
+.rbp-enquiry-block {
+  background: linear-gradient(135deg, #fff7ed 0%, #fff8f1 100%);
+  border: 1px solid rgba(249,115,22,.2);
+  border-radius: 20px; padding: 24px; margin-top: 20px;
+}
+.rbp-enquiry-title { font-size: 14px; font-weight: 900; color: #9a3412; margin: 0 0 8px; }
+.rbp-enquiry-desc { font-size: 13px; color: #c2410c; line-height: 1.6; font-weight: 500; margin-bottom: 16px; }
+
+/* Trust badges */
+.rbp-trust-row {
+  display: flex; gap: 16px; flex-wrap: wrap; margin-top: 20px;
+  padding-top: 16px; border-top: 1px solid var(--rbp-border);
+}
+.rbp-trust-item {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 12px; color: var(--rbp-slate-500); font-weight: 600;
+}
+.rbp-trust-item svg { color: #22c55e; }
+
+/* ── Responsive ─────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .rbp-avail-form { flex-direction: column; }
+  .rbp-product-cta-actions { flex-direction: column; }
+}
+</style>
+
+{%- liquid
+  assign product_type = product.type | handleize | downcase
+  assign fulfilment_type = 'standard'
+  assign member_required = false
+
+  if product.tags contains 'instant-download'
+    assign fulfilment_type = 'instant'
+  elsif product.tags contains 'onboarding-required'
+    assign fulfilment_type = 'onboarding'
+  elsif product.tags contains 'enquiry-required'
+    assign fulfilment_type = 'enquiry'
+  elsif product.tags contains 'availability-check'
+    assign fulfilment_type = 'check'
+  elsif product.tags contains 'booking-required'
+    assign fulfilment_type = 'booking'
+  elsif product.tags contains 'member-only'
+    assign fulfilment_type = 'membership'
+    assign member_required = true
+  endif
+
+  # Override by product type (explicit type always wins over tag)
+  if product_type == 'template-pack' or product_type == 'template pack'
+    assign fulfilment_type = 'instant'
+  elsif product_type == 'toolkit' or product_type == 'digital toolkit' or product_type == 'digital-toolkit'
+    assign fulfilment_type = 'instant'
+  elsif product_type == 'documentation-suite' or product_type == 'documentation suite'
+    assign fulfilment_type = 'instant'
+  elsif product_type == 'on-demand-service' or product_type == 'on-demand service'
+    assign fulfilment_type = 'onboarding'
+  elsif product_type == 'core-service' or product_type == 'core service'
+    assign fulfilment_type = 'onboarding'
+  elsif product_type == 'membership'
+    assign fulfilment_type = 'membership'
+    assign member_required = true
+  elsif product_type == 'business-nbn' or product_type == 'business nbn' or product_type == 'business-internet'
+    assign fulfilment_type = 'check'
+  elsif product_type == 'property-field-service' or product_type == 'property field service'
+    assign fulfilment_type = 'booking'
+  elsif product_type == 'business-in-a-box' or product_type == 'business in a box'
+    assign fulfilment_type = 'enquiry'
+  elsif product_type == 'asset-sale' or product_type == 'asset sale'
+    assign fulfilment_type = 'enquiry'
+  elsif product_type == 'custom-solution' or product_type == 'custom solution'
+    assign fulfilment_type = 'enquiry'
+  elsif product_type == 'marketplace-service'
+    assign fulfilment_type = 'enquiry'
+  endif
+-%}
+
+<div class="rbp-product-state"
+  data-rbp-flow="{{ fulfilment_type }}"
+  data-product-type="{{ product_type }}"
+  data-fulfilment-type="{{ fulfilment_type }}"
+  data-member-required="{{ member_required }}"
+  data-product-handle="{{ product.handle }}">
+
+  {%- comment %} ── Fulfilment badge ── {% endcomment %}
+  {%- if fulfilment_type == 'instant' -%}
+    <div class="rbp-fulfilment-badge instant" role="status" aria-label="Instant digital download">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Instant digital download
+    </div>
+
+    <div class="rbp-instant-block">
+      <h3 class="rbp-instant-block-title">✅ What's included with your purchase</h3>
+      <ul class="rbp-instant-include-list" aria-label="What is included">
+        <li>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+          Instant download link emailed on purchase
+        </li>
+        <li>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+          Download accessible from your account
+        </li>
+        <li>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+          Fully editable Microsoft Office / Google Workspace compatible
+        </li>
+        <li>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+          Designed for Australian businesses — compliant with AU legislation
+        </li>
+        <li>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+          Lifetime access — re-download anytime from your account
+        </li>
+      </ul>
+      <p class="rbp-instant-note">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        Need help with a template? Visit our <a href="/pages/help-center" style="color:#6b7280;font-weight:700;">Help Center</a> or <a href="/pages/contact" style="color:#6b7280;font-weight:700;">contact us</a>.
+      </p>
+    </div>
+
+  {%- elsif fulfilment_type == 'onboarding' -%}
+    <div class="rbp-fulfilment-badge service" role="status" aria-label="Service engagement — onboarding required">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      Service engagement — onboarding required
+    </div>
+
+    <div class="rbp-product-cta-block">
+      <h3 class="rbp-product-cta-title">How your service is delivered</h3>
+      <p class="rbp-product-cta-desc">This is a professional service product. After purchase, our team will initiate your onboarding to get started. This is not an instant download.</p>
+      <div class="rbp-product-cta-steps" aria-label="Service delivery steps">
+        <div class="rbp-product-cta-step">
+          <span class="rbp-product-cta-step-num" aria-hidden="true">1</span>
+          Purchase the service and complete checkout
+        </div>
+        <div class="rbp-product-cta-step">
+          <span class="rbp-product-cta-step-num" aria-hidden="true">2</span>
+          Our team contacts you within 1 business day to begin onboarding
+        </div>
+        <div class="rbp-product-cta-step">
+          <span class="rbp-product-cta-step-num" aria-hidden="true">3</span>
+          Complete a brief requirements form to scope your engagement
+        </div>
+        <div class="rbp-product-cta-step">
+          <span class="rbp-product-cta-step-num" aria-hidden="true">4</span>
+          Delivery commences within the agreed timeframe
+        </div>
+      </div>
+      <div class="rbp-product-cta-actions">
+        <a href="/pages/help-center" class="rbp-product-cta-btn rbp-product-cta-btn-outline">How it works</a>
+        <a href="/pages/contact" class="rbp-product-cta-btn rbp-product-cta-btn-outline">Ask a question</a>
+      </div>
+    </div>
+
+  {%- elsif fulfilment_type == 'check' -%}
+    <div class="rbp-fulfilment-badge check" role="status" aria-label="Availability check required">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      Address availability check required
+    </div>
+
+    <div class="rbp-avail-block" data-rbp-flow="nbn-check">
+      <h3 class="rbp-avail-title">Check your address availability</h3>
+      <p class="rbp-avail-desc">Business NBN availability depends on your location. Enter your address below to check if this plan is available at your business premises.</p>
+      <div class="rbp-avail-form" role="search" aria-label="Address availability check">
+        <input type="text" class="rbp-avail-input" id="rbp-nbn-address" placeholder="Enter your business address…" aria-label="Business address" autocomplete="street-address">
+        <button class="rbp-avail-btn" type="button" id="rbp-nbn-check-btn" data-rbp-flow="check-address">Check availability</button>
+      </div>
+      <div class="rbp-avail-result" id="rbp-avail-result" role="alert" aria-live="polite"></div>
+      <p style="margin-top:12px;font-size:12px;color:#b45309;font-weight:500;">
+        ℹ️ Some locations require a manual serviceability check — our team will contact you within 1 business day if automatic checking isn't available for your address.
+      </p>
+    </div>
+
+  {%- elsif fulfilment_type == 'enquiry' -%}
+    <div class="rbp-fulfilment-badge enquiry" role="status" aria-label="Manual review required">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      Manual review required
+    </div>
+
+    <div class="rbp-enquiry-block" data-rbp-flow="enquiry">
+      <h3 class="rbp-enquiry-title">How to purchase &amp; enquire</h3>
+      <p class="rbp-enquiry-desc">This product requires a review and discussion before purchase. Add to cart to submit an enquiry, or contact our team directly to discuss your requirements.</p>
+      <div class="rbp-product-cta-actions">
+        <a href="/pages/marketplace-enquiry" class="rbp-product-cta-btn rbp-product-cta-btn-primary" data-rbp-flow="marketplace-enquiry">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          Submit an enquiry
+        </a>
+        <a href="/pages/contact" class="rbp-product-cta-btn rbp-product-cta-btn-outline">Speak to our team</a>
+      </div>
+    </div>
+
+  {%- elsif fulfilment_type == 'booking' -%}
+    <div class="rbp-fulfilment-badge booking" role="status" aria-label="Booking required">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      Booking required
+    </div>
+
+    <div class="rbp-product-cta-block" data-rbp-flow="booking">
+      <p class="rbp-product-cta-title">Property Field Service — booking required</p>
+      <p class="rbp-product-cta-desc">This service requires a confirmed booking. After purchase, you'll be contacted to schedule your property inspection, report, or field service appointment.</p>
+      <div class="rbp-product-cta-steps">
+        <div class="rbp-product-cta-step">
+          <span class="rbp-product-cta-step-num">1</span>
+          <span>Purchase the service and complete checkout</span>
+        </div>
+        <div class="rbp-product-cta-step">
+          <span class="rbp-product-cta-step-num">2</span>
+          <span>Receive a booking confirmation request via email</span>
+        </div>
+        <div class="rbp-product-cta-step">
+          <span class="rbp-product-cta-step-num">3</span>
+          <span>Confirm your preferred date, time and property address</span>
+        </div>
+        <div class="rbp-product-cta-step">
+          <span class="rbp-product-cta-step-num">4</span>
+          <span>Field service completed and report delivered as agreed</span>
+        </div>
+      </div>
+      <div class="rbp-product-cta-actions">
+        <a href="/pages/help-center" class="rbp-product-cta-btn rbp-product-cta-btn-ghost">How it works</a>
+        <a href="/pages/contact" class="rbp-product-cta-btn rbp-product-cta-btn-ghost">Ask a question</a>
+      </div>
+    </div>
+
+  {%- elsif fulfilment_type == 'membership' -%}
+    <div class="rbp-fulfilment-badge member" role="status" aria-label="Membership product">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      Membership product
+    </div>
+
+    <div class="rbp-member-lock" data-rbp-flow="membership">
+      <div class="rbp-member-lock-icon" aria-hidden="true">⭐</div>
+      <h3 class="rbp-member-lock-title">RBP Premium Membership</h3>
+      <p class="rbp-member-lock-desc">Unlock priority access, exclusive member rates, partner offers, and the full member portal. Start free — upgrade anytime for premium benefits.</p>
+      <div class="rbp-member-lock-actions">
+        <a href="/pages/membership#join" class="rbp-member-lock-btn rbp-member-lock-btn-primary" data-rbp-flow="membership-join">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          Join now
+        </a>
+        <a href="/pages/membership" class="rbp-member-lock-btn rbp-member-lock-btn-ghost">Learn more</a>
+      </div>
+    </div>
+
+  {%- endif -%}
+
+  {%- comment %} ── Member-only lock overlay (additional) ── {% endcomment %}
+  {%- if member_required == true -%}
+    <div class="rbp-member-lock" data-rbp-flow="lock-state" data-member-required="true" style="margin-top:16px;">
+      <div class="rbp-member-lock-icon" aria-hidden="true">🔒</div>
+      <h3 class="rbp-member-lock-title">Members only</h3>
+      <p class="rbp-member-lock-desc">This content is available exclusively to RBP Members. Join free to access member-only resources, exclusive rates, and partner offers.</p>
+      <div class="rbp-member-lock-actions">
+        <a href="/pages/membership#join" class="rbp-member-lock-btn rbp-member-lock-btn-primary" data-rbp-flow="membership-join">Become a member</a>
+        <a href="/account/login" class="rbp-member-lock-btn rbp-member-lock-btn-ghost">Login</a>
+      </div>
+    </div>
+  {%- endif -%}
+
+  {%- comment %} ── Trust badges ── {% endcomment %}
+  <div class="rbp-trust-row" aria-label="Trust signals">
+    <div class="rbp-trust-item">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+      Australian owned
+    </div>
+    <div class="rbp-trust-item">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+      Secure payment
+    </div>
+    <div class="rbp-trust-item">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+      GST invoice included
+    </div>
+    {%- if fulfilment_type == 'instant' -%}
+      <div class="rbp-trust-item">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+        Lifetime access
+      </div>
+    {%- endif -%}
+  </div>
+
+</div>
+
+<script>
+(function(){
+  // NBN address checker — hooks into Codex /apps/rbp-bridge/api/check-address
+  var checkBtn = document.getElementById('rbp-nbn-check-btn');
+  if(!checkBtn) return;
+  checkBtn.addEventListener('click', function(){
+    var address = document.getElementById('rbp-nbn-address').value.trim();
+    var result = document.getElementById('rbp-avail-result');
+    if(!address){ result.style.display='block'; result.style.color='#b45309'; result.textContent='Please enter your business address to check availability.'; return; }
+    checkBtn.textContent='Checking…'; checkBtn.disabled=true;
+    // Placeholder — Codex will connect /apps/rbp-bridge/api/check-address
+    setTimeout(function(){
+      result.style.display='block';
+      result.style.color='#047857';
+      result.innerHTML='<strong>Address submitted.</strong> Our team will confirm availability within 1 business day. <a href="/pages/contact" style="color:#047857;font-weight:700;">Questions? Contact us.</a>';
+      checkBtn.textContent='Check availability'; checkBtn.disabled=false;
+    }, 1200);
+  });
+})();
+</script>
+
+{% schema %}
+{
+  "name": "RBP Product State",
+  "tag": "div",
+  "class": "rbp-product-state-section",
+  "settings": [],
+  "presets": [{ "name": "RBP Product State" }]
+}
+{% endschema %}

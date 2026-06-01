@@ -1,0 +1,210 @@
+{%- style -%}
+  .rbp-onboarding { padding: 48px 0 64px; }
+  .rbp-onboarding__wrap { max-width: 980px; margin: 0 auto; padding: 0 20px; }
+  .rbp-onboarding__hero { background: rgb(var(--color-background)); border: 1px solid rgba(var(--color-foreground), .12); border-radius: 18px; padding: 28px; margin-bottom: 24px; }
+  .rbp-onboarding__eyebrow { text-transform: uppercase; letter-spacing: .08em; font-size: 12px; margin: 0 0 8px; opacity: .75; }
+  .rbp-onboarding__hero h1 { margin: 0 0 12px; }
+  .rbp-onboarding__steps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-top: 22px; }
+  .rbp-onboarding__step { border: 1px solid rgba(var(--color-foreground), .12); border-radius: 14px; padding: 14px; background: rgba(var(--color-foreground), .03); }
+  .rbp-onboarding__step strong { display: block; margin-bottom: 4px; }
+  .rbp-form { display: grid; gap: 22px; }
+  .rbp-form__section { border: 1px solid rgba(var(--color-foreground), .12); border-radius: 18px; padding: 22px; background: rgb(var(--color-background)); }
+  .rbp-form__section h2 { margin-top: 0; margin-bottom: 8px; }
+  .rbp-form__intro { margin-top: 0; opacity: .8; }
+  .rbp-form__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+  .rbp-field { display: grid; gap: 7px; }
+  .rbp-field label, .rbp-check label { font-weight: 600; }
+  .rbp-field input, .rbp-field select, .rbp-field textarea { width: 100%; min-height: 44px; border: 1px solid rgba(var(--color-foreground), .18); border-radius: 10px; padding: 10px 12px; font: inherit; background: rgb(var(--color-background)); color: rgb(var(--color-foreground)); }
+  .rbp-field textarea { min-height: 110px; resize: vertical; }
+  .rbp-field small { opacity: .72; }
+  .rbp-check { display: grid; grid-template-columns: 22px 1fr; gap: 10px; align-items: start; margin: 10px 0; }
+  .rbp-check input { margin-top: 4px; }
+  .rbp-category-panel { display: none; margin-top: 14px; padding: 16px; border-radius: 14px; background: rgba(var(--color-foreground), .04); }
+  .rbp-category-panel.is-active { display: block; }
+  .rbp-submit { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+  .rbp-submit .button { min-width: 220px; }
+  .rbp-note { border-left: 4px solid currentColor; padding: 10px 12px; background: rgba(var(--color-foreground), .04); border-radius: 10px; }
+  @media screen and (max-width: 749px) { .rbp-onboarding__steps, .rbp-form__grid { grid-template-columns: 1fr; } .rbp-onboarding__hero, .rbp-form__section { padding: 18px; } }
+{%- endstyle -%}
+
+<section class="rbp-onboarding color-{{ section.settings.color_scheme }} gradient">
+  <div class="rbp-onboarding__wrap">
+    <div class="rbp-onboarding__hero">
+      <p class="rbp-onboarding__eyebrow">{{ section.settings.eyebrow }}</p>
+      <h1>{{ section.settings.heading }}</h1>
+      <div class="rte">{{ section.settings.intro }}</div>
+      <div class="rbp-onboarding__steps" aria-label="Onboarding steps">
+        <div class="rbp-onboarding__step"><strong>1. Confirm order</strong><span>Match your submission to your Shopify purchase.</span></div>
+        <div class="rbp-onboarding__step"><strong>2. Share context</strong><span>Tell us about your business and use case.</span></div>
+        <div class="rbp-onboarding__step"><strong>3. Add details</strong><span>Provide customisation notes, tone and supporting links.</span></div>
+        <div class="rbp-onboarding__step"><strong>4. Submit brief</strong><span>Your delivery timeframe starts after submission.</span></div>
+      </div>
+    </div>
+
+    {% form 'contact', id: 'RbpTemplateOnboardingForm', class: 'rbp-form' %}
+      {% if form.posted_successfully? %}
+        <div class="rbp-form__section" tabindex="-1" autofocus>
+          <h2>Onboarding form submitted</h2>
+          <p>Your onboarding form has been submitted. We will review your information and customise your purchased product. Your delivery timeframe begins from this submission. If clarification is needed, we will contact you using the email address provided.</p>
+        </div>
+      {% endif %}
+
+      {% if form.errors %}
+        <div class="rbp-form__section">
+          <h2>Check the form</h2>
+          <div class="form__message">{{ form.errors | default_errors }}</div>
+        </div>
+      {% endif %}
+
+      <input type="hidden" name="contact[subject]" value="Template customisation onboarding submission">
+      <input type="hidden" id="rbp_url_product_handle" name="contact[URL product handle]">
+      <input type="hidden" id="rbp_url_sku" name="contact[URL SKU]">
+      <input type="hidden" id="rbp_url_category" name="contact[URL onboarding category]">
+      <input type="hidden" id="rbp_current_url" name="contact[Submission page URL]">
+
+      <div class="rbp-form__section">
+        <h2>Order details</h2>
+        <p class="rbp-form__intro">Use the same details from your Shopify checkout so we can match this brief to the correct order.</p>
+        <div class="rbp-form__grid">
+          <div class="rbp-field"><label for="rbp_order">Shopify order number *</label><input id="rbp_order" name="contact[Shopify order number]" autocomplete="off" required></div>
+          <div class="rbp-field"><label for="rbp_product_title">Product purchased *</label><input id="rbp_product_title" name="contact[Product purchased]" required></div>
+          <div class="rbp-field"><label for="rbp_name">Full name *</label><input id="rbp_name" name="contact[name]" autocomplete="name" required></div>
+          <div class="rbp-field"><label for="rbp_email">Email used at checkout *</label><input id="rbp_email" type="email" name="contact[email]" autocomplete="email" required></div>
+        </div>
+      </div>
+
+      <div class="rbp-form__section">
+        <h2>Business profile</h2>
+        <p class="rbp-form__intro">Tell us the basic business context we should use when tailoring the product.</p>
+        <div class="rbp-form__grid">
+          <div class="rbp-field"><label for="rbp_business_name">Legal business name *</label><input id="rbp_business_name" name="contact[Legal business name]" required></div>
+          <div class="rbp-field"><label for="rbp_trading_name">Trading name, if different</label><input id="rbp_trading_name" name="contact[Trading name]"></div>
+          <div class="rbp-field"><label for="rbp_website">Website</label><input id="rbp_website" name="contact[Website]"></div>
+          <div class="rbp-field"><label for="rbp_location">Country / state *</label><input id="rbp_location" name="contact[Country state]" required></div>
+          <div class="rbp-field"><label for="rbp_industry">Industry *</label><select id="rbp_industry" name="contact[Industry]" required><option value="">Select one</option><option>Professional services</option><option>Health / disability / care services</option><option>Retail / ecommerce</option><option>Construction / trades</option><option>Hospitality</option><option>Education / training</option><option>Technology / digital services</option><option>Finance / bookkeeping / accounting</option><option>Marketing / creative services</option><option>Agriculture / farming</option><option>Real estate / property</option><option>Transport / logistics</option><option>Manufacturing</option><option>Not-for-profit / community services</option><option>Other</option></select></div>
+          <div class="rbp-field"><label for="rbp_business_size">Business size *</label><select id="rbp_business_size" name="contact[Business size]" required><option value="">Select one</option><option>Sole trader / solo operator</option><option>2-5 people</option><option>6-20 people</option><option>21-50 people</option><option>51-100 people</option><option>100+ people</option></select></div>
+        </div>
+        <div class="rbp-field" style="margin-top:16px"><label for="rbp_services">Main products or services *</label><textarea id="rbp_services" name="contact[Main products or services]" required></textarea></div>
+        <div class="rbp-field" style="margin-top:16px"><label for="rbp_description">Brief business description *</label><textarea id="rbp_description" name="contact[Brief business description]" required></textarea></div>
+      </div>
+
+      <div class="rbp-form__section">
+        <h2>Product purpose and use case</h2>
+        <p class="rbp-form__intro">Explain what you need the product to do. This keeps the customisation practical instead of vaguely decorative, which is apparently a risk.</p>
+        <div class="rbp-field"><label for="rbp_use_case">What do you want to use this product for? *</label><textarea id="rbp_use_case" name="contact[Product use case]" required></textarea></div>
+        <div class="rbp-form__grid" style="margin-top:16px">
+          <div class="rbp-field"><label for="rbp_who_uses">Who will use the completed product? *</label><select id="rbp_who_uses" name="contact[Who will use it]" required><option value="">Select one</option><option>Business owner / director</option><option>Manager / team leader</option><option>HR / people team</option><option>Finance / accounts team</option><option>Operations team</option><option>Sales / marketing team</option><option>Admin team</option><option>Employees</option><option>Contractors</option><option>Clients / customers</option><option>Participants / service users</option><option>Other</option></select></div>
+          <div class="rbp-field"><label for="rbp_audience">Who is it intended for? *</label><select id="rbp_audience" name="contact[Intended audience]" required><option value="">Select one</option><option>Internal team</option><option>External clients / customers</option><option>Employees</option><option>Contractors</option><option>Suppliers</option><option>NDIS participants / representatives</option><option>Regulators / auditors</option><option>Job applicants</option><option>Board / leadership team</option><option>Other</option></select></div>
+          <div class="rbp-field"><label for="rbp_new_existing">Is this for a new or existing document/process? *</label><select id="rbp_new_existing" name="contact[New or existing]" required><option value="">Select one</option><option>New document/process</option><option>Updating an existing document/process</option><option>Replacing an old template</option><option>Not sure</option></select></div>
+          <div class="rbp-field"><label for="rbp_category">Product category *</label><select id="rbp_category" name="contact[Product category]" required><option value="">Select one</option><option value="hr">HR / Employment</option><option value="finance">Finance</option><option value="marketing">Marketing / Sales</option><option value="technology">Technology / Data / Security</option><option value="compliance">Compliance / Audit / Risk</option><option value="ndis">NDIS / Care / Service Delivery</option><option value="operations">Operations / Process</option><option value="general">General Business</option></select></div>
+        </div>
+        <div class="rbp-field" style="margin-top:16px"><label for="rbp_outcome">What outcome do you want from this product? *</label><textarea id="rbp_outcome" name="contact[Desired outcome]" required></textarea></div>
+      </div>
+
+      <div class="rbp-form__section">
+        <h2>Customisation details</h2>
+        <p class="rbp-form__intro">Add the details we should insert, reflect or avoid when customising your product.</p>
+        <div class="rbp-field"><label for="rbp_business_specific">What business-specific details should be included? *</label><textarea id="rbp_business_specific" name="contact[Business specific details]" required></textarea></div>
+        <div class="rbp-form__grid" style="margin-top:16px">
+          <div class="rbp-field"><label for="rbp_roles">Names, roles, departments or contact details to include</label><textarea id="rbp_roles" name="contact[Roles departments contacts]"></textarea></div>
+          <div class="rbp-field"><label for="rbp_processes">Processes, steps or workflows to reflect</label><textarea id="rbp_processes" name="contact[Processes workflows]"></textarea></div>
+          <div class="rbp-field"><label for="rbp_approvals">Approval points, responsibilities or escalation steps</label><textarea id="rbp_approvals" name="contact[Approvals responsibilities escalations]"></textarea></div>
+          <div class="rbp-field"><label for="rbp_systems">Tools, systems, software or platforms used</label><textarea id="rbp_systems" name="contact[Tools systems platforms]"></textarea></div>
+        </div>
+        <div class="rbp-form__grid" style="margin-top:16px">
+          <div class="rbp-field"><label for="rbp_include_words">Terms or wording to include</label><textarea id="rbp_include_words" name="contact[Wording to include]"></textarea></div>
+          <div class="rbp-field"><label for="rbp_avoid_words">Terms or wording to avoid</label><textarea id="rbp_avoid_words" name="contact[Wording to avoid]"></textarea></div>
+        </div>
+      </div>
+
+      <div class="rbp-form__section">
+        <h2>Category-specific guidance</h2>
+        <p class="rbp-form__intro">The questions below change based on the category selected above. Yes, one form can behave itself.</p>
+        <div class="rbp-category-panel" data-panel="hr"><div class="rbp-field"><label for="rbp_hr">HR / Employment details</label><textarea id="rbp_hr" name="contact[HR employment details]" placeholder="Employee type, role, workplace arrangement, workplace rules, conduct standards, approval steps or responsible person."></textarea></div></div>
+        <div class="rbp-category-panel" data-panel="finance"><div class="rbp-field"><label for="rbp_finance">Finance details</label><textarea id="rbp_finance" name="contact[Finance details]" placeholder="Finance process, payment terms, approval limits, reporting periods, responsible roles or accounting system."></textarea></div></div>
+        <div class="rbp-category-panel" data-panel="marketing"><div class="rbp-field"><label for="rbp_marketing">Marketing / Sales details</label><textarea id="rbp_marketing" name="contact[Marketing sales details]" placeholder="Product, service, offer, target audience, marketing channel, campaign goal or key message."></textarea></div></div>
+        <div class="rbp-category-panel" data-panel="technology"><div class="rbp-field"><label for="rbp_technology">Technology / Data / Security details</label><textarea id="rbp_technology" name="contact[Technology data security details]" placeholder="Systems, tools, platforms, data types, access rules, security responsibilities or usage rules."></textarea></div></div>
+        <div class="rbp-category-panel" data-panel="compliance"><div class="rbp-field"><label for="rbp_compliance">Compliance / Audit / Risk details</label><textarea id="rbp_compliance" name="contact[Compliance audit risk details]" placeholder="Risk, obligation, compliance requirement, review period, incident step or reporting requirement."></textarea></div></div>
+        <div class="rbp-category-panel" data-panel="ndis"><div class="rbp-field"><label for="rbp_ndis">NDIS / Care / Service Delivery details</label><textarea id="rbp_ndis" name="contact[NDIS care service delivery details]" placeholder="Services or supports, participant groups, worker details, safeguarding matters or service delivery requirements."></textarea></div></div>
+        <div class="rbp-category-panel" data-panel="operations"><div class="rbp-field"><label for="rbp_operations">Operations / Process details</label><textarea id="rbp_operations" name="contact[Operations process details]" placeholder="Process steps, responsible people, approvals, handovers, review points or operating locations."></textarea></div></div>
+        <div class="rbp-category-panel" data-panel="general"><div class="rbp-field"><label for="rbp_general">General business details</label><textarea id="rbp_general" name="contact[General business details]" placeholder="Business activity, information to customise, examples or preferences to follow."></textarea></div></div>
+      </div>
+
+      <div class="rbp-form__section">
+        <h2>Tone, style and supporting materials</h2>
+        <div class="rbp-form__grid">
+          <div class="rbp-field"><label for="rbp_tone">Preferred tone *</label><select id="rbp_tone" name="contact[Preferred tone]" required><option value="">Select one</option><option>Professional and practical</option><option>Formal</option><option>Plain English</option><option>Friendly and customer-facing</option><option>Strategic and polished</option><option>Minimal and simple</option></select></div>
+          <div class="rbp-field"><label for="rbp_spelling">Preferred spelling *</label><select id="rbp_spelling" name="contact[Preferred spelling]" required><option value="">Select one</option><option>Australian English</option><option>UK English</option><option>US English</option></select></div>
+          <div class="rbp-field"><label for="rbp_format">Preferred format *</label><select id="rbp_format" name="contact[Preferred format]" required><option value="">Select one</option><option>Word document</option><option>Google Docs</option><option>PDF</option><option>Excel</option><option>Google Sheets</option><option>Canva</option><option>Use the best format for this product</option></select></div>
+          <div class="rbp-field"><label for="rbp_logo">Do you want your logo included?</label><select id="rbp_logo" name="contact[Logo included]"><option>No</option><option>Yes</option><option>Not sure</option></select></div>
+        </div>
+        <div class="rbp-field" style="margin-top:16px"><label for="rbp_supporting_links">Supporting file links</label><textarea id="rbp_supporting_links" name="contact[Supporting file links]" placeholder="Paste links to logos, current documents, brand guides, examples or notes. Make sure sharing permissions allow us to access them."></textarea><small>Native Shopify contact forms cannot attach files without an app. Use share links here, or add a form app later if uploads are essential.</small></div>
+        <div class="rbp-field" style="margin-top:16px"><label for="rbp_extra_notes">Anything else we should know?</label><textarea id="rbp_extra_notes" name="contact[Additional notes]"></textarea></div>
+      </div>
+
+      <div class="rbp-form__section">
+        <h2>Delivery and scope confirmation</h2>
+        <p class="rbp-note">Your delivery timeframe begins once this completed form has been submitted. Missing or unclear information may delay delivery.</p>
+        <div class="rbp-check"><input id="rbp_confirm_1" type="checkbox" required name="contact[Confirmed customised digital product]" value="Yes"><label for="rbp_confirm_1">I understand this is a customised digital product prepared using the information I provide.</label></div>
+        <div class="rbp-check"><input id="rbp_confirm_2" type="checkbox" required name="contact[Confirmed delivery starts after form]" value="Yes"><label for="rbp_confirm_2">I understand the delivery timeframe begins after this form is submitted.</label></div>
+        <div class="rbp-check"><input id="rbp_confirm_3" type="checkbox" required name="contact[Confirmed information accurate]" value="Yes"><label for="rbp_confirm_3">I confirm the information provided is accurate and complete to the best of my knowledge.</label></div>
+        <div class="rbp-check"><input id="rbp_confirm_4" type="checkbox" required name="contact[Confirmed scope limits]" value="Yes"><label for="rbp_confirm_4">I understand this purchase does not include additional consulting, legal advice, financial advice, HR advice or compliance advice unless separately purchased.</label></div>
+        <div class="rbp-check"><input id="rbp_confirm_5" type="checkbox" required name="contact[Confirmed revisions scope]" value="Yes"><label for="rbp_confirm_5">I understand major rewrites, new documents or expanded customisation may require a separate service.</label></div>
+        <div class="rbp-submit"><button type="submit" class="button">Submit onboarding form</button><span>We will use this brief to prepare your customised product.</span></div>
+      </div>
+    {% endform %}
+  </div>
+</section>
+
+<script>
+  (function() {
+    var params = new URLSearchParams(window.location.search);
+    var map = {
+      order: 'rbp_order',
+      email: 'rbp_email',
+      title: 'rbp_product_title',
+      product_title: 'rbp_product_title',
+      product: 'rbp_url_product_handle',
+      sku: 'rbp_url_sku',
+      category: 'rbp_url_category'
+    };
+    Object.keys(map).forEach(function(key) {
+      var value = params.get(key);
+      var field = document.getElementById(map[key]);
+      if (value && field) field.value = value;
+    });
+    var currentUrl = document.getElementById('rbp_current_url');
+    if (currentUrl) currentUrl.value = window.location.href;
+
+    var category = document.getElementById('rbp_category');
+    var categoryParam = (params.get('category') || '').toLowerCase();
+    var aliases = {
+      hr_employment: 'hr', hr: 'hr', finance: 'finance', marketing_sales: 'marketing', marketing: 'marketing', sales: 'marketing',
+      technology_data_security: 'technology', technology: 'technology', compliance_audit_risk: 'compliance', compliance: 'compliance',
+      ndis_care_service_delivery: 'ndis', ndis: 'ndis', operations_process: 'operations', operations: 'operations', general_business: 'general', general: 'general'
+    };
+    if (category && aliases[categoryParam]) category.value = aliases[categoryParam];
+    function refreshPanels() {
+      var value = category ? category.value : '';
+      document.querySelectorAll('.rbp-category-panel').forEach(function(panel) {
+        panel.classList.toggle('is-active', panel.getAttribute('data-panel') === value);
+      });
+    }
+    if (category) { category.addEventListener('change', refreshPanels); refreshPanels(); }
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "RBP onboarding form",
+  "settings": [
+    { "type": "color_scheme", "id": "color_scheme", "label": "Colour scheme", "default": "scheme-1" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Customisation brief" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Complete your product onboarding form" },
+    { "type": "richtext", "id": "intro", "label": "Intro", "default": "<p>Complete this form after checkout so we can customise your purchased template, documentation suite or toolkit for your business. Your delivery timeframe begins once this completed form is submitted.</p>" }
+  ],
+  "presets": [
+    { "name": "RBP onboarding form" }
+  ]
+}
+{% endschema %}

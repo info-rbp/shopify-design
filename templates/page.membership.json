@@ -1,0 +1,13 @@
+{
+  "sections": {
+    "rbp_membership_page": {
+      "type": "rbp-membership-page",
+      "settings": {
+        "eyebrow": "RBP Membership",
+        "hero_heading": "Your business, better supported.",
+        "hero_subtext": "RBP Membership gives Australian SMEs structured access to business support, professional resources, document guidance and service pathways — through one connected membership relationship."
+      }
+    }
+  },
+  "order": ["rbp_membership_page"]
+}

@@ -1,0 +1,105 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "vendor": { "type": "text", "settings": { "text": "{{ product.vendor }}", "text_style": "uppercase" } },
+        "title": { "type": "title", "settings": {} },
+        "rating": { "type": "rating", "settings": {} },
+        "price": { "type": "price", "settings": {} },
+        "variant_picker": { "type": "variant_picker", "settings": { "picker_type": "button", "swatch_shape": "circle" } },
+        "quantity_selector": { "type": "quantity_selector", "settings": {} },
+        "buy_buttons": { "type": "buy_buttons", "settings": { "show_dynamic_checkout": true, "show_gift_card_recipient": true } },
+        "description": { "type": "description", "settings": {} },
+        "share": { "type": "share", "settings": { "share_label": "Share" } }
+      },
+      "block_order": ["vendor", "title", "rating", "price", "variant_picker", "quantity_selector", "buy_buttons", "description", "share"],
+      "settings": {
+        "enable_sticky_info": true,
+        "color_scheme": "scheme-1",
+        "media_size": "medium",
+        "constrain_to_viewport": true,
+        "media_fit": "contain",
+        "gallery_layout": "thumbnail_slider",
+        "media_position": "left",
+        "image_zoom": "lightbox",
+        "mobile_thumbnails": "hide",
+        "hide_variants": true,
+        "enable_video_looping": false,
+        "padding_top": 60,
+        "padding_bottom": 40
+      }
+    },
+    "rbp_product_state": {
+      "type": "rbp-product-state",
+      "settings": {}
+    },
+    "rbp_product_state_guard": {
+      "type": "rbp-product-state-guard",
+      "settings": {}
+    },
+    "rbp_product_information": {
+      "type": "rbp-product-information",
+      "settings": {
+        "default_delivery_time": "Delivered after onboarding is completed",
+        "licence_note": "Single business use licence unless otherwise stated.",
+        "editing_note": "Delivered document may be used and adapted internally for your business where applicable.",
+        "review_note": "Review the delivered document before relying on it for your specific business context."
+      }
+    },
+    "rbp_product_offerings": {
+      "type": "rbp-product-offerings",
+      "settings": {
+        "templates_title": "Templates",
+        "templates_text": "Individual business documents prepared for a specific need, task, process or decision.",
+        "templates_link": "/pages/templates",
+        "suites_title": "Documentation Suites",
+        "suites_text": "Grouped document packs for businesses that need several connected documents prepared together.",
+        "suites_link": "/pages/documentation-suite",
+        "toolkits_title": "Toolkits",
+        "toolkits_text": "Practical bundles that combine documents, guidance and resources to help you complete a broader business activity.",
+        "toolkits_link": "/pages/toolkits"
+      }
+    },
+    "rbp_product_faq": {
+      "type": "rbp-product-faq",
+      "settings": { "default_delivery_time": "Delivered after onboarding is completed" }
+    },
+    "rbp_product_help": {
+      "type": "rbp-product-help",
+      "settings": {}
+    },
+    "rbp_card_fallback_styles": {
+      "type": "rbp-card-fallback-styles",
+      "settings": {}
+    },
+    "related-products": {
+      "type": "related-products",
+      "settings": {
+        "heading": "Related products and useful next steps",
+        "heading_size": "h2",
+        "products_to_show": 4,
+        "columns_desktop": 4,
+        "color_scheme": "scheme-1",
+        "image_ratio": "portrait",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "columns_mobile": "2",
+        "padding_top": 0,
+        "padding_bottom": 60
+      }
+    }
+  },
+  "order": ["main", "rbp_product_state", "rbp_product_state_guard", "rbp_product_information", "rbp_product_offerings", "rbp_product_faq", "rbp_product_help", "rbp_card_fallback_styles", "related-products"]
+}
