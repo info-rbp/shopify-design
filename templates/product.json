@@ -61,7 +61,7 @@
       "settings": {
         "templates_title": "Templates",
         "templates_text": "Individual business documents prepared for a specific need, task, process or decision.",
-        "templates_link": "/pages/templates",
+        "templates_link": "/collections/templates",
         "suites_title": "Documentation Suites",
         "suites_text": "Grouped document packs for businesses that need several connected documents prepared together.",
         "suites_link": "/pages/documentation-suite",

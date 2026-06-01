@@ -1,0 +1,28 @@
+{
+  "sections": {
+    "main": {
+      "type": "rbp-landing-page",
+      "settings": {
+        "eyebrow": "Support",
+        "heading": "Help, guidance and contact pathways when you need them.",
+        "intro": "Find support resources, contact options, policies and education pathways for RBP services.",
+        "primary_label": "Visit Help Centre",
+        "primary_link": "/pages/help-centre",
+        "secondary_label": "Contact RBP",
+        "secondary_link": "/pages/contact",
+        "featured_title": "Help Centre"
+      },
+      "blocks": {
+        "help": {"type": "pathway_card", "settings": {"type_label": "Support", "title": "Help Centre", "text": "Find support resources and guidance for RBP pathways.", "link": "/pages/help-centre", "cta_text": "View support"}},
+        "nbn": {"type": "pathway_card", "settings": {"type_label": "NBN", "title": "NBN Support & Education", "text": "Learn about Business NBN serviceability, support and next steps.", "link": "/pages/nbn-support-education", "cta_text": "View support"}},
+        "contact": {"type": "pathway_card", "settings": {"type_label": "Contact", "title": "Contact", "text": "Send an enquiry so the right support pathway can be identified.", "link": "/pages/contact", "cta_text": "Contact RBP"}},
+        "about": {"type": "pathway_card", "settings": {"type_label": "Company", "title": "About", "text": "Learn more about Remote Business Partner.", "link": "/pages/about", "cta_text": "View page"}},
+        "privacy": {"type": "pathway_card", "settings": {"type_label": "Policy", "title": "Privacy Policy", "text": "Review the current privacy policy.", "link": "/policies/privacy-policy", "cta_text": "View policy"}},
+        "terms": {"type": "pathway_card", "settings": {"type_label": "Policy", "title": "Terms of Service", "text": "Review the current terms of service.", "link": "/policies/terms-of-service", "cta_text": "View policy"}},
+        "refund": {"type": "pathway_card", "settings": {"type_label": "Policy", "title": "Refund Policy", "text": "Review the current refund policy.", "link": "/policies/refund-policy", "cta_text": "View policy"}}
+      },
+      "block_order": ["help", "nbn", "contact", "about", "privacy", "terms", "refund"]
+    }
+  },
+  "order": ["main"]
+}

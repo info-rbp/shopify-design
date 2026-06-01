@@ -1,42 +1,78 @@
-{% assign outcome = product.metafields.core.short_outcome.value | default: product.description | strip_html %}
-{% assign service_type = product.metafields.core.service_type.value %}
-{% assign delivery = product.metafields.core.delivery_timeframe.value %}
-{% assign intake = product.metafields.core.intake_blueprint.value %}
-<section class="rbp-core-product">
-  <div class="rbp-core-product__hero page-width">
-    <div class="rbp-core-product__eyebrow">Remote Business Partner Core Service{% if service_type != blank %} · {{ service_type }}{% endif %}</div>
-    <h1>{{ product.title }}</h1>
-    {% if outcome != blank %}<p class="rbp-core-product__lead">{{ outcome }}</p>{% endif %}
-    <div class="rbp-core-product__price">{{ product.selected_or_first_available_variant.price | money }}</div>
-    <div class="rbp-core-product__actions">
-      {% form 'product', product %}
-        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
-        <button type="submit" class="button button--primary">{% if product.price == 0 %}Start quote intake{% else %}Buy service{% endif %}</button>
-      {% endform %}
-      <a class="button button--secondary" href="/pages/core-services">Compare Core Services</a>
-    </div>
-  </div>
-  <div class="page-width rbp-core-product__grid">
-    <article class="rbp-card rbp-card--wide">
-      <h2>What this service helps with</h2>
-      <div class="rte">{{ product.description }}</div>
-    </article>
-    <article class="rbp-card">
-      <h2>After checkout</h2>
-      <p>Complete the service-specific intake form on the Shopify site. Delivery starts once the intake is submitted.</p>
-      {% if intake != blank %}<p class="rbp-muted">Intake blueprint: {{ intake.title | default: 'Configured' }}</p>{% endif %}
-    </article>
-    <article class="rbp-card">
-      <h2>Delivery</h2>
-      <p>{{ delivery | default: 'Confirmed after intake is submitted.' }}</p>
-    </article>
-    <article class="rbp-card">
-      <h2>Member access</h2>
-      <p>Customers tagged as members are intended to receive 100% automatic discount access for Core Services once the member discount rule is active.</p>
-    </article>
-  </div>
-</section>
+{%- liquid
+  assign handle = product.handle
+  assign short_summary = product.metafields.core.short_summary.value | default: product.description | strip_html
+  assign outcome = product.metafields.core.outcome.value
+  assign best_for = product.metafields.core.best_for.value
+  assign not_for = product.metafields.core.not_for.value
+  assign inclusions = product.metafields.core.inclusions.value
+  assign deliverables = product.metafields.core.deliverables.value
+  assign process_steps = product.metafields.core.process_steps.value
+  assign intake_page = product.metafields.core.intake_page.value
+  assign turnaround = product.metafields.core.turnaround.value
+  assign boundary = product.metafields.core.service_boundary.value
+  assign price_label = product.metafields.core.display_price_label.value
+  assign primary_label = product.metafields.core.primary_cta_label.value
+  if price_label == blank
+    if product.price == 0
+      assign price_label = 'Quote intake only'
+    else
+      assign price_label = product.selected_or_first_available_variant.price | money
+    endif
+  endif
+  if primary_label == blank
+    if product.price == 0
+      assign primary_label = 'Start quote intake'
+    else
+      assign primary_label = 'Buy service'
+    endif
+  endif
+  if outcome == blank
+    case handle
+      when 'business-health-check'
+        assign outcome = 'A structured review of the current business issue, risks and next practical steps.'
+      when 'business-advisor'
+        assign outcome = 'Commercially grounded advisory support for a defined business question or decision.'
+      when 'decision-desk'
+        assign outcome = 'Decision support that compares options, tradeoffs and recommended next steps.'
+      when 'risk-advisor'
+        assign outcome = 'A practical risk review that identifies issues, exposure and response options.'
+      when 'the-fixer'
+        assign outcome = 'Quote intake for a business issue that needs triage before scope and pricing are confirmed.'
+      else
+        assign outcome = 'Structured business support with clear next steps after intake.'
+    endcase
+  endif
+  if best_for == blank
+    assign best_for = 'Business owners who need a defined advisory, diagnostic or decision-support pathway.'
+  endif
+  if not_for == blank
+    assign not_for = 'Urgent legal, accounting, migration, tax, financial product or regulated advice matters requiring a licensed professional.'
+  endif
+  if inclusions == blank
+    assign inclusions = 'Initial review|Issue framing|Commercial context review|Practical recommendations|Next-step pathway'
+  endif
+  if deliverables == blank
+    assign deliverables = 'Summary of findings|Recommended next steps|Scope boundaries|Follow-up pathway where relevant'
+  endif
+  if process_steps == blank
+    assign process_steps = 'Checkout or submit quote intake|Complete the service intake form|RBP reviews the supplied information|Recommendations or next steps are delivered'
+  endif
+  if boundary == blank
+    assign boundary = 'This service provides practical business support. It does not provide legal advice, legal representation, financial product advice, tax advice or promised outcomes.'
+  endif
+  if intake_page == blank
+    assign intake_page = '/pages/' | append: handle | append: '-intake'
+  endif
+-%}
 <style>
-.rbp-core-product{background:rgb(var(--color-background));padding:48px 0 64px}.rbp-core-product__hero{padding:44px 32px;border-radius:28px;background:linear-gradient(135deg,rgba(var(--color-foreground),.06),rgba(var(--color-button),.08));border:1px solid rgba(var(--color-foreground),.08)}.rbp-core-product__eyebrow{text-transform:uppercase;letter-spacing:.12em;font-size:1.2rem;color:rgba(var(--color-foreground),.7);margin-bottom:14px}.rbp-core-product h1{margin:0;font-size:clamp(3rem,5vw,6rem);line-height:1.02}.rbp-core-product__lead{max-width:780px;font-size:1.8rem;margin:18px 0;color:rgba(var(--color-foreground),.78)}.rbp-core-product__price{font-size:2.4rem;font-weight:700;margin:20px 0}.rbp-core-product__actions{display:flex;gap:14px;flex-wrap:wrap}.rbp-core-product__grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-top:24px}.rbp-card{padding:26px;border:1px solid rgba(var(--color-foreground),.1);border-radius:24px;background:rgb(var(--color-background));box-shadow:0 10px 30px rgba(0,0,0,.04)}.rbp-card--wide{grid-column:span 3}.rbp-card h2{margin-top:0}.rbp-muted{font-size:1.3rem;color:rgba(var(--color-foreground),.65)}@media(max-width:749px){.rbp-core-product__grid{grid-template-columns:1fr}.rbp-card--wide{grid-column:auto}.rbp-core-product__hero{padding:28px 20px}}
+.rbp-core-product{--b:#1d4ed8;--n:#0f172a;--m:#475569;--l:#e2e8f0;background:#fff;color:#0f172a}.rbp-core-product *{box-sizing:border-box}.rbp-core-c{width:min(100% - 2.5rem,1180px);margin:auto}.rbp-core-sec{padding:64px 0}.rbp-core-hero{background:linear-gradient(135deg,#0f172a,#1e3a8a);color:#fff}.rbp-core-hero-in{display:grid;grid-template-columns:minmax(0,1fr) minmax(280px,.4fr);gap:32px;align-items:center;padding:72px 0}.rbp-core-ey{display:inline-flex;border-radius:999px;background:#dbeafe;color:#1d4ed8;padding:7px 12px;font-size:12px;font-weight:900;letter-spacing:.08em;text-transform:uppercase}.rbp-core-hero .rbp-core-ey{background:rgba(255,255,255,.12);color:#bfdbfe}.rbp-core-product h1{margin:16px 0;color:#fff;font-size:clamp(38px,6vw,72px);line-height:1.02}.rbp-core-product h2{font-size:clamp(26px,4vw,44px);line-height:1.08;margin:0 0 14px}.rbp-core-product h3{margin:0 0 8px;font-size:19px}.rbp-core-product p{color:#475569;line-height:1.7}.rbp-core-hero p{color:#cbd5e1;font-size:18px}.rbp-core-card{border:1px solid #e2e8f0;border-radius:18px;background:#fff;padding:24px;box-shadow:0 1px 2px rgba(15,23,42,.05)}.rbp-core-price{background:#fff;border-radius:18px;padding:24px;color:#0f172a}.rbp-core-price strong{display:block;font-size:30px}.rbp-core-grid{display:grid;gap:18px}.rbp-core-g2{grid-template-columns:repeat(2,minmax(0,1fr))}.rbp-core-g3{grid-template-columns:repeat(3,minmax(0,1fr))}.rbp-core-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}.rbp-core-btn{display:inline-flex;justify-content:center;align-items:center;border-radius:12px;padding:13px 16px;font-weight:900;text-decoration:none;border:1px solid rgba(15,23,42,.14);background:#fff;color:#334155}.rbp-core-btn--primary{background:#1d4ed8;border-color:#1d4ed8;color:#fff}.rbp-core-list{display:grid;gap:10px;margin:14px 0 0;padding:0;list-style:none}.rbp-core-list li{display:grid;grid-template-columns:22px 1fr;gap:10px;color:#334155}.rbp-core-list li:before{content:"";width:18px;height:18px;margin-top:4px;border-radius:999px;background:#dbeafe}.rbp-core-faq details{border:1px solid #e2e8f0;border-radius:14px;padding:16px;background:#fff}.rbp-core-faq details+details{margin-top:10px}.rbp-core-faq summary{font-weight:900;cursor:pointer}.rbp-core-muted{background:#f8fafc}.rbp-core-final{background:linear-gradient(135deg,#1d4ed8,#0f172a);border-radius:22px;padding:36px;color:#fff}.rbp-core-final h2,.rbp-core-final p{color:#fff}@media(max-width:900px){.rbp-core-hero-in,.rbp-core-g2,.rbp-core-g3{grid-template-columns:1fr}.rbp-core-btn,.rbp-core-product form button{width:100%}.rbp-core-sec{padding:52px 0}}
 </style>
+<section class="rbp-core-product">
+  <div class="rbp-core-hero"><div class="rbp-core-c rbp-core-hero-in"><div><span class="rbp-core-ey">Core Service</span><h1>{{ product.title }}</h1><p>{{ short_summary }}</p><div class="rbp-core-actions">{% form 'product', product %}<input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}"><button type="submit" class="rbp-core-btn rbp-core-btn--primary">{{ primary_label }}</button>{% endform %}<a class="rbp-core-btn" href="/pages/core-services">Compare Core Services</a></div></div><aside class="rbp-core-price"><span class="rbp-core-ey">Price</span><strong>{{ price_label }}</strong><p>{{ outcome }}</p></aside></div></div>
+  <div class="rbp-core-sec"><div class="rbp-core-c rbp-core-grid rbp-core-g2"><article class="rbp-core-card"><h2>Best for</h2><p>{{ best_for }}</p></article><article class="rbp-core-card"><h2>Not for</h2><p>{{ not_for }}</p></article></div></div>
+  <div class="rbp-core-sec rbp-core-muted"><div class="rbp-core-c rbp-core-grid rbp-core-g3"><article class="rbp-core-card"><h2>What is included</h2><ul class="rbp-core-list">{% assign rows=inclusions | split:'|' %}{% for row in rows %}<li>{{ row }}</li>{% endfor %}</ul></article><article class="rbp-core-card"><h2>What you receive</h2><ul class="rbp-core-list">{% assign rows=deliverables | split:'|' %}{% for row in rows %}<li>{{ row }}</li>{% endfor %}</ul></article><article class="rbp-core-card"><h2>After checkout</h2><p>Complete the service-specific intake page so RBP can start the review with the right information.</p><a class="rbp-core-btn" href="{{ intake_page }}">Open intake page</a>{% if turnaround != blank %}<p>{{ turnaround }}</p>{% endif %}</article></div></div>
+  <div class="rbp-core-sec"><div class="rbp-core-c rbp-core-grid rbp-core-g2"><article class="rbp-core-card"><h2>How it works</h2><ul class="rbp-core-list">{% assign rows=process_steps | split:'|' %}{% for row in rows %}<li>{{ row }}</li>{% endfor %}</ul></article><article class="rbp-core-card"><h2>Scope boundaries</h2><p>{{ boundary }}</p></article></div></div>
+  <div class="rbp-core-sec rbp-core-muted"><div class="rbp-core-c rbp-core-grid rbp-core-g2"><article class="rbp-core-card"><h2>Related Core Services</h2><ul class="rbp-core-list"><li><a href="/products/business-health-check">Business Health Check</a></li><li><a href="/products/business-advisor">Business Advisor</a></li><li><a href="/products/decision-desk">Decision Desk</a></li><li><a href="/products/risk-advisor">Risk Advisor</a></li><li><a href="/products/the-fixer">The Fixer</a></li></ul></article><article class="rbp-core-card rbp-core-faq"><h2>FAQ</h2><details open><summary>When does work start?</summary><p>Work starts after checkout or quote intake and after the service-specific intake information has been supplied.</p></details><details><summary>Is The Fixer free?</summary><p>No. The Fixer uses quote intake only. Scope and pricing are confirmed after review.</p></details><details><summary>Does this include regulated advice?</summary><p>No. This is business support and does not include legal, tax, financial product or other regulated professional advice.</p></details></article></div></div>
+  <div class="rbp-core-sec"><div class="rbp-core-c"><div class="rbp-core-final"><h2>Ready to move forward?</h2><p>Start this service or compare the Core Services pathway before checkout.</p><div class="rbp-core-actions">{% form 'product', product %}<input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}"><button type="submit" class="rbp-core-btn">{{ primary_label }}</button>{% endform %}<a class="rbp-core-btn" href="/pages/core-services">Compare Core Services</a></div></div></div></div>
+</section>
 {% schema %}{"name":"RBP Core Service Product","settings":[],"presets":[{"name":"RBP Core Service Product"}]}{% endschema %}

@@ -153,8 +153,8 @@
       const data = await postJson('available-slots', { serviceType, productHandle, durationMinutes: cfg.durationMinutes, timezone, form: formValues() });
       if (Array.isArray(data.slots) && data.slots.length) slots = data.slots;
     } catch (err) {
-      container.innerHTML = `<div class="service-booking__error">${escapeHtml(err.message || 'Available slots could not be loaded. Showing review placeholders.')}</div>`;
-      container.insertAdjacentHTML('beforeend', '<p class="service-booking__small">Placeholder slots are shown for review only.</p>');
+      container.innerHTML = `<div class="service-booking__error">${escapeHtml(err.message || 'Available slots could not be loaded. Showing review-only availability.')}</div>`;
+      container.insertAdjacentHTML('beforeend', '<p class="service-booking__small">Availability is reviewed before confirmation.</p>');
     }
     renderSlots(slots);
   }
