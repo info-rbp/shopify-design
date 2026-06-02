@@ -1,30 +1,20 @@
 {
   "sections": {
     "main": {
-      "type": "rbp-offer-listing",
+      "type": "rbp-offer-categories",
       "settings": {
-        "filter_mode": "all",
-        "show_search": true,
         "eyebrow": "Partner Offers",
-        "heading": "Business offers built for practical savings.",
-        "hero_text": "Browse public partner offers, useful business tools and practical deals from the Remote Business Partner network.",
-        "primary_cta_label": "Browse Offers",
-        "primary_cta_link": "/pages/offers",
-        "secondary_cta_label": "View Categories",
-        "secondary_cta_link": "/pages/offers-by-categories",
-        "panel_heading": "Offer directory",
-        "panel_text": "Search, filter and browse partner offers managed as structured Shopify content.",
-        "list_eyebrow": "Offer directory",
-        "list_heading": "Explore active partner offers",
-        "list_text": "Use search and category filters to find offers relevant to your business.",
-        "empty_heading": "No public partner offers have been added yet",
-        "empty_text": "The storefront structure is ready. Public partner offers will appear here once they are reviewed and activated.",
-        "empty_cta_label": "View Categories",
-        "empty_cta_link": "/pages/offers-by-categories",
-        "cta_heading": "Find practical business offers",
-        "cta_text": "Explore partner offers across business finance, technology, operations, connectivity and other useful service categories.",
-        "cta_label": "Browse offer categories",
-        "cta_link": "/pages/offers-by-categories"
+        "heading": "Browse partner offers by category.",
+        "hero_text": "Explore practical partner offers across business finance, technology, operations, connectivity, insurance and other useful service categories.",
+        "panel_heading": "Start with a category",
+        "panel_text": "Choose a category to view relevant offers, compare options and open each offer on its own detail page.",
+        "list_eyebrow": "Offer categories",
+        "list_heading": "Find offers by business need",
+        "list_text": "Select a category to see the available partner offers in that area.",
+        "cta_heading": "Explore practical business offers",
+        "cta_text": "Each offer is reviewed, organised by category and redeemable through a direct partner link.",
+        "cta_label": "Browse categories",
+        "cta_link": "/pages/offers"
       }
     }
   },

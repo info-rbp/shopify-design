@@ -1,0 +1,29 @@
+<style>
+  .rbp-cat-detail{--b:#1d4ed8;--bs:#dbeafe;--s9:#0f172a;--s7:#334155;--s6:#475569;--s0:#f8fafc;--br:rgba(15,23,42,.1);--br2:rgba(15,23,42,.16);background:#fff;color:var(--s9);font-family:var(--font-body-family)}.rbp-cat-detail *{box-sizing:border-box}.rbp-cat-detail a{text-decoration:none;color:inherit}.rbp-cd-c{width:min(100% - 3rem,1200px);margin-inline:auto}.rbp-cd-hero{color:#fff;background:linear-gradient(135deg,#0f172a,#172554);padding:84px 0}.rbp-cd-ey{display:inline-flex;align-items:center;gap:8px;border-radius:999px;padding:7px 12px;background:rgba(59,130,246,.18);color:#93c5fd;border:1px solid rgba(147,197,253,.28);font-size:12px;font-weight:900;text-transform:uppercase}.rbp-cd-dot{width:7px;height:7px;border-radius:999px;background:currentColor}.rbp-cd-h1{margin:16px 0 0;color:#fff;font-size:clamp(38px,5vw,70px);line-height:1.03;font-weight:900}.rbp-cd-p{margin:16px 0 0;color:#cbd5e1;font-size:18px;line-height:1.75;max-width:760px}.rbp-cd-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}.rbp-cd-btn{display:inline-flex;align-items:center;justify-content:center;border-radius:14px;padding:14px 18px;border:1px solid transparent;font-size:14px;font-weight:900;line-height:1}.rbp-cd-btn-p{background:var(--b);color:#fff}.rbp-cd-btn-g{background:rgba(255,255,255,.1);color:#fff;border-color:rgba(255,255,255,.24)}.rbp-cd-sec{padding:74px 0;background:var(--s0)}.rbp-cd-head{max-width:800px;margin-bottom:30px}.rbp-cd-h2{margin:0;color:var(--s9);font-size:clamp(30px,4vw,48px);line-height:1.06;font-weight:900}.rbp-cd-text{margin:14px 0 0;color:var(--s6);line-height:1.75}.rbp-cd-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}.rbp-cd-empty{border:1px dashed var(--br2);border-radius:24px;background:#fff;padding:32px;text-align:center;color:var(--s6)}.rbp-cd-empty h3{margin:0 0 8px;color:var(--s9);font-size:22px;font-weight:900}.rbp-offer-card{overflow:hidden;display:flex;flex-direction:column;min-height:100%;background:#fff;border:1px solid var(--br);border-radius:24px;box-shadow:0 1px 2px rgba(15,23,42,.05)}.rbp-offer-media{min-height:178px;background:linear-gradient(135deg,#0f172a,#1d4ed8);display:grid;place-items:center;color:#fff;position:relative}.rbp-offer-media img{width:100%;height:100%;object-fit:cover}.rbp-offer-mark{width:74px;height:74px;border-radius:24px;display:grid;place-items:center;background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.18);font-size:24px;font-weight:900}.rbp-offer-badges{position:absolute;left:14px;top:14px;display:flex;flex-wrap:wrap;gap:7px}.rbp-offer-badge{border-radius:999px;background:rgba(255,255,255,.92);color:var(--b);padding:6px 9px;font-size:11px;font-weight:900}.rbp-offer-body{padding:24px;display:flex;flex-direction:column;flex:1}.rbp-offer-meta{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}.rbp-offer-pill{border-radius:999px;background:#f1f5f9;color:var(--s7);padding:7px 10px;font-size:12px;font-weight:850}.rbp-offer-pill-blue{background:var(--bs);color:var(--b)}.rbp-offer-title{margin:0;color:var(--s9);font-size:20px;font-weight:900;line-height:1.2}.rbp-offer-text{margin:12px 0 0;color:var(--s6);line-height:1.65;font-size:14px}.rbp-offer-footer{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-top:auto;padding-top:22px}.rbp-offer-code{border-radius:999px;background:#fef3c7;color:#92400e;padding:7px 10px;font-size:12px;font-weight:900}.rbp-offers-btn{display:inline-flex;align-items:center;justify-content:center;border-radius:14px;padding:14px 18px;border:1px solid transparent;font-size:14px;font-weight:900;line-height:1}.rbp-offers-btn-p{background:var(--b);color:#fff}@media(max-width:989px){.rbp-cd-grid{grid-template-columns:1fr}.rbp-cd-c{width:min(100% - 2rem,1200px)}}
+</style>
+
+{% assign category = metaobject %}
+{% assign category_name = category.name.value | default: category.system.handle %}
+
+<div class="rbp-cat-detail">
+  <section class="rbp-cd-hero"><div class="rbp-cd-c"><span class="rbp-cd-ey"><span class="rbp-cd-dot"></span>Partner Offers</span><h1 class="rbp-cd-h1">{{ category_name }}</h1>{% if category.description.value != blank %}<div class="rbp-cd-p">{{ category.description | metafield_tag }}</div>{% else %}<p class="rbp-cd-p">Browse public partner offers in this business category.</p>{% endif %}<div class="rbp-cd-actions"><a class="rbp-cd-btn rbp-cd-btn-p" href="/pages/offers">All categories</a><a class="rbp-cd-btn rbp-cd-btn-g" href="/pages/offers-by-categories">Browse categories</a></div></div></section>
+  <section class="rbp-cd-sec"><div class="rbp-cd-c"><div class="rbp-cd-head"><h2 class="rbp-cd-h2">Available offers</h2><p class="rbp-cd-text">Open an offer to view the full details and redeem it through the partner link.</p></div>
+    {% assign rendered_count = 0 %}
+    <div class="rbp-cd-grid">
+      {% for offer in shop.metaobjects.partner_offer.values %}
+        {% assign status = offer.status.value | default: '' %}
+        {% assign visibility = offer.visibility.value | default: '' %}
+        {% assign offer_category = offer.category.value %}
+        {% if status == 'active' and visibility == 'public' and offer_category.system.handle == category.system.handle %}
+          {% assign rendered_count = rendered_count | plus: 1 %}
+          {% render 'rbp-offer-card', offer: offer %}
+        {% endif %}
+      {% endfor %}
+    </div>
+    {% if rendered_count == 0 %}<div class="rbp-cd-empty"><h3>No public offers in this category yet</h3><p>Public partner offers will appear here once they are reviewed, activated and assigned to this category.</p><div class="rbp-cd-actions" style="justify-content:center"><a class="rbp-cd-btn rbp-cd-btn-p" href="/pages/offers">Back to categories</a></div></div>{% endif %}
+  </div></section>
+</div>
+
+{% schema %}
+{"name":"RBP offer category detail","settings":[],"presets":[{"name":"RBP offer category detail"}]}
+{% endschema %}

@@ -9,17 +9,18 @@
     <div class="rbp-cats-grid">
       {% for category in shop.metaobjects.offer_category.values %}
         {% assign category_count = category_count | plus: 1 %}
-        {% assign slug = category.slug.value | default: category.system.handle %}
+        {% assign category_url = category.system.url %}
+        {% if category_url == blank %}{% assign category_url = '/offer-categories/' | append: category.system.handle %}{% endif %}
         {% assign icon = category.icon.value %}
         {% assign offer_count = 0 %}
         {% for offer in shop.metaobjects.partner_offer.values %}
           {% assign offer_category = offer.category.value %}
           {% assign offer_visibility = offer.visibility.value | default: '' %}
-          {% if offer.status.value == 'active' and offer_visibility == 'public' and offer_category.slug.value == slug %}
+          {% if offer.status.value == 'active' and offer_visibility == 'public' and offer_category.system.handle == category.system.handle %}
             {% assign offer_count = offer_count | plus: 1 %}
           {% endif %}
         {% endfor %}
-        <a class="rbp-cat-card" href="/pages/offers?category={{ slug | escape }}"><div class="rbp-cat-icon">{% if icon != blank %}{{ icon | image_url: width: 180 | image_tag: loading: 'lazy', alt: category.name.value }}{% else %}{{ category.name.value | slice: 0, 2 | upcase }}{% endif %}</div><div><h3>{{ category.name.value }}</h3>{% if category.description.value != blank %}<p>{{ category.description | metafield_tag }}</p>{% else %}<p>Browse public partner offers in this business category.</p>{% endif %}</div><span class="rbp-cat-meta">{{ offer_count }} public offer{% unless offer_count == 1 %}s{% endunless %} - Browse category</span></a>
+        <a class="rbp-cat-card" href="{{ category_url }}"><div class="rbp-cat-icon">{% if icon != blank %}{{ icon | image_url: width: 180 | image_tag: loading: 'lazy', alt: category.name.value }}{% else %}{{ category.name.value | slice: 0, 2 | upcase }}{% endif %}</div><div><h3>{{ category.name.value }}</h3>{% if category.description.value != blank %}<p>{{ category.description | metafield_tag }}</p>{% else %}<p>Browse public partner offers in this business category.</p>{% endif %}</div><span class="rbp-cat-meta">{{ offer_count }} public offer{% unless offer_count == 1 %}s{% endunless %} - View category</span></a>
       {% endfor %}
     </div>
     {% if category_count == 0 %}<div class="rbp-cats-empty"><h3>No offer categories yet</h3><p>Create Offer Category metaobject entries in Shopify Admin to populate this page.</p></div>{% endif %}
@@ -28,5 +29,5 @@
 </div>
 
 {% schema %}
-{"name":"RBP offer categories","settings":[{"type":"text","id":"eyebrow","label":"Hero eyebrow","default":"Offer Categories"},{"type":"text","id":"heading","label":"Hero heading","default":"Browse partner offers by business category."},{"type":"textarea","id":"hero_text","label":"Hero text","default":"Find public partner offers across finance, insurance, connectivity, HR, operations, technology and other practical business categories."},{"type":"text","id":"panel_heading","label":"Hero panel heading","default":"Category-powered browsing"},{"type":"textarea","id":"panel_text","label":"Hero panel text","default":"Each category helps you browse relevant partner offers and filter the main offers directory."},{"type":"text","id":"list_eyebrow","label":"List eyebrow","default":"Directory"},{"type":"text","id":"list_heading","label":"List heading","default":"Offer categories"},{"type":"textarea","id":"list_text","label":"List text","default":"Choose a category to filter the main partner offers directory."},{"type":"text","id":"cta_heading","label":"CTA heading","default":"Find the right business offer"},{"type":"textarea","id":"cta_text","label":"CTA text","default":"Browse practical partner offers designed to help businesses compare tools, services and benefits."},{"type":"text","id":"cta_label","label":"CTA label","default":"Browse all offers"},{"type":"text","id":"cta_link","label":"CTA link","default":"/pages/offers"}],"presets":[{"name":"RBP offer categories"}]}
+{"name":"RBP offer categories","settings":[{"type":"text","id":"eyebrow","label":"Hero eyebrow","default":"Partner Offers"},{"type":"text","id":"heading","label":"Hero heading","default":"Browse partner offers by category."},{"type":"textarea","id":"hero_text","label":"Hero text","default":"Explore practical partner offers across business finance, technology, operations, connectivity, insurance and other useful service categories."},{"type":"text","id":"panel_heading","label":"Hero panel heading","default":"Start with a category"},{"type":"textarea","id":"panel_text","label":"Hero panel text","default":"Choose a category to view relevant offers, compare options and open each offer on its own detail page."},{"type":"text","id":"list_eyebrow","label":"List eyebrow","default":"Offer categories"},{"type":"text","id":"list_heading","label":"List heading","default":"Find offers by business need"},{"type":"textarea","id":"list_text","label":"List text","default":"Select a category to see the available partner offers in that area."},{"type":"text","id":"cta_heading","label":"CTA heading","default":"Explore practical business offers"},{"type":"textarea","id":"cta_text","label":"CTA text","default":"Each offer is reviewed, organised by category and redeemable through a direct partner link."},{"type":"text","id":"cta_label","label":"CTA label","default":"Browse categories"},{"type":"text","id":"cta_link","label":"CTA link","default":"/pages/offers"}],"presets":[{"name":"RBP offer categories"}]}
 {% endschema %}

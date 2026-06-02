@@ -4,16 +4,16 @@
       "type": "rbp-offer-categories",
       "settings": {
         "eyebrow": "Offer Categories",
-        "heading": "Browse partner offers by business category.",
-        "hero_text": "Find public partner offers across finance, insurance, connectivity, HR, operations, technology and other practical business categories.",
-        "panel_heading": "Category-powered browsing",
-        "panel_text": "Each category helps you browse relevant partner offers and filter the main offers directory.",
-        "list_eyebrow": "Directory",
-        "list_heading": "Offer categories",
-        "list_text": "Choose a category to filter the main partner offers directory.",
-        "cta_heading": "Find the right business offer",
-        "cta_text": "Browse practical partner offers designed to help businesses compare tools, services and benefits.",
-        "cta_label": "Browse all offers",
+        "heading": "Browse partner offers by category.",
+        "hero_text": "Explore practical partner offers across business finance, technology, operations, connectivity, insurance and other useful service categories.",
+        "panel_heading": "Start with a category",
+        "panel_text": "Choose a category to view relevant offers, compare options and open each offer on its own detail page.",
+        "list_eyebrow": "Offer categories",
+        "list_heading": "Find offers by business need",
+        "list_text": "Select a category to see the available partner offers in that area.",
+        "cta_heading": "Explore practical business offers",
+        "cta_text": "Each offer is reviewed, organised by category and redeemable through a direct partner link.",
+        "cta_label": "Browse categories",
         "cta_link": "/pages/offers"
       }
     }
