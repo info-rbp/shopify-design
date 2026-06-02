@@ -15,7 +15,7 @@
     </div>
 
     <div class="rbp-onboarding-container">
-      <form method="post" action="{{ section.settings.app_proxy_path }}" class="rbp-onboarding-form" id="rbp-onboarding-form-{{ section.id }}" data-rbp-onboarding-form>
+      <form method="post" action="{{ section.settings.app_proxy_path | default: "/apps/rbp-bridge" }}" class="rbp-onboarding-form" id="rbp-onboarding-form-{{ section.id }}" data-rbp-onboarding-form>
         {%- comment -%} Bridge Integration Hidden Fields {%- endcomment -%}
         <input type="hidden" name="sourceArea" value="{{ section.settings.source_area | default: 'core_services' }}">
         <input type="hidden" name="formType" value="{{ section.settings.form_type | default: 'business-health-check' }}">
@@ -43,7 +43,7 @@
           <button type="submit" class="button button--primary rbp-button-large">
             <span>{{ section.settings.submit_label | default: 'Submit onboarding request' }}</span>
           </button>
-          <div class="rbp-onboarding-status-message hidden" data-rbp-onboarding-message></div>
+          <div class="rbp-onboarding-status-message rbp-onboarding-hidden" data-rbp-onboarding-message></div>
         </div>
       </form>
     </div>

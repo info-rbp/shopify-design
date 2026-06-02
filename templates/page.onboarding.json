@@ -3,8 +3,9 @@
     "main": {
       "type": "rbp-onboarding-form",
       "settings": {
-        "title": "Onboarding Form",
-        "form_id": "business-health-check"
+        "title": "Business Health Check",
+        "form_id": "business-health-check",
+        "app_proxy_path": "/apps/rbp-bridge"
       }
     }
   },
