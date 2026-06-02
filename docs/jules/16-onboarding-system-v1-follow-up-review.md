@@ -44,9 +44,26 @@ This document provides a follow-up review and hardening report for the repositor
 ## YAML-to-Theme Workflow Gap
 Current v1 system uses YAML for source definitions, but the live Shopify form relies on manual section block configuration or presets. Shopify Liquid cannot parse the YAML definitions directly at runtime.
 
+## Generator Model Started
+The first generator model now exists at `scripts/generate-onboarding-template.js`.
+
+Current tested input:
+
+```text
+content/onboarding/forms/business-health-check.yml
+```
+
+Current generated review artifact:
+
+```text
+content/onboarding/generated/page.business-health-check.generated.json
+```
+
+The generated output preserves `/apps/rbp-bridge`, maps the Business Health Check fields to the Bridge lead schema, and does not overwrite live templates by default. Live Shopify and Google Cloud verification steps are documented in `docs/jules/17-live-shopify-bridge-verification-runbook.md`.
+
 ### Recommended Future Models
 1. **Manual model**: YAML definitions guide manual section block settings in Shopify Admin.
-2. **Generator model**: A local script converts YAML definitions into Shopify JSON template/section block configuration files.
+2. **Generator model**: A local script converts YAML definitions into Shopify JSON template/section block configuration files. Started with `scripts/generate-onboarding-template.js`.
 3. **Backend model**: The Bridge backend reads YAML from the repo and syncs Shopify pages/metaobjects via Admin API.
 
 ## Known Limitations
@@ -54,4 +71,4 @@ Current v1 system uses YAML for source definitions, but the live Shopify form re
 - JavaScript progressive enhancement relies on the backend returning standard lead-pipeline compatible responses.
 
 ## Recommended Next Step
-Proceed with the **Generator model** to automate the creation of JSON templates and section block settings from the YAML definitions, ensuring a single source of truth in the `content/` directory.
+Use the generated Business Health Check artifact as a review baseline, then verify Shopify Admin app proxy settings, storefront password/test access, live form submission, and Google Cloud storage receipt before promoting generated templates.

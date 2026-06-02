@@ -1,0 +1,111 @@
+{
+  "sections": {
+    "main": {
+      "type": "rbp-onboarding-form",
+      "settings": {
+        "title": "Business Health Check",
+        "form_id": "business-health-check",
+        "app_proxy_path": "/apps/rbp-bridge",
+        "source_area": "core_services",
+        "form_type": "business-health-check",
+        "product_or_service": "Business Health Check",
+        "submit_label": "Submit your business context"
+      },
+      "blocks": {
+        "business_name": {
+          "type": "field",
+          "settings": {
+            "label": "Business name",
+            "type": "text",
+            "name": "metadata[business_name]",
+            "placeholder": "Enter your business name",
+            "required": true
+          }
+        },
+        "contact_name": {
+          "type": "field",
+          "settings": {
+            "label": "Contact name",
+            "type": "text",
+            "name": "name",
+            "placeholder": "Enter your name",
+            "required": true
+          }
+        },
+        "email": {
+          "type": "field",
+          "settings": {
+            "label": "Email address",
+            "type": "email",
+            "name": "email",
+            "placeholder": "Enter your email address",
+            "required": true
+          }
+        },
+        "phone": {
+          "type": "field",
+          "settings": {
+            "label": "Phone number",
+            "type": "tel",
+            "name": "phone",
+            "placeholder": "Enter your phone number",
+            "required": false
+          }
+        },
+        "industry": {
+          "type": "field",
+          "settings": {
+            "label": "Industry",
+            "type": "select",
+            "name": "metadata[industry]",
+            "options": "Retail\nHospitality\nProfessional services\nTrade services\nConstruction\nHealth and care\nNDIS or community services\nEcommerce\nOther",
+            "required": false
+          }
+        },
+        "current_challenge": {
+          "type": "field",
+          "settings": {
+            "label": "What is the main challenge you want help with?",
+            "type": "textarea",
+            "name": "message",
+            "placeholder": "Briefly explain the business issue, decision, or support need.",
+            "required": true
+          }
+        },
+        "desired_outcome": {
+          "type": "field",
+          "settings": {
+            "label": "What outcome are you looking for?",
+            "type": "textarea",
+            "name": "preferredNextStep",
+            "placeholder": "Describe what a useful result would look like.",
+            "required": false
+          }
+        },
+        "urgency": {
+          "type": "field",
+          "settings": {
+            "label": "How urgent is this request?",
+            "type": "select",
+            "name": "timeline",
+            "options": "Not urgent\nWithin the next few weeks\nThis week\nAs soon as possible",
+            "required": false
+          }
+        }
+      },
+      "block_order": [
+        "business_name",
+        "contact_name",
+        "email",
+        "phone",
+        "industry",
+        "current_challenge",
+        "desired_outcome",
+        "urgency"
+      ]
+    }
+  },
+  "order": [
+    "main"
+  ]
+}
