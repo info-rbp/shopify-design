@@ -1,0 +1,258 @@
+{{ 'rbp-onboarding-form.css' | asset_url | stylesheet_tag }}
+
+<div class="rbp-onboarding-form-section color-{{ section.settings.color_scheme }} gradient">
+  <div class="page-width">
+    <div class="rbp-onboarding-intro">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="rbp-onboarding-eyebrow">{{ section.settings.eyebrow | escape }}</p>
+      {%- endif -%}
+      {%- if section.settings.title != blank -%}
+        <h1 class="rbp-onboarding-title">{{ section.settings.title | escape }}</h1>
+      {%- endif -%}
+      {%- if section.settings.intro_text != blank -%}
+        <div class="rbp-onboarding-description">{{ section.settings.intro_text }}</div>
+      {%- endif -%}
+    </div>
+
+    <div class="rbp-onboarding-container">
+      <form method="post" action="{{ section.settings.app_proxy_path }}" class="rbp-onboarding-form" id="rbp-onboarding-form-{{ section.id }}" data-rbp-onboarding-form>
+        {%- comment -%} Bridge Integration Hidden Fields {%- endcomment -%}
+        <input type="hidden" name="sourceArea" value="{{ section.settings.source_area | default: 'core_services' }}">
+        <input type="hidden" name="formType" value="{{ section.settings.form_type | default: 'business-health-check' }}">
+        <input type="hidden" name="productOrService" value="{{ section.settings.product_or_service | default: 'Business Health Check' }}">
+        <input type="hidden" name="metadata[form_id]" value="{{ section.settings.form_id | default: 'business-health-check' }}">
+        <input type="hidden" name="metadata[bridge_app_title]" value="Bridge to Google Cloud">
+
+        {%- comment -%} Context Hidden Fields {%- endcomment -%}
+        <input type="hidden" name="sourcePage" value="{{ page.handle }}">
+        <input type="hidden" name="urlContext" value="{{ shop.url }}{{ page.url }}" id="rbp-url-context">
+        <input type="hidden" name="source_template" value="{{ template.name }}">
+
+        {%- if customer -%}
+          <input type="hidden" name="customer_id" value="{{ customer.id }}">
+          <input type="hidden" name="customer_email" value="{{ customer.email }}">
+        {%- endif -%}
+
+        <div class="rbp-onboarding-fields">
+          {%- for block in section.blocks -%}
+            {%- render 'rbp-onboarding-field', block: block -%}
+          {%- endfor -%}
+        </div>
+
+        <div class="rbp-onboarding-submit">
+          <button type="submit" class="button button--primary rbp-button-large">
+            <span>{{ section.settings.submit_label | default: 'Submit onboarding request' }}</span>
+          </button>
+          <div class="rbp-onboarding-status-message hidden" data-rbp-onboarding-message></div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script src="{{ 'rbp-onboarding-form.js' | asset_url }}" defer></script>
+
+{% schema %}
+{
+  "name": "RBP Onboarding Form",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Onboarding"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Form title",
+      "default": "Business Health Check"
+    },
+    {
+      "type": "richtext",
+      "id": "intro_text",
+      "label": "Introductory text",
+      "default": "<p>Submit your business context so RBP can review your request and recommend the right next step.</p>"
+    },
+    {
+      "type": "text",
+      "id": "submit_label",
+      "label": "Submit button label",
+      "default": "Submit onboarding request"
+    },
+    {
+      "type": "header",
+      "content": "Bridge Integration"
+    },
+    {
+      "type": "text",
+      "id": "app_proxy_path",
+      "label": "App proxy path",
+      "default": "/apps/rbp-bridge",
+      "info": "Submission destination via Shopify app proxy."
+    },
+    {
+      "type": "text",
+      "id": "form_id",
+      "label": "Form ID",
+      "default": "business-health-check"
+    },
+    {
+      "type": "text",
+      "id": "source_area",
+      "label": "Source area",
+      "default": "core_services"
+    },
+    {
+      "type": "text",
+      "id": "form_type",
+      "label": "Form type",
+      "default": "business-health-check"
+    },
+    {
+      "type": "text",
+      "id": "product_or_service",
+      "label": "Product or service",
+      "default": "Business Health Check"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "field",
+      "name": "Form Field",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Field Label"
+        },
+        {
+          "type": "select",
+          "id": "type",
+          "label": "Field type",
+          "options": [
+            { "value": "text", "label": "Text" },
+            { "value": "email", "label": "Email" },
+            { "value": "tel", "label": "Phone" },
+            { "value": "textarea", "label": "Textarea" },
+            { "value": "select", "label": "Select" },
+            { "value": "checkbox", "label": "Checkbox" },
+            { "value": "radio", "label": "Radio" },
+            { "value": "hidden", "label": "Hidden" }
+          ],
+          "default": "text"
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Payload target (name attribute)",
+          "info": "Use payload_target from definition, e.g. name, email, or metadata[business_name]"
+        },
+        {
+          "type": "text",
+          "id": "placeholder",
+          "label": "Placeholder"
+        },
+        {
+          "type": "checkbox",
+          "id": "required",
+          "label": "Required",
+          "default": false
+        },
+        {
+          "type": "textarea",
+          "id": "options",
+          "label": "Options (one per line)",
+          "info": "For select, radio, and checkbox groups."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "RBP Onboarding Form",
+      "blocks": [
+        {
+          "type": "field",
+          "settings": {
+            "label": "Business name",
+            "type": "text",
+            "name": "metadata[business_name]",
+            "required": true
+          }
+        },
+        {
+          "type": "field",
+          "settings": {
+            "label": "Contact name",
+            "type": "text",
+            "name": "name",
+            "required": true
+          }
+        },
+        {
+          "type": "field",
+          "settings": {
+            "label": "Email address",
+            "type": "email",
+            "name": "email",
+            "required": true
+          }
+        },
+        {
+          "type": "field",
+          "settings": {
+            "label": "Phone number",
+            "type": "tel",
+            "name": "phone",
+            "required": false
+          }
+        },
+        {
+          "type": "field",
+          "settings": {
+            "label": "Industry",
+            "type": "select",
+            "name": "metadata[industry]",
+            "options": "Retail\nHospitality\nProfessional services\nTrade services\nConstruction\nHealth and care\nNDIS or community services\nEcommerce\nOther"
+          }
+        },
+        {
+          "type": "field",
+          "settings": {
+            "label": "What is the main challenge you want help with?",
+            "type": "textarea",
+            "name": "message",
+            "required": true
+          }
+        },
+        {
+          "type": "field",
+          "settings": {
+            "label": "What outcome are you looking for?",
+            "type": "textarea",
+            "name": "preferredNextStep",
+            "required": false
+          }
+        },
+        {
+          "type": "field",
+          "settings": {
+            "label": "How urgent is this request?",
+            "type": "select",
+            "name": "timeline",
+            "options": "Not urgent\nWithin the next few weeks\nThis week\nAs soon as possible"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

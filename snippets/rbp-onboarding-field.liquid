@@ -1,0 +1,104 @@
+{%- comment -%}
+  Renders a form field for the RBP onboarding form.
+  Accepts:
+  - block: The block object from the section.
+{%- endcomment -%}
+
+<div class="rbp-onboarding-field rbp-onboarding-field--{{ block.settings.type }}" data-field-id="{{ block.id }}">
+  {%- if block.settings.type != 'hidden' -%}
+    <label class="field__label" for="Field-{{ block.id }}">
+      {{ block.settings.label | escape }}
+      {%- if block.settings.required -%}<span aria-hidden="true">*</span>{%- endif -%}
+    </label>
+  {%- endif -%}
+
+  <div class="field">
+    {%- case block.settings.type -%}
+      {%- when 'text', 'email', 'tel' -%}
+        <input
+          type="{{ block.settings.type }}"
+          id="Field-{{ block.id }}"
+          class="field__input"
+          name="{{ block.settings.name }}"
+          value=""
+          placeholder="{{ block.settings.placeholder | escape }}"
+          {% if block.settings.required %}required aria-required="true"{% endif %}
+        >
+
+      {%- when 'textarea' -%}
+        <textarea
+          id="Field-{{ block.id }}"
+          class="text-area field__input"
+          name="{{ block.settings.name }}"
+          placeholder="{{ block.settings.placeholder | escape }}"
+          {% if block.settings.required %}required aria-required="true"{% endif %}
+        ></textarea>
+
+      {%- when 'select' -%}
+        <select
+          id="Field-{{ block.id }}"
+          class="select__select field__input"
+          name="{{ block.settings.name }}"
+          {% if block.settings.required %}required aria-required="true"{% endif %}
+        >
+          {%- if block.settings.placeholder != blank -%}
+            <option value="" disabled selected>{{ block.settings.placeholder | escape }}</option>
+          {%- else -%}
+            <option value="" disabled selected>Select an option</option>
+          {%- endif -%}
+          {%- assign options = block.settings.options | newline_to_br | split: '<br />' -%}
+          {%- for option in options -%}
+            {%- assign opt = option | strip -%}
+            {%- if opt != blank -%}
+              <option value="{{ opt | escape }}">{{ opt | escape }}</option>
+            {%- endif -%}
+          {%- endfor -%}
+        </select>
+
+      {%- when 'checkbox' -%}
+        <div class="rbp-onboarding-checkbox-group">
+          <input
+            type="checkbox"
+            id="Field-{{ block.id }}"
+            name="{{ block.settings.name }}"
+            value="true"
+            {% if block.settings.required %}required aria-required="true"{% endif %}
+          >
+          <label for="Field-{{ block.id }}">{{ block.settings.placeholder | default: block.settings.label | escape }}</label>
+        </div>
+
+      {%- when 'radio' -%}
+        <div class="rbp-onboarding-radio-group">
+          {%- assign options = block.settings.options | newline_to_br | split: '<br />' -%}
+          {%- for option in options -%}
+            {%- assign opt = option | strip -%}
+            {%- if opt != blank -%}
+              <div class="rbp-onboarding-radio-option">
+                <input
+                  type="radio"
+                  id="Field-{{ block.id }}-{{ forloop.index }}"
+                  name="{{ block.settings.name }}"
+                  value="{{ opt | escape }}"
+                  {% if block.settings.required %}required{% endif %}
+                >
+                <label for="Field-{{ block.id }}-{{ forloop.index }}">{{ opt | escape }}</label>
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+
+      {%- when 'hidden' -%}
+        <input
+          type="hidden"
+          id="Field-{{ block.id }}"
+          name="{{ block.settings.name }}"
+          value="{{ block.settings.placeholder | escape }}"
+        >
+    {%- endcase -%}
+  </div>
+
+  {%- if block.settings.help_text != blank -%}
+    <p class="rbp-onboarding-field-help">{{ block.settings.help_text | escape }}</p>
+  {%- endif -%}
+  <div class="rbp-onboarding-field-error hidden" id="Error-{{ block.id }}"></div>
+</div>
