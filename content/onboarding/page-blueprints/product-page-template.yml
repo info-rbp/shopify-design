@@ -1,0 +1,14 @@
+page_id: "product-onboarding-template"
+status: draft
+page:
+  title: "Product Onboarding"
+  handle: "product-onboarding"
+  template: page.onboarding
+form:
+  form_id: "product-onboarding"
+  app_proxy_path: /apps/rbp-bridge
+seo:
+  title: "Product Onboarding | Remote Business Partner"
+  description: "Provide the details needed to fulfil your product order."
+notes:
+  - "Base template for product-driven onboarding."

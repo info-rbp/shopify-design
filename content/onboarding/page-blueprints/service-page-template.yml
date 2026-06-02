@@ -1,0 +1,14 @@
+page_id: "service-onboarding-template"
+status: draft
+page:
+  title: "Service Onboarding"
+  handle: "service-onboarding"
+  template: page.onboarding
+form:
+  form_id: "service-onboarding"
+  app_proxy_path: /apps/rbp-bridge
+seo:
+  title: "Service Onboarding | Remote Business Partner"
+  description: "Complete your service onboarding to get started."
+notes:
+  - "Base template for service-driven onboarding."

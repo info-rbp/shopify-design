@@ -1,0 +1,12 @@
+links:
+  - id: example-public-offer
+    partner: Example Partner
+    label: Example public offer
+    public_url: https://example.com/?ref=rbp
+    status: draft
+    public_safe: false
+    placements:
+      - service_pages
+      - blog_posts
+    notes: Placeholder only. Replace with a public-safe partner or affiliate URL before rendering.
+    last_reviewed: null

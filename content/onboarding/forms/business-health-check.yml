@@ -1,0 +1,99 @@
+form_id: business-health-check
+title: Business Health Check Onboarding
+status: approved
+
+rendering:
+  page_handle: business-health-check
+  template: page.onboarding
+  section: rbp-onboarding-form
+
+submission:
+  handler: app_proxy
+  method: post
+  destination: /apps/rbp-bridge
+  success_redirect: /pages/thank-you
+  error_mode: inline
+
+storage:
+  system: google_cloud
+  bridge_app: Bridge to Google Cloud
+  cloud_run_backend: rbp-integration-bridge
+  create_shopify_customer: true
+  customer_tags:
+    - onboarding
+    - business-health-check
+
+bridge_payload:
+  sourceArea: core_services
+  formType: business-health-check
+  productOrService: Business Health Check
+
+fields:
+  - id: business_name
+    label: Business name
+    type: text
+    required: true
+    placeholder: "Enter your business name"
+    payload_target: metadata[business_name]
+
+  - id: contact_name
+    label: Contact name
+    type: text
+    required: true
+    placeholder: "Enter your name"
+    payload_target: name
+
+  - id: email
+    label: Email address
+    type: email
+    required: true
+    placeholder: "Enter your email address"
+    payload_target: email
+
+  - id: phone
+    label: Phone number
+    type: tel
+    required: false
+    placeholder: "Enter your phone number"
+    payload_target: phone
+
+  - id: industry
+    label: Industry
+    type: select
+    required: false
+    payload_target: metadata[industry]
+    options:
+      - Retail
+      - Hospitality
+      - Professional services
+      - Trade services
+      - Construction
+      - Health and care
+      - NDIS or community services
+      - Ecommerce
+      - Other
+
+  - id: current_challenge
+    label: What is the main challenge you want help with?
+    type: textarea
+    required: true
+    placeholder: "Briefly explain the business issue, decision, or support need."
+    payload_target: message
+
+  - id: desired_outcome
+    label: What outcome are you looking for?
+    type: textarea
+    required: false
+    placeholder: "Describe what a useful result would look like."
+    payload_target: preferredNextStep
+
+  - id: urgency
+    label: How urgent is this request?
+    type: select
+    required: false
+    payload_target: timeline
+    options:
+      - Not urgent
+      - Within the next few weeks
+      - This week
+      - As soon as possible

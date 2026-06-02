@@ -1,0 +1,14 @@
+{
+  "sections": {
+    "main": {
+      "type": "rbp-onboarding-form",
+      "settings": {
+        "title": "Onboarding Form",
+        "form_id": "business-health-check"
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}
