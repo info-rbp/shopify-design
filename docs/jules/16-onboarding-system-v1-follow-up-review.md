@@ -8,26 +8,38 @@ This document provides a follow-up review and hardening report for the repositor
 - **Follow-up Hardening**:
     - Scoped the global `.hidden` CSS rule to `.rbp-onboarding-hidden`.
     - Added a Liquid fallback to the form action defaulting to `/apps/rbp-bridge`.
-    - Improved JavaScript to support multiple forms per page and hardened response handling (content-type checks, redirect support, error messaging).
-    - Refined `page.onboarding.json` defaults for the Business Health Check pilot.
+    - Added `metadata[submitted_via]=Bridge to Google Cloud` alongside the existing bridge app metadata.
+    - Improved JavaScript to support multiple forms per page and hardened response handling (content-type checks, JSON redirect support, fetch-followed redirect support, validation errors, network errors, and missing submit/message elements).
+    - Refined `page.onboarding.json` defaults and blocks for the Business Health Check pilot.
 
 ## Bridge Integration
 - **Default Route**: `/apps/rbp-bridge`
 - **Installed App**: Bridge to Google Cloud
 - **Backend**: rbp-integration-bridge (Cloud Run)
+- **New Shopify App Created**: No.
+- **Direct Cloud Run Browser Call Added**: No.
+- **Payload Alignment**: Hidden and visible field names match the bridge lead schema documented in `15-bridge-to-google-cloud-integration.md`, including `metadata[submitted_via]`.
 
 ## Verification Status
-- **Repository Safety**: COMPLETED. No secrets, tokens, or hardcoded backend URLs found in theme code.
-- **Backend Health**: VERIFIED. Endpoint `/health` returns 200 OK.
-- **App Proxy Signature**: VERIFIED. Unsigned direct requests are rejected with 401 Unauthorized.
+- **Repository Safety**: COMPLETED. No secrets, tokens, private URLs, submitted responses, customer data, or hardcoded Cloud Run URLs were found in browser-facing theme implementation files.
+- **Route Safety**: COMPLETED. `/apps/rbp-bridge` remains the implementation default. `/apps/rbp-onboarding` appears only in older documentation/context references, not as the theme default.
+- **Syntax Checks**: COMPLETED. `templates/page.onboarding.json` is valid JSON, section schema JSON is valid, onboarding section/snippet Liquid block balance passed, and `assets/rbp-onboarding-form.js` passed `node --check`.
+- **CSS Scope Check**: COMPLETED. No global `.hidden` rule remains in `assets/rbp-onboarding-form.css`.
+- **Backend Health**: VERIFIED. `curl -i https://rbp-integration-bridge-dlng4rmgtq-ts.a.run.app/health` returned `HTTP/2 200`.
+- **App Proxy Signature**: VERIFIED. Unsigned direct POST to `/api/app-proxy/api/plans` returned `HTTP/2 401` with `Invalid app proxy signature`.
 - **Live Storefront Submission**: PENDING manual confirmation in a live Shopify environment.
+- **Touched Scope**: Header, footer, cart, checkout, contact, product, service, marketplace, Business NBN, and membership implementation files were not changed by this follow-up.
 
 ## Store-side Configuration Requirements
+- [ ] Confirm "Bridge to Google Cloud" is installed.
 - [ ] Confirm app proxy is enabled for "Bridge to Google Cloud".
+- [ ] Verify app proxy prefix is `apps`.
 - [ ] Verify app proxy subpath is `rbp-bridge`.
 - [ ] Verify app proxy target is `https://rbp-integration-bridge-dlng4rmgtq-ts.a.run.app/api/app-proxy`.
 - [ ] Create "Business Health Check" page and assign `page.onboarding` template.
 - [ ] Ensure `/pages/thank-you` exists.
+- [ ] Test live storefront form submission through Shopify.
+- [ ] Confirm Google Cloud storage/workflow receives the submission.
 
 ## YAML-to-Theme Workflow Gap
 Current v1 system uses YAML for source definitions, but the live Shopify form relies on manual section block configuration or presets. Shopify Liquid cannot parse the YAML definitions directly at runtime.

@@ -61,6 +61,8 @@
               }
             });
           }
+        } else if (response.redirected && response.url) {
+          window.location.href = response.url;
         } else {
           // Fallback for non-JSON or missing data.ok
           showMessage('Thank you! Your submission has been received.');
@@ -104,7 +106,7 @@
             'Accept': 'application/json'
           }
         });
-        handleResponse(response);
+        await handleResponse(response);
       } catch (error) {
         console.error('Submission error:', error);
         if (submitBtn) {

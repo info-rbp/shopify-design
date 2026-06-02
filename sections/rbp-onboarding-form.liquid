@@ -15,13 +15,14 @@
     </div>
 
     <div class="rbp-onboarding-container">
-      <form method="post" action="{{ section.settings.app_proxy_path | default: "/apps/rbp-bridge" }}" class="rbp-onboarding-form" id="rbp-onboarding-form-{{ section.id }}" data-rbp-onboarding-form>
+      <form method="post" action="{{ section.settings.app_proxy_path | default: '/apps/rbp-bridge' }}" class="rbp-onboarding-form" id="rbp-onboarding-form-{{ section.id }}" data-rbp-onboarding-form>
         {%- comment -%} Bridge Integration Hidden Fields {%- endcomment -%}
         <input type="hidden" name="sourceArea" value="{{ section.settings.source_area | default: 'core_services' }}">
         <input type="hidden" name="formType" value="{{ section.settings.form_type | default: 'business-health-check' }}">
         <input type="hidden" name="productOrService" value="{{ section.settings.product_or_service | default: 'Business Health Check' }}">
         <input type="hidden" name="metadata[form_id]" value="{{ section.settings.form_id | default: 'business-health-check' }}">
         <input type="hidden" name="metadata[bridge_app_title]" value="Bridge to Google Cloud">
+        <input type="hidden" name="metadata[submitted_via]" value="Bridge to Google Cloud">
 
         {%- comment -%} Context Hidden Fields {%- endcomment -%}
         <input type="hidden" name="sourcePage" value="{{ page.handle }}">
