@@ -1,0 +1,181 @@
+/* RBP UX remediation layer */
+:root {
+  --rbp-muted: #475569;
+}
+
+html,
+body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  text-rendering: optimizeLegibility;
+}
+
+.rbp-home,
+.rbp-container,
+.rbp-home-c,
+.page-width,
+.shopify-section {
+  max-width: 100%;
+}
+
+.rbp-home-c,
+.rbp-container {
+  width: min(100% - var(--rbp-container-x, 2.5rem), var(--rbp-page-width, 1280px));
+}
+
+.rbp-home-p,
+.rbp-card p,
+.rbp-support-panel,
+.rbp-notice,
+.rbp-trust-strip,
+.rbp-empty-state p {
+  color: #334155;
+}
+
+.rbp-home-hero-text .rbp-home-p,
+.rbp-home-hero-card-main p,
+.rbp-home-hero-stat-label,
+.rbp-home-hero-float-card-label,
+.rbp-home-trust-item,
+.rbp-home-eye--white {
+  color: rgba(255, 255, 255, .88);
+}
+
+.rbp-home-hero-card-main,
+.rbp-home-hero-float-card {
+  background: rgba(255, 255, 255, .08);
+  border-color: rgba(255, 255, 255, .22);
+}
+
+.rbp-button,
+.rbp-home-btn,
+.rbp-home-journey-btn,
+.rbp-empty-state__actions a {
+  min-width: 44px;
+  min-height: 44px;
+}
+
+.rbp-home-btn:focus-visible,
+.rbp-home-journey-btn:focus-visible,
+.rbp-empty-state__actions a:focus-visible {
+  outline: 3px solid rgba(37, 99, 235, .4);
+  outline-offset: 3px;
+}
+
+.rbp-home-journey,
+.rbp-card-grid,
+.product-grid,
+.collection-list,
+.rbp-home-hero-in {
+  min-width: 0;
+}
+
+.rbp-home-journey > *,
+.rbp-card-grid > *,
+.product-grid > *,
+.collection-list > *,
+.rbp-home-hero-in > * {
+  min-width: 0;
+}
+
+.rbp-home [style*="overflow"],
+.rbp-home [class*="scroll"] {
+  scrollbar-gutter: stable;
+}
+
+.rbp-collection-empty-guidance {
+  max-width: 740px;
+  margin: 0 auto;
+  padding: clamp(2rem, 6vw, 4rem);
+  border: 1px solid rgba(15, 23, 42, .1);
+  border-radius: 24px;
+  background: #ffffff;
+  box-shadow: 0 18px 56px rgba(15, 23, 42, .08);
+  text-align: left;
+}
+
+.rbp-collection-empty-guidance h2 {
+  margin: 0 0 1rem;
+  color: #0f172a;
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  line-height: 1.08;
+}
+
+.rbp-collection-empty-guidance p {
+  margin: 0 0 1.5rem;
+  color: #334155;
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+.rbp-collection-empty-guidance__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .75rem;
+}
+
+.rbp-collection-empty-guidance__actions a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  border-radius: 14px;
+  padding: .85rem 1.1rem;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.rbp-collection-empty-guidance__actions a:first-child {
+  background: #1d4ed8;
+  color: #ffffff;
+}
+
+.rbp-collection-empty-guidance__actions a:not(:first-child) {
+  border: 1px solid rgba(29, 78, 216, .24);
+  color: #1e3a8a;
+}
+
+@media (max-width: 749px) {
+  .rbp-home-c,
+  .rbp-container {
+    width: min(100% - 1.25rem, var(--rbp-page-width, 1280px));
+  }
+
+  .rbp-home-sec {
+    padding: 56px 0;
+  }
+
+  .rbp-home-hero {
+    min-height: auto;
+  }
+
+  .rbp-home-hero-in {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    padding: 72px 0 48px;
+  }
+
+  .rbp-home-actions,
+  .rbp-collection-empty-guidance__actions {
+    flex-direction: column;
+  }
+
+  .rbp-home-btn,
+  .rbp-collection-empty-guidance__actions a {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rbp-home *,
+  .rbp-home *::before,
+  .rbp-home *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: .01ms !important;
+  }
+}
