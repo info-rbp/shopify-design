@@ -1,0 +1,49 @@
+<style>
+/* Home page CTA button colour override.
+   Keeps this scoped to the refreshed homepage section so theme-wide buttons are not touched. */
+.rbp-home-refresh .rbp-btn,
+.rbp-home-refresh .rbp-btn:visited,
+.rbp-home-refresh .rbp-btn:hover,
+.rbp-home-refresh .rbp-btn:focus,
+.rbp-home-refresh .rbp-btn:active {
+  color: #ffffff !important;
+}
+
+.rbp-home-refresh .rbp-btn--primary,
+.rbp-home-refresh .rbp-btn--light,
+.rbp-home-refresh .rbp-final .rbp-btn--light,
+.rbp-home-refresh .rbp-sme .rbp-actions .rbp-btn,
+.rbp-home-refresh .rbp-split-card .rbp-btn--light {
+  background: var(--rbp-blue) !important;
+  color: #ffffff !important;
+  border-color: rgba(255, 255, 255, .28) !important;
+}
+
+.rbp-home-refresh .rbp-split-card--partner .rbp-btn--light {
+  background: var(--rbp-teal) !important;
+}
+
+.rbp-home-refresh .rbp-btn--ghost {
+  color: #ffffff !important;
+  border-color: rgba(255, 255, 255, .35) !important;
+}
+
+.rbp-home-refresh .rbp-btn span,
+.rbp-home-refresh .rbp-btn svg,
+.rbp-home-refresh .rbp-btn path {
+  color: #ffffff !important;
+  stroke: currentColor !important;
+}
+</style>
+
+{% schema %}
+{
+  "name": "RBP home button fix",
+  "settings": [],
+  "presets": [
+    {
+      "name": "RBP home button fix"
+    }
+  ]
+}
+{% endschema %}
