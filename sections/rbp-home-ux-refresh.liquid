@@ -1,0 +1,680 @@
+<style>
+.rbp-home-refresh {
+  --rbp-navy: #0b1224;
+  --rbp-navy-2: #111c38;
+  --rbp-blue: #1d4ed8;
+  --rbp-blue-2: #2563eb;
+  --rbp-teal: #0f766e;
+  --rbp-amber: #b45309;
+  --rbp-purple: #6d28d9;
+  --rbp-green: #047857;
+  --rbp-ink: #0f172a;
+  --rbp-text: #334155;
+  --rbp-muted: #64748b;
+  --rbp-line: #dbe3ef;
+  --rbp-soft: #f7f9fc;
+  --rbp-white: #ffffff;
+  --rbp-radius: 22px;
+  --rbp-radius-sm: 14px;
+  --rbp-shadow: 0 18px 60px rgba(15, 23, 42, .12);
+  --rbp-shadow-sm: 0 10px 30px rgba(15, 23, 42, .08);
+  color: var(--rbp-ink);
+  background: var(--rbp-white);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  isolation: isolate;
+}
+
+.rbp-home-refresh *,
+.rbp-home-refresh *::before,
+.rbp-home-refresh *::after { box-sizing: border-box; }
+.rbp-home-refresh a { color: inherit; text-decoration: none; }
+.rbp-home-refresh p,
+.rbp-home-refresh h1,
+.rbp-home-refresh h2,
+.rbp-home-refresh h3,
+.rbp-home-refresh h4 { margin: 0; }
+.rbp-home-refresh ul { margin: 0; padding: 0; list-style: none; }
+
+.rbp-wrap { width: min(100% - 40px, 1180px); margin: 0 auto; }
+.rbp-section { padding: 92px 0; }
+.rbp-section--soft { background: var(--rbp-soft); }
+.rbp-section-head { max-width: 760px; margin: 0 auto 42px; text-align: center; }
+.rbp-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+  padding: 7px 12px;
+  border-radius: 999px;
+  background: #eaf1ff;
+  color: var(--rbp-blue);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.rbp-kicker::before { content: ""; width: 7px; height: 7px; border-radius: 999px; background: currentColor; }
+.rbp-title {
+  font-size: clamp(32px, 4.3vw, 56px);
+  line-height: 1.02;
+  letter-spacing: -.045em;
+  font-weight: 900;
+  color: var(--rbp-ink);
+}
+.rbp-copy { color: var(--rbp-text); font-size: 17px; line-height: 1.72; }
+.rbp-section-head .rbp-copy { margin-top: 16px; }
+
+.rbp-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  min-height: 46px;
+  padding: 14px 22px;
+  border-radius: 14px;
+  font-size: 14px;
+  line-height: 1;
+  font-weight: 850;
+  transition: transform .2s ease, box-shadow .2s ease, background .2s ease, border-color .2s ease;
+}
+.rbp-btn:hover { transform: translateY(-2px); }
+.rbp-btn--primary { background: var(--rbp-blue); color: var(--rbp-white); box-shadow: 0 14px 34px rgba(29, 78, 216, .28); }
+.rbp-btn--primary:hover { background: #1e40af; box-shadow: 0 18px 42px rgba(29, 78, 216, .35); }
+.rbp-btn--light { background: var(--rbp-white); color: var(--rbp-blue); box-shadow: 0 12px 32px rgba(15, 23, 42, .12); }
+.rbp-btn--ghost { border: 1px solid rgba(255, 255, 255, .25); color: rgba(255, 255, 255, .92); }
+.rbp-btn--ghost:hover { background: rgba(255, 255, 255, .08); }
+.rbp-actions { display: flex; flex-wrap: wrap; gap: 14px; }
+
+.rbp-hero {
+  position: relative;
+  overflow: hidden;
+  min-height: 760px;
+  display: flex;
+  align-items: center;
+  padding: 90px 0 78px;
+  background:
+    radial-gradient(circle at 72% 18%, rgba(59, 130, 246, .25), transparent 33%),
+    radial-gradient(circle at 12% 85%, rgba(20, 184, 166, .16), transparent 30%),
+    linear-gradient(150deg, #091225 0%, #11265a 52%, #08111f 100%);
+}
+.rbp-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
+  background-size: 54px 54px;
+  mask-image: linear-gradient(to bottom, black, transparent 86%);
+  pointer-events: none;
+}
+.rbp-hero__grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(360px, .78fr);
+  gap: 64px;
+  align-items: center;
+}
+.rbp-hero__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 13px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.2);
+  color: rgba(255,255,255,.82);
+  background: rgba(255,255,255,.08);
+  font-size: 12px;
+  font-weight: 850;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+}
+.rbp-hero__eyebrow::before { content: ""; width: 8px; height: 8px; border-radius: 999px; background: #22c55e; box-shadow: 0 0 0 6px rgba(34, 197, 94, .12); }
+.rbp-hero h1 {
+  max-width: 700px;
+  color: var(--rbp-white);
+  font-size: clamp(48px, 7.4vw, 88px);
+  line-height: .98;
+  letter-spacing: -.065em;
+  font-weight: 950;
+}
+.rbp-hero__text { max-width: 650px; margin-top: 26px; color: #c6d3e5; font-size: 19px; line-height: 1.74; }
+.rbp-hero .rbp-actions { margin-top: 34px; }
+.rbp-hero__proof {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 42px;
+  padding-top: 28px;
+  border-top: 1px solid rgba(255,255,255,.12);
+}
+.rbp-proof-pill {
+  padding: 13px 14px;
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 14px;
+  background: rgba(255,255,255,.045);
+}
+.rbp-proof-pill strong { display: block; color: var(--rbp-white); font-size: 13px; line-height: 1.25; }
+.rbp-proof-pill span { display: block; color: #91a4bd; font-size: 12px; line-height: 1.45; margin-top: 4px; }
+
+.rbp-finder {
+  position: relative;
+  border-radius: 28px;
+  padding: 28px;
+  border: 1px solid rgba(255,255,255,.16);
+  background: linear-gradient(180deg, rgba(255,255,255,.11), rgba(255,255,255,.055));
+  box-shadow: 0 26px 90px rgba(0, 0, 0, .22);
+  backdrop-filter: blur(22px);
+}
+.rbp-finder::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(96,165,250,.7), rgba(20,184,166,.45), rgba(167,139,250,.5));
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+}
+.rbp-finder h2 { color: var(--rbp-white); font-size: 23px; line-height: 1.15; letter-spacing: -.02em; font-weight: 900; }
+.rbp-finder__intro { color: #9fb0c7; margin-top: 8px; font-size: 14px; line-height: 1.55; }
+.rbp-finder__list { display: grid; gap: 10px; margin-top: 22px; }
+.rbp-finder__item {
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr) auto;
+  gap: 14px;
+  align-items: center;
+  padding: 14px;
+  border-radius: 16px;
+  background: rgba(255,255,255,.07);
+  border: 1px solid rgba(255,255,255,.10);
+  transition: transform .2s ease, background .2s ease, border-color .2s ease;
+}
+.rbp-finder__item:hover { transform: translateX(4px); background: rgba(255,255,255,.115); border-color: rgba(255,255,255,.22); }
+.rbp-finder__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 13px;
+  background: rgba(255,255,255,.12);
+  color: #bfdbfe;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: .04em;
+}
+.rbp-finder__item strong { display: block; color: var(--rbp-white); font-size: 14px; line-height: 1.2; }
+.rbp-finder__item span { display: block; color: #90a4bd; font-size: 12px; line-height: 1.45; margin-top: 4px; }
+.rbp-finder__arrow { color: rgba(255,255,255,.5); font-weight: 900; }
+
+.rbp-grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; }
+.rbp-grid-4 { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; }
+.rbp-card {
+  position: relative;
+  min-height: 100%;
+  padding: 28px;
+  border: 1px solid var(--rbp-line);
+  border-radius: var(--rbp-radius);
+  background: var(--rbp-white);
+  box-shadow: 0 1px 0 rgba(15, 23, 42, .04);
+  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+}
+.rbp-card:hover { transform: translateY(-4px); border-color: color-mix(in srgb, var(--card-accent, var(--rbp-blue)) 42%, var(--rbp-line)); box-shadow: var(--rbp-shadow-sm); }
+.rbp-card::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 4px; border-radius: var(--rbp-radius) var(--rbp-radius) 0 0; background: var(--card-accent, var(--rbp-blue)); opacity: .85; }
+.rbp-card__icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 15px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 22px;
+  background: color-mix(in srgb, var(--card-accent, var(--rbp-blue)) 12%, white);
+  color: var(--card-accent, var(--rbp-blue));
+  font-weight: 900;
+  font-size: 12px;
+  letter-spacing: .06em;
+}
+.rbp-card h3 { color: var(--rbp-ink); font-size: 20px; line-height: 1.18; letter-spacing: -.02em; font-weight: 900; }
+.rbp-card p { margin-top: 12px; color: var(--rbp-text); font-size: 15px; line-height: 1.68; }
+.rbp-card__link { display: inline-flex; margin-top: 20px; align-items: center; gap: 7px; color: var(--card-accent, var(--rbp-blue)); font-size: 13px; font-weight: 850; }
+
+.rbp-process {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+  counter-reset: rbp-step;
+}
+.rbp-step {
+  position: relative;
+  padding: 28px;
+  border-radius: var(--rbp-radius);
+  background: var(--rbp-white);
+  border: 1px solid var(--rbp-line);
+}
+.rbp-step::before {
+  counter-increment: rbp-step;
+  content: "0" counter(rbp-step);
+  display: inline-flex;
+  margin-bottom: 22px;
+  color: var(--rbp-blue);
+  font-size: 13px;
+  font-weight: 950;
+  letter-spacing: .08em;
+}
+.rbp-step h3 { font-size: 18px; font-weight: 900; letter-spacing: -.015em; }
+.rbp-step p { margin-top: 10px; color: var(--rbp-text); font-size: 14px; line-height: 1.65; }
+
+.rbp-pathways {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+}
+.rbp-pathway {
+  display: grid;
+  grid-template-columns: 68px minmax(0, 1fr);
+  gap: 20px;
+  align-items: start;
+  padding: 28px;
+  border-radius: var(--rbp-radius);
+  border: 1px solid rgba(255,255,255,.12);
+  background: rgba(255,255,255,.055);
+  color: var(--rbp-white);
+  transition: transform .2s ease, background .2s ease, border-color .2s ease;
+}
+.rbp-pathway:hover { transform: translateY(-4px); background: rgba(255,255,255,.085); border-color: rgba(255,255,255,.2); }
+.rbp-pathway__mark {
+  width: 68px;
+  height: 68px;
+  border-radius: 19px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,.1);
+  color: #bfdbfe;
+  font-size: 13px;
+  font-weight: 950;
+  letter-spacing: .05em;
+}
+.rbp-pathway h3 { font-size: 22px; font-weight: 900; letter-spacing: -.02em; }
+.rbp-pathway p { margin-top: 8px; color: #b6c4d8; font-size: 15px; line-height: 1.65; }
+.rbp-pathway span { display: inline-flex; margin-top: 16px; color: #93c5fd; font-size: 13px; font-weight: 850; }
+.rbp-dark-section {
+  padding: 92px 0;
+  background:
+    radial-gradient(circle at 80% 20%, rgba(37,99,235,.18), transparent 32%),
+    linear-gradient(145deg, #081122 0%, #101e3c 56%, #081122 100%);
+}
+.rbp-dark-section .rbp-kicker { background: rgba(255,255,255,.1); color: #bfdbfe; border: 1px solid rgba(255,255,255,.14); }
+.rbp-dark-section .rbp-title { color: var(--rbp-white); }
+.rbp-dark-section .rbp-copy { color: #b6c4d8; }
+
+.rbp-sme {
+  display: grid;
+  grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr);
+  gap: 56px;
+  align-items: center;
+}
+.rbp-sme .rbp-section-head { text-align: left; margin: 0; }
+.rbp-sme__features { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+.rbp-mini {
+  padding: 24px;
+  border-radius: var(--rbp-radius);
+  background: var(--rbp-white);
+  border: 1px solid var(--rbp-line);
+}
+.rbp-mini strong { display: block; color: var(--rbp-ink); font-size: 16px; line-height: 1.25; font-weight: 900; }
+.rbp-mini span { display: block; margin-top: 9px; color: var(--rbp-text); font-size: 14px; line-height: 1.58; }
+
+.rbp-split { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.rbp-split-card {
+  position: relative;
+  overflow: hidden;
+  padding: 42px;
+  border-radius: 28px;
+  color: var(--rbp-white);
+  min-height: 100%;
+}
+.rbp-split-card::before { content: ""; position: absolute; width: 300px; height: 300px; right: -80px; top: -100px; border-radius: 999px; background: rgba(255,255,255,.08); }
+.rbp-split-card--member { background: linear-gradient(135deg, #1d4ed8, #132f68); }
+.rbp-split-card--partner { background: linear-gradient(135deg, #0f766e, #0b1224); }
+.rbp-split-card > * { position: relative; z-index: 1; }
+.rbp-split-card__label { display: inline-flex; margin-bottom: 18px; padding: 6px 11px; border-radius: 999px; background: rgba(255,255,255,.13); font-size: 11px; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; }
+.rbp-split-card h3 { font-size: 29px; line-height: 1.08; letter-spacing: -.03em; font-weight: 930; }
+.rbp-split-card p { margin-top: 12px; color: rgba(255,255,255,.76); font-size: 15px; line-height: 1.68; }
+.rbp-split-card ul { margin: 22px 0 28px; display: grid; gap: 9px; }
+.rbp-split-card li { display: flex; gap: 9px; align-items: flex-start; color: rgba(255,255,255,.86); font-size: 14px; line-height: 1.45; }
+.rbp-split-card li::before { content: ""; width: 7px; height: 7px; margin-top: 7px; border-radius: 999px; background: #86efac; flex: 0 0 auto; }
+
+.rbp-resource {
+  min-height: 100%;
+  padding: 24px;
+  border-radius: 18px;
+  background: var(--rbp-white);
+  border: 1px solid var(--rbp-line);
+  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+}
+.rbp-resource:hover { transform: translateY(-4px); border-color: #b8c7dc; box-shadow: var(--rbp-shadow-sm); }
+.rbp-resource__type { display: inline-flex; margin-bottom: 14px; padding: 4px 9px; border-radius: 999px; background: #eaf1ff; color: var(--rbp-blue); font-size: 10px; font-weight: 900; letter-spacing: .07em; text-transform: uppercase; }
+.rbp-resource h3 { font-size: 16px; line-height: 1.28; letter-spacing: -.01em; font-weight: 900; }
+.rbp-resource p { margin-top: 9px; color: var(--rbp-text); font-size: 13px; line-height: 1.6; }
+
+.rbp-final { padding: 92px 0 108px; background: var(--rbp-white); }
+.rbp-final__box {
+  overflow: hidden;
+  position: relative;
+  padding: 64px 42px;
+  border-radius: 30px;
+  text-align: center;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(59,130,246,.28), transparent 30%),
+    linear-gradient(135deg, var(--rbp-blue) 0%, #1e40af 45%, var(--rbp-navy) 100%);
+  color: var(--rbp-white);
+}
+.rbp-final__box::before { content: ""; position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px); background-size: 48px 48px; opacity: .45; }
+.rbp-final__box > * { position: relative; z-index: 1; }
+.rbp-final h2 { font-size: clamp(30px, 4vw, 48px); line-height: 1.06; letter-spacing: -.04em; font-weight: 940; }
+.rbp-final p { max-width: 620px; margin: 16px auto 30px; color: #d9e5f7; font-size: 17px; line-height: 1.65; }
+.rbp-final .rbp-actions { justify-content: center; }
+
+@media (max-width: 1080px) {
+  .rbp-hero__grid,
+  .rbp-sme { grid-template-columns: 1fr; }
+  .rbp-hero { min-height: auto; }
+  .rbp-hero__proof { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .rbp-grid-3,
+  .rbp-process { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .rbp-grid-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 760px) {
+  .rbp-wrap { width: min(100% - 28px, 1180px); }
+  .rbp-section,
+  .rbp-dark-section,
+  .rbp-final { padding: 68px 0; }
+  .rbp-hero { padding: 70px 0 58px; }
+  .rbp-hero h1 { font-size: clamp(42px, 13vw, 62px); }
+  .rbp-hero__text { font-size: 17px; }
+  .rbp-hero__proof,
+  .rbp-grid-3,
+  .rbp-grid-4,
+  .rbp-process,
+  .rbp-pathways,
+  .rbp-sme__features,
+  .rbp-split { grid-template-columns: 1fr; }
+  .rbp-finder { padding: 22px; }
+  .rbp-finder__item { grid-template-columns: 40px minmax(0, 1fr); }
+  .rbp-finder__arrow { display: none; }
+  .rbp-pathway { grid-template-columns: 1fr; }
+  .rbp-split-card,
+  .rbp-final__box { padding: 34px 24px; }
+  .rbp-actions { width: 100%; }
+  .rbp-actions .rbp-btn { flex: 1 1 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .rbp-home-refresh *,
+  .rbp-home-refresh *::before,
+  .rbp-home-refresh *::after { transition: none !important; scroll-behavior: auto !important; }
+}
+</style>
+
+<div class="rbp-home-refresh" data-rbp-section="homepage-ux-refresh">
+  <section class="rbp-hero" aria-label="Remote Business Partner homepage hero">
+    <div class="rbp-wrap">
+      <div class="rbp-hero__grid">
+        <div>
+          <div class="rbp-hero__eyebrow">Australian SME support platform</div>
+          <h1>
+            {{ section.settings.hero_heading | default: 'Practical business support for Australian SMEs.' }}
+          </h1>
+          <p class="rbp-hero__text">
+            {{ section.settings.hero_subtext | default: 'Find services, resources, partner offers and operational support pathways without bouncing between disconnected providers.' }}
+          </p>
+          <div class="rbp-actions">
+            <a class="rbp-btn rbp-btn--primary" href="#start-with-need">Start with your need <span aria-hidden="true">→</span></a>
+            <a class="rbp-btn rbp-btn--ghost" href="/pages/core-services">Explore services</a>
+          </div>
+          <div class="rbp-hero__proof" aria-label="Platform positioning">
+            <div class="rbp-proof-pill"><strong>SME focused</strong><span>Designed around Australian small business needs.</span></div>
+            <div class="rbp-proof-pill"><strong>Flexible support</strong><span>Use resources, services, partners or membership.</span></div>
+            <div class="rbp-proof-pill"><strong>One front door</strong><span>Clear pathways instead of scattered service pages.</span></div>
+            <div class="rbp-proof-pill"><strong>No lock-in</strong><span>Explore options before committing to a pathway.</span></div>
+          </div>
+        </div>
+
+        <aside class="rbp-finder" aria-label="Choose a business support pathway">
+          <h2>What are you trying to do?</h2>
+          <p class="rbp-finder__intro">Choose the closest need and move straight to the most relevant support area.</p>
+          <div class="rbp-finder__list">
+            <a class="rbp-finder__item" href="/pages/core-services">
+              <span class="rbp-finder__icon">AD</span>
+              <span><strong>Get business advice</strong><span>Strategy, systems, operations and structured advisory support.</span></span>
+              <span class="rbp-finder__arrow" aria-hidden="true">→</span>
+            </a>
+            <a class="rbp-finder__item" href="/collections/on-demand-services">
+              <span class="rbp-finder__icon">OD</span>
+              <span><strong>Find task-based help</strong><span>Use on-demand support for specific work, projects or admin needs.</span></span>
+              <span class="rbp-finder__arrow" aria-hidden="true">→</span>
+            </a>
+            <a class="rbp-finder__item" href="/collections/templates">
+              <span class="rbp-finder__icon">RS</span>
+              <span><strong>Access resources</strong><span>Templates, toolkits and documentation suites for practical work.</span></span>
+              <span class="rbp-finder__arrow" aria-hidden="true">→</span>
+            </a>
+            <a class="rbp-finder__item" href="/pages/offers">
+              <span class="rbp-finder__icon">MP</span>
+              <span><strong>Browse partner offers</strong><span>Compare curated tools, services and offers for SMEs.</span></span>
+              <span class="rbp-finder__arrow" aria-hidden="true">→</span>
+            </a>
+            <a class="rbp-finder__item" href="/pages/contact">
+              <span class="rbp-finder__icon">?</span>
+              <span><strong>Not sure where to start?</strong><span>Talk through the problem before choosing a pathway.</span></span>
+              <span class="rbp-finder__arrow" aria-hidden="true">→</span>
+            </a>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section id="start-with-need" class="rbp-section" aria-label="Start with your business need">
+    <div class="rbp-wrap">
+      <div class="rbp-section-head">
+        <div class="rbp-kicker">Start here</div>
+        <h2 class="rbp-title">Choose the business problem you need to solve</h2>
+        <p class="rbp-copy">The homepage now routes users by intent first, then service category. Much less mystery meat, much more useful navigation.</p>
+      </div>
+      <div class="rbp-grid-3">
+        <a class="rbp-card" style="--card-accent: var(--rbp-blue);" href="/pages/core-services">
+          <span class="rbp-card__icon">AD</span>
+          <h3>Get strategic advice</h3>
+          <p>For businesses that need structure around growth, systems, operations, process or decision-making.</p>
+          <span class="rbp-card__link">View advisory support →</span>
+        </a>
+        <a class="rbp-card" style="--card-accent: var(--rbp-teal);" href="/collections/on-demand-services">
+          <span class="rbp-card__icon">OD</span>
+          <h3>Find on-demand help</h3>
+          <p>For task-based support when you need practical help without hiring another full-time role.</p>
+          <span class="rbp-card__link">Browse on-demand services →</span>
+        </a>
+        <a class="rbp-card" style="--card-accent: var(--rbp-purple);" href="/collections/templates">
+          <span class="rbp-card__icon">TP</span>
+          <h3>Use templates and tools</h3>
+          <p>For checklists, document packs, toolkits and resources that help your team move faster.</p>
+          <span class="rbp-card__link">Explore resources →</span>
+        </a>
+        <a class="rbp-card" style="--card-accent: var(--rbp-amber);" href="/pages/membership">
+          <span class="rbp-card__icon">MB</span>
+          <h3>Become a member</h3>
+          <p>For eligible SMEs that want a structured relationship with access to selected benefits and support routes.</p>
+          <span class="rbp-card__link">View membership →</span>
+        </a>
+        <a class="rbp-card" style="--card-accent: var(--rbp-green);" href="/pages/offers">
+          <span class="rbp-card__icon">OF</span>
+          <h3>Compare partner offers</h3>
+          <p>For software, providers and partner-sourced offers curated around common SME needs.</p>
+          <span class="rbp-card__link">Browse offers →</span>
+        </a>
+        <a class="rbp-card" style="--card-accent: var(--rbp-blue-2);" href="/pages/business-nbn">
+          <span class="rbp-card__icon">NB</span>
+          <h3>Check connectivity options</h3>
+          <p>For business NBN pathways and preliminary address checks before qualification and activation.</p>
+          <span class="rbp-card__link">Check availability →</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="rbp-section rbp-section--soft" aria-label="How Remote Business Partner works">
+    <div class="rbp-wrap">
+      <div class="rbp-section-head">
+        <div class="rbp-kicker">How it works</div>
+        <h2 class="rbp-title">A clearer path from problem to support</h2>
+        <p class="rbp-copy">Instead of another wall of cards, users get a simple decision flow that explains what happens next.</p>
+      </div>
+      <div class="rbp-process">
+        <div class="rbp-step"><h3>Pick your business need</h3><p>Start with the outcome you are trying to achieve, not a confusing internal category.</p></div>
+        <div class="rbp-step"><h3>Review the best pathway</h3><p>Compare whether the right next step is a service, resource, membership route or partner offer.</p></div>
+        <div class="rbp-step"><h3>Take action quickly</h3><p>Open the relevant page, make an enquiry, download a resource or browse available options.</p></div>
+        <div class="rbp-step"><h3>Build from there</h3><p>Use the platform as a continuing business support hub as your needs change.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="rbp-dark-section" aria-label="Core service pathways">
+    <div class="rbp-wrap">
+      <div class="rbp-section-head">
+        <div class="rbp-kicker">Service pathways</div>
+        <h2 class="rbp-title">Support options without the usual maze</h2>
+        <p class="rbp-copy">The main pathways stay visible, but the page no longer relies on repeating the same card grid forever. Revolutionary, apparently.</p>
+      </div>
+      <div class="rbp-pathways">
+        <a class="rbp-pathway" href="/pages/core-services">
+          <span class="rbp-pathway__mark">CORE</span>
+          <span><h3>Core Services and Advisory</h3><p>Structured support across strategy, systems, operations and business improvement.</p><span>Explore core services →</span></span>
+        </a>
+        <a class="rbp-pathway" href="/collections/on-demand-services">
+          <span class="rbp-pathway__mark">TASK</span>
+          <span><h3>On-Demand Services</h3><p>Practical support for specific business tasks, admin work, projects and specialist needs.</p><span>Browse on-demand services →</span></span>
+        </a>
+        <a class="rbp-pathway" href="/pages/membership">
+          <span class="rbp-pathway__mark">MEM</span>
+          <span><h3>Membership</h3><p>A structured pathway for businesses that want ongoing access to selected benefits and support routes.</p><span>View membership →</span></span>
+        </a>
+        <a class="rbp-pathway" href="/pages/help-centre">
+          <span class="rbp-pathway__mark">HUB</span>
+          <span><h3>Business Hub and Help Centre</h3><p>Guides, support articles and resources to help users find answers before they need a conversation.</p><span>Visit the Help Centre →</span></span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="rbp-section" aria-label="Built for Australian SMEs">
+    <div class="rbp-wrap rbp-sme">
+      <div class="rbp-section-head">
+        <div class="rbp-kicker">Built for SMEs</div>
+        <h2 class="rbp-title">Designed around how Australian SMEs actually work</h2>
+        <p class="rbp-copy">SMEs need practical pathways, not a dense services catalogue wearing a nice gradient suit. This section makes the positioning more specific, credible and human.</p>
+        <div class="rbp-actions" style="margin-top:28px">
+          <a class="rbp-btn rbp-btn--primary" href="/pages/core-services">Find business support</a>
+          <a class="rbp-btn" style="border:1px solid var(--rbp-line); color:var(--rbp-blue); background:var(--rbp-white)" href="/pages/contact">Talk to the team</a>
+        </div>
+      </div>
+      <div class="rbp-sme__features">
+        <div class="rbp-mini"><strong>Flexible, not bloated</strong><span>Use support as needed instead of committing to heavy retainers before you know what fits.</span></div>
+        <div class="rbp-mini"><strong>Advice plus action</strong><span>Move from guidance into resources, services or partner options without starting again.</span></div>
+        <div class="rbp-mini"><strong>Curated pathways</strong><span>Make the next step clearer for users who are busy running the business, because apparently that matters.</span></div>
+        <div class="rbp-mini"><strong>Built for decisions</strong><span>Help users compare their options and choose a route with less friction.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="rbp-section rbp-section--soft" aria-label="Membership and marketplace pathways">
+    <div class="rbp-wrap">
+      <div class="rbp-section-head">
+        <div class="rbp-kicker">Choose your role</div>
+        <h2 class="rbp-title">Use RBP as an SME or as a partner</h2>
+        <p class="rbp-copy">This split creates two clean conversion paths instead of asking every visitor to decode whether they are buyer, member, provider or lost traveller.</p>
+      </div>
+      <div class="rbp-split">
+        <div class="rbp-split-card rbp-split-card--member">
+          <span class="rbp-split-card__label">For SMEs</span>
+          <h3>Become an RBP member</h3>
+          <p>Access a structured membership pathway for business resources, selected benefits and support options.</p>
+          <ul>
+            <li>Use one organised business support hub</li>
+            <li>Access resources and selected member routes</li>
+            <li>Move faster from problem to action</li>
+          </ul>
+          <a class="rbp-btn rbp-btn--light" href="/pages/membership">Explore membership</a>
+        </div>
+        <div class="rbp-split-card rbp-split-card--partner">
+          <span class="rbp-split-card__label">For providers</span>
+          <h3>List your offer on the marketplace</h3>
+          <p>Reach Australian SMEs through a clearer partner pathway for services, products and offers.</p>
+          <ul>
+            <li>Present your offer to a focused SME audience</li>
+            <li>Support marketplace and partner discovery</li>
+            <li>Create a cleaner path for business enquiries</li>
+          </ul>
+          <a class="rbp-btn rbp-btn--light" href="/pages/marketplace">Apply as a partner</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="rbp-section" aria-label="Business resources for Australian SMEs">
+    <div class="rbp-wrap">
+      <div class="rbp-section-head">
+        <div class="rbp-kicker">Resources</div>
+        <h2 class="rbp-title">Useful business resources, not decorative blog confetti</h2>
+        <p class="rbp-copy">Resource cards now communicate practical value and content type, which helps the section feel like a real tool rather than filler.</p>
+      </div>
+      <div class="rbp-grid-4">
+        <a class="rbp-resource" href="/collections/templates"><span class="rbp-resource__type">Templates</span><h3>Business document templates</h3><p>Download-ready documents for common operational and administrative needs.</p></a>
+        <a class="rbp-resource" href="/collections/toolkits"><span class="rbp-resource__type">Toolkits</span><h3>SME operating toolkits</h3><p>Practical bundles for improving business systems, workflows and decisions.</p></a>
+        <a class="rbp-resource" href="/collections/documentation-suites"><span class="rbp-resource__type">Suites</span><h3>Documentation packages</h3><p>Grouped resources for businesses that need more complete document sets.</p></a>
+        <a class="rbp-resource" href="/pages/help-centre"><span class="rbp-resource__type">Guides</span><h3>Help centre articles</h3><p>Guidance for choosing the right service pathway and using the platform.</p></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="rbp-final" aria-label="Final call to action">
+    <div class="rbp-wrap">
+      <div class="rbp-final__box">
+        <h2>Find the support pathway that fits your business</h2>
+        <p>Start with your business need, browse the available support routes, or speak with the team before choosing your next step.</p>
+        <div class="rbp-actions">
+          <a class="rbp-btn rbp-btn--light" href="#start-with-need">Start with your need</a>
+          <a class="rbp-btn rbp-btn--ghost" href="/pages/contact">Talk to us first</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+{% schema %}
+{
+  "name": "RBP home UX refresh",
+  "settings": [
+    {
+      "type": "text",
+      "id": "hero_heading",
+      "label": "Hero heading",
+      "default": "Practical business support for Australian SMEs."
+    },
+    {
+      "type": "textarea",
+      "id": "hero_subtext",
+      "label": "Hero subtext",
+      "default": "Find services, resources, partner offers and operational support pathways without bouncing between disconnected providers."
+    }
+  ],
+  "presets": [
+    {
+      "name": "RBP home UX refresh"
+    }
+  ]
+}
+{% endschema %}
