@@ -6,7 +6,11 @@
         "hero_heading": "Practical business support for Australian SMEs.",
         "hero_subtext": "Find services, resources, partner offers and operational support pathways without bouncing between disconnected providers."
       }
+    },
+    "rbp_home_button_fix": {
+      "type": "rbp-home-button-fix",
+      "settings": {}
     }
   },
-  "order": ["rbp_home_ux_refresh"]
+  "order": ["rbp_home_ux_refresh", "rbp_home_button_fix"]
 }
